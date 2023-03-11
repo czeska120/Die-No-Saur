@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:textOutline="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
@@ -10,7 +11,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/BG_Fall"
+        android:src="@drawable/bg_fall"
         android:scaleType="fitXY"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,25 +35,27 @@
             android:id="@+id/home_titlecard"
             android:layout_width="374dp"
             android:layout_height="118dp"
-            android:src="@drawable/Home_TitleCard"
-            android:layout_marginTop="150dp"/>
+            android:layout_marginTop="165dp"
+            android:src="@drawable/home_titlecard" />
 
-        <TextView
+        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
             android:id="@+id/home_title1"
             style="@style/textStyle"
+            app:outlineColor="@color/outline"
+            app:outlineSize="5dp"
             android:layout_alignTop="@id/home_titlecard"
             android:layout_marginTop="23dp"
             android:text="DIE-NO-SAUR"
             android:textSize="58sp" />
 
-        <TextView
+        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
             android:id="@+id/home_title2"
             style="@style/textStyle"
+            app:outlineColor="@color/outline"
+            app:outlineSize="5dp"
             android:layout_below="@+id/home_title1"
             android:text="It's the end of the world!"
             android:textSize="25sp" />
-
-
 
         <ImageButton
             android:id="@+id/home_btn1"
@@ -61,8 +64,10 @@
             style="@style/btnStyle"
             />
 
-        <TextView
+        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
             style="@style/textStyle"
+            app:outlineColor="@color/outline"
+            app:outlineSize="5dp"
             android:text="PLAY"
             android:textSize="58sp"
             android:layout_marginTop="5dp"
@@ -70,7 +75,4 @@
             />
 
     </RelativeLayout>
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
