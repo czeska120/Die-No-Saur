@@ -4,16 +4,73 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/main_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/BG_Fall"
+        android:scaleType="fitXY"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:id="@+id/home_titlecard"
+            android:layout_width="374dp"
+            android:layout_height="118dp"
+            android:src="@drawable/Home_TitleCard"
+            android:layout_marginTop="150dp"/>
+
+        <TextView
+            android:id="@+id/home_title1"
+            style="@style/textStyle"
+            android:layout_alignTop="@id/home_titlecard"
+            android:layout_marginTop="23dp"
+            android:text="DIE-NO-SAUR"
+            android:textSize="58sp" />
+
+        <TextView
+            android:id="@+id/home_title2"
+            style="@style/textStyle"
+            android:layout_below="@+id/home_title1"
+            android:text="It's the end of the world!"
+            android:textSize="25sp" />
+
+
+
+        <ImageButton
+            android:id="@+id/home_btn1"
+            android:layout_marginTop="175dp"
+            android:layout_below="@+id/home_titlecard"
+            style="@style/btnStyle"
+            />
+
+        <TextView
+            style="@style/textStyle"
+            android:text="PLAY"
+            android:textSize="58sp"
+            android:layout_marginTop="5dp"
+            android:layout_alignTop="@+id/home_btn1"
+            />
+
+    </RelativeLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

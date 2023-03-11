@@ -12,5 +12,25 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
+    </style>
+
+    <style name="textStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:fontFamily">@font/fibberish</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:textColor">@color/text</item>
+        <item name="android:shadowColor">@color/shadow</item>
+        <item name="android:shadowDx">-10</item>
+        <item name="android:shadowDy">8</item>
+        <item name="android:shadowRadius">1</item>
+    </style>
+
+    <style name="btnStyle">
+        <item name="android:layout_width">285dp</item>
+        <item name="android:layout_height">65dp</item>
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:background">@drawable/Button_Round</item>
     </style>
 </resources>
