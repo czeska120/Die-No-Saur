@@ -45,12 +45,19 @@
             android:src="@drawable/bg_fallbot"
             app:layout_constraintBottom_toBottomOf="parent" />
 
+
+        <pl.droidsonroids.gif.GifImageView
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:src="@drawable/nico"
+            android:layout_above="@+id/bg_bot"/>
+
         <ImageView
             android:id="@+id/home_titlecard"
             android:layout_width="347dp"
             android:layout_height="137dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="165dp"
+            android:layout_marginTop="125dp"
             android:src="@drawable/home_titlecard" />
 
 
@@ -77,13 +84,12 @@
             android:id="@+id/home_btn1"
             style="@style/btnStyle"
             android:layout_below="@+id/home_titlecard"
-            android:layout_marginTop="225dp" />
+            android:layout_marginTop="280dp" />
 
         <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
             android:id="@+id/home_tv1"
             style="@style/textNoSize"
             android:layout_alignTop="@+id/home_btn1"
-
             android:text="PLAY"
             android:textSize="45dp"
             app:outlineColor="@color/outline"

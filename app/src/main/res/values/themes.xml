@@ -23,12 +23,12 @@
         <item name="android:fontFamily">@font/fibberish</item>
         <item name="android:textColor">@color/text</item>
         <item name="android:shadowColor">#D74E3B3B</item>
-        <item name="android:shadowDx">-10</item>
-        <item name="android:shadowDy">15</item>
+        <item name="android:shadowDx">-13</item>
+        <item name="android:shadowDy">13</item>
         <item name="android:shadowRadius">1.5</item>
         <item name="android:padding">5dp</item>
 
-        <item name="android:layout_marginTop">7dp</item>
+        <item name="android:layout_marginTop">5dp</item>
     </style>
 
     <style name="textHeader">
@@ -40,11 +40,11 @@
         <item name="android:layout_centerInParent">true</item>
         <item name="android:textColor">@color/text</item>
         <item name="android:shadowColor">#D74E3B3B</item>
-        <item name="android:shadowDx">-10</item>
+        <item name="android:shadowDx">-13</item>
         <item name="android:shadowDy">15</item>
         <item name="android:shadowRadius">1.5</item>
         <item name="android:textSize">58sp</item>
-        <item name="android:padding">2dp</item>
+        <item name="android:padding">5dp</item>
     </style>
 
     <style name="textSubheading">
@@ -57,10 +57,10 @@
         <item name="android:textColor">@color/text</item>
         <item name="android:shadowColor">#D74E3B3B</item>
         <item name="android:shadowDx">-10</item>
-        <item name="android:shadowDy">15</item>
+        <item name="android:shadowDy">13</item>
         <item name="android:shadowRadius">1.5</item>
         <item name="android:textSize"> 25sp</item>
-        <item name="android:padding">2dp</item>
+        <item name="android:padding">5dp</item>
         <item name="android:layout_marginTop">7dp</item>
     </style>
 
