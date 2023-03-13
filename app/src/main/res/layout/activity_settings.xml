@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingsActivity">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/settings_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/dark_fall"
+            android:backgroundTint="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/settings_board"
+            android:layout_width="wrap_content"
+            android:layout_height="500dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="125dp"
+            android:src="@drawable/board_long" />
+
+        <ImageButton
+            android:id="@+id/settings_plate"
+            style="@style/btnStyle2"
+            android:layout_alignBottom="@+id/settings_board"
+            android:layout_marginBottom="480dp"/>
+
+        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+            android:id="@+id/home_title1"
+            style="@style/textSubheading"
+            android:textSize="32dp"
+            android:layout_alignTop="@id/settings_plate"
+            android:layout_marginTop="2dp"
+            android:text="SETTINGS"
+            app:outlineColor="@color/outline"
+            app:outlineSize="5dp" />
+
+<!--        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline-->
+<!--            android:id="@+id/home_title2"-->
+<!--            style="@style/textSubheading"-->
+<!--            android:layout_below="@+id/home_title1"-->
+<!--            android:text="It's the end of the world!"-->
+<!--            app:outlineColor="@color/outline"-->
+<!--            app:outlineSize="5dp" />-->
+
+
+
+<!--        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline-->
+<!--            android:id="@+id/home_tv1"-->
+<!--            style="@style/textNoSize"-->
+<!--            android:layout_alignTop="@+id/home_btn1"-->
+<!--            android:text="PLAY"-->
+<!--            android:textSize="45dp"-->
+<!--            app:outlineColor="@color/outline"-->
+<!--            app:outlineSize="5dp" />-->
+
+<!--        <ImageButton-->
+<!--            android:id="@+id/home_btn2"-->
+<!--            style="@style/btnStyle"-->
+<!--            android:layout_below="@+id/home_btn1"-->
+<!--            android:layout_marginTop="5dp" />-->
+
+<!--        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline-->
+<!--            android:id="@+id/home_tv2"-->
+<!--            style="@style/textNoSize"-->
+<!--            android:layout_alignTop="@+id/home_btn2"-->
+<!--            android:text="SETTINGS"-->
+<!--            android:textSize="45dp"-->
+<!--            app:outlineColor="@color/outline"-->
+<!--            app:outlineSize="5dp" />-->
+
+<!--        <ImageButton-->
+<!--            android:id="@+id/home_btn3"-->
+<!--            style="@style/btnStyle"-->
+<!--            android:layout_below="@+id/home_btn2"-->
+<!--            android:layout_marginTop="5dp" />-->
+
+<!--        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline-->
+<!--            android:id="@+id/home_tv3"-->
+<!--            style="@style/textNoSize"-->
+<!--            android:layout_alignTop="@+id/home_btn3"-->
+<!--            android:text="LEADERBOARD"-->
+<!--            android:textSize="39dp"-->
+<!--            app:outlineColor="@color/outline"-->
+<!--            app:outlineSize="5dp" />-->
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

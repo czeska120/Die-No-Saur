@@ -124,7 +124,6 @@
             android:textSize="39dp"
             app:outlineColor="@color/outline"
             app:outlineSize="5dp" />
-
-
     </RelativeLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
