@@ -37,7 +37,7 @@
             android:layout_marginTop="125dp"
             android:src="@drawable/board_long" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/settings_plate"
             style="@style/btnStyle2"
             android:layout_alignBottom="@+id/settings_board"
@@ -46,61 +46,132 @@
         <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
             android:id="@+id/home_title1"
             style="@style/textSubheading"
-            android:textSize="32dp"
+            android:textSize="32sp"
             android:layout_alignTop="@id/settings_plate"
             android:layout_marginTop="2dp"
             android:text="SETTINGS"
             app:outlineColor="@color/outline"
             app:outlineSize="5dp" />
 
-<!--        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline-->
-<!--            android:id="@+id/home_title2"-->
-<!--            style="@style/textSubheading"-->
-<!--            android:layout_below="@+id/home_title1"-->
-<!--            android:text="It's the end of the world!"-->
-<!--            app:outlineColor="@color/outline"-->
-<!--            app:outlineSize="5dp" />-->
+        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+            android:id="@+id/settings_soundfx"
+            style="@style/textSubheading"
+            android:layout_alignTop="@id/settings_plate"
+            android:layout_marginTop="75dp"
+            android:layout_marginEnd="130dp"
+            android:textAlignment="textStart"
+            android:text="Sound FX"
+            app:outlineColor="@color/outline"
+            app:outlineSize="5dp" />
+
+        <View
+            android:id="@+id/settings_line1"
+            android:layout_width="230dp"
+            android:layout_height="1dp"
+            android:layout_alignStart="@+id/settings_soundfx"
+            android:layout_below="@+id/settings_soundfx"
+            android:layout_marginVertical="10dp"
+            android:background="@color/text"/>
+
+        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+            android:id="@+id/settings_music"
+            style="@style/textSubheading"
+            android:layout_below="@+id/settings_line1"
+            android:layout_marginEnd="130dp"
+            android:textAlignment="textStart"
+            android:text="Music"
+            app:outlineColor="@color/outline"
+            app:outlineSize="5dp" />
+
+        <View
+            android:id="@+id/settings_line2"
+            android:layout_width="230dp"
+            android:layout_height="1dp"
+            android:layout_alignStart="@+id/settings_music"
+            android:layout_below="@+id/settings_music"
+            android:layout_marginVertical="10dp"
+            android:background="@color/text"/>
 
 
+        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+            android:id="@+id/settings_customize"
+            style="@style/textSubheading"
+            android:layout_below="@+id/settings_line2"
+            android:layout_marginEnd="130dp"
+            android:textAlignment="textStart"
+            android:text="Customize"
+            app:outlineColor="@color/outline"
+            app:outlineSize="5dp" />
 
-<!--        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline-->
-<!--            android:id="@+id/home_tv1"-->
-<!--            style="@style/textNoSize"-->
-<!--            android:layout_alignTop="@+id/home_btn1"-->
-<!--            android:text="PLAY"-->
-<!--            android:textSize="45dp"-->
-<!--            app:outlineColor="@color/outline"-->
-<!--            app:outlineSize="5dp" />-->
+        <View
+            android:id="@+id/settings_line3"
+            android:layout_width="230dp"
+            android:layout_height="1dp"
+            android:layout_alignStart="@+id/settings_customize"
+            android:layout_below="@+id/settings_customize"
+            android:layout_marginVertical="10dp"
+            android:background="@color/text"/>
 
-<!--        <ImageButton-->
-<!--            android:id="@+id/home_btn2"-->
-<!--            style="@style/btnStyle"-->
-<!--            android:layout_below="@+id/home_btn1"-->
-<!--            android:layout_marginTop="5dp" />-->
+        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+            android:id="@+id/settings_help"
+            style="@style/textSubheading"
+            android:layout_below="@+id/settings_line3"
+            android:layout_marginEnd="130dp"
+            android:textAlignment="textStart"
+            android:text="Help"
+            app:outlineColor="@color/outline"
+            app:outlineSize="5dp" />
 
-<!--        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline-->
-<!--            android:id="@+id/home_tv2"-->
-<!--            style="@style/textNoSize"-->
-<!--            android:layout_alignTop="@+id/home_btn2"-->
-<!--            android:text="SETTINGS"-->
-<!--            android:textSize="45dp"-->
-<!--            app:outlineColor="@color/outline"-->
-<!--            app:outlineSize="5dp" />-->
+        <View
+            android:id="@+id/settings_line4"
+            android:layout_width="230dp"
+            android:layout_height="1dp"
+            android:layout_alignStart="@+id/settings_help"
+            android:layout_below="@+id/settings_help"
+            android:layout_marginVertical="10dp"
+            android:background="@color/text"/>
 
-<!--        <ImageButton-->
-<!--            android:id="@+id/home_btn3"-->
-<!--            style="@style/btnStyle"-->
-<!--            android:layout_below="@+id/home_btn2"-->
-<!--            android:layout_marginTop="5dp" />-->
+        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+            android:id="@+id/settings_credits"
+            style="@style/textSubheading"
+            android:layout_below="@+id/settings_line4"
+            android:layout_marginEnd="130dp"
+            android:textAlignment="textStart"
+            android:text="Credits"
+            app:outlineColor="@color/outline"
+            app:outlineSize="5dp" />
 
-<!--        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline-->
-<!--            android:id="@+id/home_tv3"-->
-<!--            style="@style/textNoSize"-->
-<!--            android:layout_alignTop="@+id/home_btn3"-->
-<!--            android:text="LEADERBOARD"-->
-<!--            android:textSize="39dp"-->
-<!--            app:outlineColor="@color/outline"-->
-<!--            app:outlineSize="5dp" />-->
+        <View
+            android:id="@+id/settings_line5"
+            android:layout_width="230dp"
+            android:layout_height="1dp"
+            android:layout_alignStart="@+id/settings_credits"
+            android:layout_below="@+id/settings_credits"
+            android:layout_marginVertical="10dp"
+            android:background="@color/text"/>
+
+        <ImageButton
+            android:id="@+id/settings_save_btn"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:background="@drawable/btn_rectshort"
+            android:layout_below="@+id/settings_line5"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="48dp"
+            />
+
+        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+            android:id="@+id/settings_save_tv"
+            style="@style/textSubheading"
+            android:textSize="40sp"
+            android:text="SAVE"
+            android:layout_below="@+id/settings_line5"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="50dp"
+            app:outlineColor="@color/outline"
+            app:outlineSize="5dp" />
+
+
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

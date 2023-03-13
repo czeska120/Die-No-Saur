@@ -24,11 +24,11 @@ class MainActivity : AppCompatActivity() {
         // --- PLAY (Button 1) ---
 
         // --- SETTINGS (Button 2) ---
-
-        // Adding button click animation
-        val buttonClick = AlphaAnimation(1F, 0.8F);
         binding.homeBtn2.setOnClickListener {
+            // Adding button click animation
+            val buttonClick = AlphaAnimation(1F, 0.8F);
             binding.homeBtn2.startAnimation(buttonClick)
+
             val goToSettings = Intent(this,SettingsActivity::class.java)
             startActivity(goToSettings)
         }
