@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".SettingsActivity">
 
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,7 +42,7 @@
             android:layout_marginBottom="480dp"/>
 
         <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
-            android:id="@+id/home_title1"
+            android:id="@+id/settings_title1"
             style="@style/textSubheading"
             android:textSize="32sp"
             android:layout_alignTop="@id/settings_plate"
@@ -189,5 +187,15 @@
 
 
     </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/settings_framelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_help1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

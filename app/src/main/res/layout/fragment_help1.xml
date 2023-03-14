@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.FragmentHelp1">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/help1_board"
+                android:layout_width="wrap_content"
+                android:layout_height="500dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="125dp"
+                android:src="@drawable/board_long" />
+
+            <ImageView
+                android:id="@+id/help1_plate"
+                style="@style/btnStyle2"
+                android:layout_alignBottom="@+id/help1_board"
+                android:layout_marginBottom="480dp"/>
+
+            <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+                android:id="@+id/help1_title"
+                style="@style/textSubheading"
+                android:textSize="32sp"
+                android:layout_alignTop="@id/help1_plate"
+                android:layout_marginTop="2dp"
+                android:text="HELP"
+                app:outlineColor="@color/outline"
+                app:outlineSize="5dp" />
+
+            <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+                android:id="@+id/help1_back"
+                style="@style/textSubheading"
+                android:layout_alignTop="@id/help1_plate"
+                android:layout_marginTop="74dp"
+                android:layout_marginEnd="130dp"
+                android:layout_marginBottom="10dp"
+                android:text="Back"
+                android:textAlignment="textStart"
+                app:outlineColor="@color/outline"
+                app:outlineSize="5dp" />
+
+            <View
+                android:id="@+id/help1_line1"
+                android:layout_width="230dp"
+                android:layout_height="1dp"
+                android:layout_below="@+id/help1_back"
+                android:layout_alignStart="@+id/help1_back"
+                android:background="@color/text"/>
+
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/help1_dino"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:src="@drawable/nico"
+                android:layout_below="@+id/help1_line1"
+                android:layout_margin="50dp"/>
+
+            <View
+                android:id="@+id/help1_line2"
+                android:layout_width="230dp"
+                android:layout_height="1dp"
+                android:layout_below="@+id/help1_dino"
+                android:layout_alignStart="@+id/help1_back"
+                android:background="@color/text"/>
+
+            <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+                android:id="@+id/help1_body"
+                style="@style/textSubheading"
+                android:layout_marginHorizontal="60dp"
+                android:layout_below="@+id/help1_line2"
+                android:layout_marginTop="30dp"
+                android:text="Tilt left &amp; right to control your dinosaur"
+                app:outlineColor="@color/outline"
+                app:outlineSize="5dp" />
+
+            <ImageButton
+                android:id="@+id/help1_next"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/help1_body"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/btn_next"
+                android:scaleType="fitCenter" />
+
+        </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
