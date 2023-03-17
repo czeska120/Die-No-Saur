@@ -20,7 +20,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/help1_board"
+                android:id="@+id/customize_board"
                 android:layout_width="wrap_content"
                 android:layout_height="500dp"
                 android:layout_centerHorizontal="true"
@@ -28,25 +28,25 @@
                 android:src="@drawable/board_long" />
 
             <ImageView
-                android:id="@+id/help1_plate"
+                android:id="@+id/customize_plate"
                 style="@style/btnStyle2"
-                android:layout_alignBottom="@+id/help1_board"
+                android:layout_alignBottom="@+id/customize_board"
                 android:layout_marginBottom="480dp"/>
 
             <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
-                android:id="@+id/help1_title"
+                android:id="@+id/customize_title"
                 style="@style/textSubheading"
                 android:textSize="32sp"
-                android:layout_alignTop="@id/help1_plate"
+                android:layout_alignTop="@id/customize_plate"
                 android:layout_marginTop="2dp"
                 android:text="SETTINGS"
                 app:outlineColor="@color/outline"
                 app:outlineSize="5dp" />
 
             <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
-                android:id="@+id/help1_back"
+                android:id="@+id/customize_back"
                 style="@style/textSubheading"
-                android:layout_alignTop="@id/help1_plate"
+                android:layout_alignTop="@id/customize_plate"
                 android:layout_marginTop="74dp"
                 android:layout_marginEnd="130dp"
                 android:layout_marginBottom="10dp"
@@ -56,17 +56,17 @@
                 app:outlineSize="5dp" />
 
             <View
-                android:id="@+id/help1_line1"
+                android:id="@+id/customize_line1"
                 android:layout_width="230dp"
                 android:layout_height="1dp"
-                android:layout_below="@+id/help1_back"
-                android:layout_alignStart="@+id/help1_back"
+                android:layout_below="@+id/customize_back"
+                android:layout_alignStart="@+id/customize_back"
                 android:background="@color/text"/>
 
             <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
-                android:id="@+id/help1_charactertitle"
+                android:id="@+id/customize_charactertitle"
                 style="@style/textSubheading"
-                android:layout_alignTop="@id/help1_line1"
+                android:layout_alignTop="@id/customize_line1"
                 android:layout_marginEnd="130dp"
                 android:layout_marginBottom="10dp"
                 android:text="CHARACTER"
@@ -75,12 +75,12 @@
                 app:outlineSize="5dp" />
 
             <pl.droidsonroids.gif.GifImageView
-                android:id="@+id/help1_dino"
+                android:id="@+id/customize_dino"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_below="@+id/help1_line1"
+                android:layout_below="@+id/customize_line1"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="60dp"
                 android:layout_marginBottom="30dp"
                 android:layout_marginHorizontal="30dp"
                 android:src="@drawable/nico" />
@@ -89,11 +89,11 @@
                 android:id="@+id/character_prev"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_alignTop="@+id/help1_dino"
+                android:layout_alignTop="@+id/customize_dino"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="30dp"
-                android:layout_toStartOf="@+id/help1_dino"
+                android:layout_toStartOf="@+id/customize_dino"
                 android:background="@drawable/btn_previous"
                 android:scaleType="fitCenter" />
 
@@ -101,27 +101,27 @@
                 android:id="@+id/character_next"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_alignTop="@+id/help1_dino"
+                android:layout_alignTop="@+id/customize_dino"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
-                android:layout_toEndOf="@+id/help1_dino"
+                android:layout_toEndOf="@+id/customize_dino"
                 android:background="@drawable/btn_next"
                 android:scaleType="fitCenter" />
 
             <View
-                android:id="@+id/help1_line2"
+                android:id="@+id/customize_line2"
                 android:layout_width="230dp"
                 android:layout_height="1dp"
-                android:layout_below="@+id/help1_dino"
-                android:layout_alignStart="@+id/help1_back"
+                android:layout_below="@+id/customize_dino"
+                android:layout_alignStart="@+id/customize_back"
                 android:background="@color/text"/>
 
             <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
-                android:id="@+id/help1_bgtitle"
+                android:id="@+id/customize_bgtitle"
                 style="@style/textSubheading"
-                android:layout_alignTop="@id/help1_line2"
+                android:layout_alignTop="@id/customize_line2"
                 android:layout_marginEnd="130dp"
                 android:layout_marginBottom="10dp"
                 android:text="BACKGROUND"
@@ -130,12 +130,12 @@
                 app:outlineSize="5dp" />
 
             <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
-                android:id="@+id/help1_bgbody"
+                android:id="@+id/customize_bgbody"
                 android:layout_width="wrap_content"
                 style="@style/textHeader"
                 android:textSize="40dp"
-                android:layout_below="@id/help1_bgtitle"
-                android:layout_marginBottom="10dp"
+                android:layout_below="@id/customize_bgtitle"
+                android:layout_marginTop="40dp"
                 android:text="FALL"
                 android:textAlignment="center"
                 app:outlineColor="@color/outline"
@@ -146,7 +146,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_alignStart="@+id/character_prev"
-                android:layout_alignTop="@+id/help1_bgbody"
+                android:layout_alignTop="@+id/customize_bgbody"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="30dp"
                 android:background="@drawable/btn_previous"
@@ -157,7 +157,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_alignStart="@+id/character_next"
-                android:layout_alignTop="@+id/help1_bgbody"
+                android:layout_alignTop="@+id/customize_bgbody"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
@@ -165,17 +165,37 @@
                 android:scaleType="fitCenter" />
 
             <ImageButton
-                android:id="@+id/help1_next"
+                android:id="@+id/customize_next"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_alignEnd="@+id/help1_dino"
-                android:layout_toEndOf="@+id/help1_dino"
+                android:layout_alignEnd="@+id/customize_dino"
+                android:layout_toEndOf="@+id/customize_dino"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/btn_next"
                 android:scaleType="fitCenter" />
 
+            <ImageButton
+                android:id="@+id/customize_save"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/customize_bgbody"
+                android:layout_marginTop="60dp"
+                android:background="@drawable/btn_rectshort"
+                android:scaleType="fitCenter" />
+
+            <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+                android:id="@+id/customize_savetitle"
+                style="@style/textSubheading"
+                android:textSize="32dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/customize_bgbody"
+                android:layout_marginTop="60dp"
+                android:text="SAVE"
+                android:textAlignment="center"
+                app:outlineColor="@color/outline"
+                app:outlineSize="5dp" />
         </RelativeLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </FrameLayout>

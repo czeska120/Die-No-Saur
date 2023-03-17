@@ -67,9 +67,12 @@
                 android:id="@+id/help1_dino"
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
-                android:src="@drawable/nico"
                 android:layout_below="@+id/help1_line1"
-                android:layout_margin="50dp"/>
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginBottom="50dp"
+                android:src="@drawable/nico" />
 
             <View
                 android:id="@+id/help1_line2"
