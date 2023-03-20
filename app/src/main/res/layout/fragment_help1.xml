@@ -46,6 +46,7 @@
             <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
                 android:id="@+id/help1_back"
                 style="@style/textSubheading"
+                android:textSize="17sp"
                 android:layout_alignTop="@id/help1_plate"
                 android:layout_marginTop="74dp"
                 android:layout_marginEnd="130dp"

@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".fragments.FragmentCredits">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/credits_board"
+                android:layout_width="wrap_content"
+                android:layout_height="500dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="125dp"
+                android:src="@drawable/board_long" />
+
+            <ImageView
+                android:id="@+id/credits_plate"
+                style="@style/btnStyle2"
+                android:layout_alignBottom="@+id/credits_board"
+                android:layout_marginBottom="480dp"/>
+
+            <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+                android:id="@+id/credits_title"
+                style="@style/textSubheading"
+                android:textSize="32sp"
+                android:layout_alignTop="@id/credits_plate"
+                android:layout_marginTop="2dp"
+                android:text="CREDITS"
+                app:outlineColor="@color/outline"
+                app:outlineSize="5dp" />
+
+            <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+                android:id="@+id/credits_back"
+                style="@style/textSubheading"
+                android:textSize="17sp"
+                android:layout_alignTop="@id/credits_plate"
+                android:layout_marginTop="74dp"
+                android:layout_marginEnd="130dp"
+                android:layout_marginBottom="10dp"
+                android:text="Back"
+                android:textAlignment="textStart"
+                app:outlineColor="@color/outline"
+                app:outlineSize="5dp" />
+
+            <View
+                android:id="@+id/credits_line1"
+                android:layout_width="230dp"
+                android:layout_height="1dp"
+                android:layout_below="@+id/credits_back"
+                android:layout_alignStart="@+id/credits_back"
+                android:background="@color/text"/>
+
+            <View
+                android:id="@+id/credits_line2"
+                android:layout_width="230dp"
+                android:layout_height="0.3dp"
+                android:layout_below="@+id/credits_line1"
+                android:layout_alignStart="@+id/credits_back"
+                android:background="@color/text"/>
+
+            <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+                android:id="@+id/credits_body"
+                style="@style/textSubheading"
+                android:textSize="22dp"
+                android:layout_marginHorizontal="60dp"
+                android:layout_below="@+id/credits_line2"
+                android:text="This game would not be made possible without the following assets:"
+                app:outlineColor="@color/outline"
+                app:outlineSize="5dp" />
+
+            <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+                android:id="@+id/credits_tv1"
+                style="@style/textCredits"
+                android:layout_marginTop="5dp"
+                android:layout_alignStart="@+id/credits_back"
+                android:layout_below="@+id/credits_body"
+                android:text=" Game sprites"
+                app:outlineColor="@color/outline"
+                app:outlineSize="5dp" />
+
+            <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+                android:id="@+id/credits_tv1_2"
+                style="@style/textCredits"
+                android:textAlignment="textEnd"
+                android:layout_marginTop="5dp"
+                android:layout_alignEnd="@+id/credits_back"
+                android:layout_below="@+id/credits_body"
+                android:text="demching.itch.io"
+                app:outlineColor="@color/outline"
+                app:outlineSize="5dp" />
+
+            <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+                android:id="@+id/credits_tv2"
+                style="@style/textCredits"
+                android:layout_alignStart="@+id/credits_back"
+                android:layout_below="@+id/credits_tv1"
+                android:text=" Backgrounds"
+                app:outlineColor="@color/outline"
+                app:outlineSize="5dp" />
+
+            <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+                android:id="@+id/credits_tv2_2"
+                style="@style/textCredits"
+                android:textAlignment="textEnd"
+                android:layout_alignEnd="@+id/credits_back"
+                android:layout_below="@+id/credits_tv1"
+                android:text="iStockPhoto"
+                app:outlineColor="@color/outline"
+                app:outlineSize="5dp" />
+
+            <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+                android:id="@+id/credits_tv3"
+                style="@style/textCredits"
+                android:layout_alignStart="@+id/credits_back"
+                android:layout_below="@+id/credits_tv2"
+                android:text=" Font"
+                app:outlineColor="@color/outline"
+                app:outlineSize="5dp" />
+
+            <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+                android:id="@+id/credits_tv3_2"
+                style="@style/textCredits"
+                android:textAlignment="textEnd"
+                android:layout_alignEnd="@+id/credits_back"
+                android:layout_below="@+id/credits_tv2"
+                android:text="fibberish by Nathan Scott"
+                app:outlineColor="@color/outline"
+                app:outlineSize="5dp" />
+
+            <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+                android:id="@+id/credits_tv4"
+                style="@style/textCredits"
+                android:layout_alignStart="@+id/credits_back"
+                android:layout_below="@+id/credits_tv3"
+                android:text=" User Interface"
+                app:outlineColor="@color/outline"
+                app:outlineSize="5dp" />
+
+            <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+                android:id="@+id/credits_tv4_2"
+                style="@style/textCredits"
+                android:textAlignment="textEnd"
+                android:layout_alignEnd="@+id/credits_back"
+                android:layout_below="@+id/credits_tv3"
+                android:text="soulofkiran.itch.io"
+                app:outlineColor="@color/outline"
+                app:outlineSize="5dp" />
+
+            <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+                android:id="@+id/credits_tv5"
+                style="@style/textCredits"
+                android:layout_alignStart="@+id/credits_back"
+                android:layout_below="@+id/credits_tv4"
+                android:text=" Heart Asset"
+                app:outlineColor="@color/outline"
+                app:outlineSize="5dp" />
+
+            <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+                android:id="@+id/credits_tv5_2"
+                style="@style/textCredits"
+                android:textAlignment="textEnd"
+                android:layout_alignEnd="@+id/credits_back"
+                android:layout_below="@+id/credits_tv4"
+                android:text="fliflifly.itch.io"
+                app:outlineColor="@color/outline"
+                app:outlineSize="5dp" />
+
+            <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+                android:id="@+id/credits_tv6"
+                style="@style/textCredits"
+                android:layout_alignStart="@+id/credits_back"
+                android:layout_below="@+id/credits_tv5"
+                android:text=" Asteroid Asset"
+                app:outlineColor="@color/outline"
+                app:outlineSize="5dp" />
+
+            <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+                android:id="@+id/credits_tv6_2"
+                style="@style/textCredits"
+                android:textAlignment="textEnd"
+                android:layout_alignEnd="@+id/credits_back"
+                android:layout_below="@+id/credits_tv5"
+                android:text="arcadeisland.itch.io"
+                app:outlineColor="@color/outline"
+                app:outlineSize="5dp" />
+
+            <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+                android:id="@+id/credits_tv7"
+                style="@style/textCredits"
+                android:layout_alignStart="@+id/credits_back"
+                android:layout_below="@+id/credits_tv6"
+                android:text=" Sound FX"
+                app:outlineColor="@color/outline"
+                app:outlineSize="5dp" />
+
+            <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+                android:id="@+id/credits_tv7_2"
+                style="@style/textCredits"
+                android:textAlignment="textEnd"
+                android:layout_alignEnd="@+id/credits_back"
+                android:layout_below="@+id/credits_tv6"
+                android:text="-"
+                app:outlineColor="@color/outline"
+                app:outlineSize="5dp" />
+
+            <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+                android:id="@+id/credits_tv8"
+                style="@style/textCredits"
+                android:layout_alignStart="@+id/credits_back"
+                android:layout_below="@+id/credits_tv7"
+                android:text=" Music"
+                app:outlineColor="@color/outline"
+                app:outlineSize="5dp" />
+
+            <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+                android:id="@+id/credits_tv8_2"
+                style="@style/textCredits"
+                android:textAlignment="textEnd"
+                android:layout_alignEnd="@+id/credits_back"
+                android:layout_below="@+id/credits_tv7"
+                android:text="-"
+                app:outlineColor="@color/outline"
+                app:outlineSize="5dp" />
+
+        </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

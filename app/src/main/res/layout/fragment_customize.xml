@@ -2,13 +2,28 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragments.FragmentCustomize">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".fragments.FragmentCustomize"
+    android:clickable="true"
+    android:focusable="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/customize_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/dark_fall"
+            android:backgroundTint="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -39,13 +54,14 @@
                 android:textSize="32sp"
                 android:layout_alignTop="@id/customize_plate"
                 android:layout_marginTop="2dp"
-                android:text="SETTINGS"
+                android:text="CUSTOMIZE"
                 app:outlineColor="@color/outline"
                 app:outlineSize="5dp" />
 
             <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
                 android:id="@+id/customize_back"
                 style="@style/textSubheading"
+                android:textSize="17sp"
                 android:layout_alignTop="@id/customize_plate"
                 android:layout_marginTop="74dp"
                 android:layout_marginEnd="130dp"
@@ -95,7 +111,7 @@
                 android:layout_marginBottom="30dp"
                 android:layout_toStartOf="@+id/customize_dino"
                 android:background="@drawable/btn_previous"
-                android:scaleType="fitCenter" />
+                android:scaleType="fitCenter"/>
 
             <ImageButton
                 android:id="@+id/character_next"
@@ -103,7 +119,7 @@
                 android:layout_height="40dp"
                 android:layout_alignTop="@+id/customize_dino"
                 android:layout_centerVertical="true"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="1dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_toEndOf="@+id/customize_dino"
@@ -133,7 +149,7 @@
                 android:id="@+id/customize_bgbody"
                 android:layout_width="wrap_content"
                 style="@style/textHeader"
-                android:textSize="40dp"
+                android:textSize="30dp"
                 android:layout_below="@id/customize_bgtitle"
                 android:layout_marginTop="40dp"
                 android:text="FALL"
@@ -147,10 +163,9 @@
                 android:layout_height="40dp"
                 android:layout_alignStart="@+id/character_prev"
                 android:layout_alignTop="@+id/customize_bgbody"
-                android:layout_marginTop="5dp"
                 android:layout_marginBottom="30dp"
                 android:background="@drawable/btn_previous"
-                android:scaleType="fitCenter" />
+                android:scaleType="fitCenter"/>
 
             <ImageButton
                 android:id="@+id/bg_next"
@@ -158,11 +173,10 @@
                 android:layout_height="40dp"
                 android:layout_alignStart="@+id/character_next"
                 android:layout_alignTop="@+id/customize_bgbody"
-                android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/btn_next"
-                android:scaleType="fitCenter" />
+                android:scaleType="fitCenter"/>
 
             <ImageButton
                 android:id="@+id/customize_next"

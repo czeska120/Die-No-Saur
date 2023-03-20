@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.ActivitySettingsBinding
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentCredits
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentCustomize
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentHelp1
 
@@ -30,11 +31,18 @@ class SettingsActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
+        binding.settingsBack.setOnClickListener {
+            finish()
+        }
+
         binding.settingsCustomize.setOnClickListener{
             loadFragment(FragmentCustomize())
         }
         binding.settingsHelp.setOnClickListener{
             loadFragment(FragmentHelp1())
+        }
+        binding.settingsCredits.setOnClickListener {
+            loadFragment(FragmentCredits())
         }
 
         binding.seekbarSoundfx.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {

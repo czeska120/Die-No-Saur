@@ -52,10 +52,30 @@
             app:outlineSize="5dp" />
 
         <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+            android:id="@+id/settings_back"
+            style="@style/textSubheading"
+            android:textSize="17sp"
+            android:layout_alignTop="@id/settings_plate"
+            android:layout_marginTop="74dp"
+            android:layout_marginEnd="130dp"
+            android:layout_marginBottom="10dp"
+            android:text="Back"
+            android:textAlignment="textStart"
+            app:outlineColor="@color/outline"
+            app:outlineSize="5dp" />
+
+        <View
+            android:id="@+id/settings_line0"
+            android:layout_width="230dp"
+            android:layout_height="1dp"
+            android:layout_below="@+id/settings_back"
+            android:layout_alignStart="@+id/settings_back"
+            android:background="@color/text"/>
+
+        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
             android:id="@+id/settings_soundfx"
             style="@style/textSubheading"
-            android:layout_alignTop="@id/settings_plate"
-            android:layout_marginTop="75dp"
+            android:layout_below="@+id/settings_line0"
             android:layout_marginEnd="130dp"
             android:textAlignment="textStart"
             android:text="Sound FX"
