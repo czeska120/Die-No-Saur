@@ -33,33 +33,15 @@ class FragmentCredits : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_credits, container, false)
 
+        // Finding IDs
         val backBtn = rootView.findViewById<TextView>(R.id.credits_back)
 
+        // Listeners
         backBtn.setOnClickListener{
             getActivity()?.onBackPressed()
         }
 
         // Inflate the layout for this fragment
         return rootView
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentCredits.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FragmentCredits().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }

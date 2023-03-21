@@ -1,6 +1,5 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -9,11 +8,10 @@ import android.view.WindowManager
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.ActivitySettingsBinding
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentCredits
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentCustomize
-import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentHelp1
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentHelp
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingsBinding
@@ -23,7 +21,7 @@ class SettingsActivity : AppCompatActivity() {
         binding = ActivitySettingsBinding.inflate(layoutInflater)
 
         // Hides title bar
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
         //Hides action bar (bottom)
@@ -39,7 +37,7 @@ class SettingsActivity : AppCompatActivity() {
             loadFragment(FragmentCustomize())
         }
         binding.settingsHelp.setOnClickListener{
-            loadFragment(FragmentHelp1())
+            loadFragment(FragmentHelp())
         }
         binding.settingsCredits.setOnClickListener {
             loadFragment(FragmentCredits())

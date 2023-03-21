@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.FragmentHelp1">
+    tools:context=".fragments.FragmentHelp">
 
 
     <RelativeLayout
@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/help1_board"
+            android:id="@+id/help_board"
             android:layout_width="wrap_content"
             android:layout_height="500dp"
             android:layout_centerHorizontal="true"
@@ -21,26 +21,26 @@
             android:src="@drawable/board_long" />
 
         <ImageView
-            android:id="@+id/help1_plate"
+            android:id="@+id/help_plate"
             style="@style/btnStyle2"
-            android:layout_alignBottom="@+id/help1_board"
+            android:layout_alignBottom="@+id/help_board"
             android:layout_marginBottom="480dp"/>
 
         <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
-            android:id="@+id/help1_title"
+            android:id="@+id/help_title"
             style="@style/textSubheading"
             android:textSize="32sp"
-            android:layout_alignTop="@id/help1_plate"
+            android:layout_alignTop="@id/help_plate"
             android:layout_marginTop="2dp"
             android:text="HELP"
             app:outlineColor="@color/outline"
             app:outlineSize="5dp" />
 
         <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
-            android:id="@+id/help1_back"
+            android:id="@+id/help_back"
             style="@style/textSubheading"
             android:textSize="17sp"
-            android:layout_alignTop="@id/help1_plate"
+            android:layout_alignTop="@id/help_plate"
             android:layout_marginTop="74dp"
             android:layout_marginEnd="130dp"
             android:layout_marginBottom="10dp"
@@ -50,15 +50,15 @@
             app:outlineSize="5dp" />
 
         <View
-            android:id="@+id/help1_line1"
+            android:id="@+id/help_line1"
             android:layout_width="230dp"
             android:layout_height="1dp"
-            android:layout_below="@+id/help1_back"
-            android:layout_alignStart="@+id/help1_back"
+            android:layout_below="@+id/help_back"
+            android:layout_alignStart="@+id/help_back"
             android:background="@color/text"/>
 
         <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/help1_viewpager"
+            android:id="@+id/help_viewpager"
             android:layout_width="270dp"
             android:layout_height="300dp"
             android:layout_marginTop="225dp"
@@ -66,10 +66,10 @@
             />
 
         <me.relex.circleindicator.CircleIndicator3
-            android:id="@+id/help1_indicator"
+            android:id="@+id/help_indicator"
             android:layout_height="50dp"
             android:layout_width="match_parent"
-            android:layout_below="@+id/help1_viewpager"/>
+            android:layout_below="@+id/help_viewpager"/>
 
 
 

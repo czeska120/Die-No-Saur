@@ -11,8 +11,8 @@ import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.R.layout.step_page
 class ViewPagerAdapter(private var steps: List<String>, private var images: List<Int>): RecyclerView.Adapter<ViewPagerAdapter.Pager2ViewHolder>() {
 
     inner class Pager2ViewHolder(stepView: View): RecyclerView.ViewHolder(stepView){
-        val stepTitle: TextView = stepView.findViewById(R.id.help1_body)
-        val stepImage: ImageView = stepView.findViewById(R.id.help1_dino)
+        val stepTitle: TextView = stepView.findViewById(R.id.help_body)
+        val stepImage: ImageView = stepView.findViewById(R.id.help_dino)
     }
 
     override fun onCreateViewHolder(

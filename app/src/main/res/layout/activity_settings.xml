@@ -216,6 +216,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout="@layout/fragment_help1" />
+        tools:layout="@layout/fragment_help" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,7 +10,7 @@
         android:orientation="vertical">
 
         <pl.droidsonroids.gif.GifImageView
-            android:id="@+id/help1_dino"
+            android:id="@+id/help_dino"
             android:layout_width="match_parent"
             android:layout_height="75dp"
             android:layout_marginStart="50dp"
@@ -20,18 +20,18 @@
             android:src="@drawable/nico" />
 
     <View
-        android:id="@+id/help1_line2"
+        android:id="@+id/help_line2"
         android:layout_width="230dp"
         android:layout_height="1dp"
-        android:layout_below="@+id/help1_dino"
+        android:layout_below="@+id/help_dino"
         android:layout_centerHorizontal="true"
         android:background="@color/text"/>
 
     <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
-        android:id="@+id/help1_body"
+        android:id="@+id/help_body"
         style="@style/textSubheading"
         android:layout_marginHorizontal="60dp"
-        android:layout_below="@+id/help1_line2"
+        android:layout_below="@+id/help_line2"
         android:layout_marginTop="30dp"
         android:text="Tilt left &amp; right to control your dinosaur"
         app:outlineColor="@color/outline"

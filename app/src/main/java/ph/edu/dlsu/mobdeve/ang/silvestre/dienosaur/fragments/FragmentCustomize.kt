@@ -44,13 +44,13 @@ class FragmentCustomize : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_customize, container, false)
 
-        val backBtn = rootView.findViewById<TextView>(R.id.customize_back)
+        val buttonClick = AlphaAnimation(1F, 0.8F);
 
-        backBtn.setOnClickListener{
-            getActivity()?.onBackPressed()
-        }
-
+        // Plugging data
         val characterArray = ArrayList<Int>()
+        var bgArray = arrayOf("FALL","SPRING","WINTER")
+        var bgImgArray = ArrayList<Int>()
+
         characterArray.add(R.drawable.nico)
         characterArray.add(R.drawable.doux)
         characterArray.add(R.drawable.kira)
@@ -58,13 +58,34 @@ class FragmentCustomize : Fragment() {
         characterArray.add(R.drawable.mono)
         characterArray.add(R.drawable.olaf)
 
+        bgImgArray.add(R.drawable.dark_fall)
+        bgImgArray.add(R.drawable.dark_spring)
+        bgImgArray.add(R.drawable.dark_winter)
+
+
+        // Finding IDs
+        val backBtn = rootView.findViewById<TextView>(R.id.customize_back)
+        val saveBtn = rootView.findViewById<ImageButton>(R.id.customize_save)
         val charaPrev = rootView.findViewById<ImageButton>(R.id.character_prev)
         val charaNext = rootView.findViewById<ImageButton>(R.id.character_next)
         val icon = rootView.findViewById<ImageView>(R.id.customize_dino)
+        val bgPrev = rootView.findViewById<ImageButton>(R.id.bg_prev)
+        val bgNext = rootView.findViewById<ImageButton>(R.id.bg_next)
+        val bgText = rootView.findViewById<TextOutline>(R.id.customize_bgbody)
+        val bgImg = rootView.findViewById<ImageView>(R.id.customize_bg)
+
+        // Listeners
+        backBtn.setOnClickListener{
+            getActivity()?.onBackPressed()
+        }
+
+        saveBtn.setOnClickListener{
+            saveBtn.startAnimation(buttonClick)
+        }
 
         var i = 0
         charaPrev.setOnClickListener {
-            val buttonClick = AlphaAnimation(1F, 0.8F);
+
             charaPrev.startAnimation(buttonClick)
             i--
             if(i >= 0) {
@@ -76,7 +97,6 @@ class FragmentCustomize : Fragment() {
             }
         }
         charaNext.setOnClickListener {
-            val buttonClick = AlphaAnimation(1F, 0.8F);
             charaNext.startAnimation(buttonClick)
             i++
             if(i < 6) {
@@ -88,20 +108,8 @@ class FragmentCustomize : Fragment() {
             }
         }
 
-        var bgArray = arrayOf("FALL","SPRING","WINTER")
-        var bgImgArray = ArrayList<Int>()
-        bgImgArray.add(R.drawable.dark_fall)
-        bgImgArray.add(R.drawable.dark_spring)
-        bgImgArray.add(R.drawable.dark_winter)
-
-        val bgPrev = rootView.findViewById<ImageButton>(R.id.bg_prev)
-        val bgNext = rootView.findViewById<ImageButton>(R.id.bg_next)
-        val bgText = rootView.findViewById<TextOutline>(R.id.customize_bgbody)
-        val bgImg = rootView.findViewById<ImageView>(R.id.customize_bg)
-
         var j=0
         bgPrev.setOnClickListener {
-            val buttonClick = AlphaAnimation(1F, 0.8F);
             bgPrev.startAnimation(buttonClick)
             j--
             if(j >= 0) {
@@ -115,7 +123,6 @@ class FragmentCustomize : Fragment() {
             }
         }
         bgNext.setOnClickListener {
-            val buttonClick = AlphaAnimation(1F, 0.8F);
             bgNext.startAnimation(buttonClick)
             j++
             if(j < 3) {

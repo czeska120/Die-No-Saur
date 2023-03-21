@@ -28,6 +28,7 @@
         <item name="android:shadowDy">13</item>
         <item name="android:shadowRadius">1.5</item>
         <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
     </style>
 
     <style name="textNoSize">
