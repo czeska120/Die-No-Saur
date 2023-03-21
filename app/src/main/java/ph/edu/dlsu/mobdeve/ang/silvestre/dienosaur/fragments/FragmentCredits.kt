@@ -1,11 +1,12 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.R
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.FragmentCreditsBinding
 
@@ -32,16 +33,13 @@ class FragmentCredits : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_credits, container, false)
-
         // Finding IDs
         val backBtn = rootView.findViewById<TextView>(R.id.credits_back)
 
         // Listeners
         backBtn.setOnClickListener{
-            getActivity()?.onBackPressed()
+            activity?.onBackPressed()
         }
-
-        // Inflate the layout for this fragment
         return rootView
     }
 }

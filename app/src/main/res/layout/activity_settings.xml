@@ -51,32 +51,13 @@
             app:outlineColor="@color/outline"
             app:outlineSize="5dp" />
 
-        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
-            android:id="@+id/settings_back"
-            style="@style/textSubheading"
-            android:textSize="17sp"
-            android:layout_alignTop="@id/settings_plate"
-            android:layout_marginTop="74dp"
-            android:layout_marginEnd="130dp"
-            android:layout_marginBottom="10dp"
-            android:text="Back"
-            android:textAlignment="textStart"
-            app:outlineColor="@color/outline"
-            app:outlineSize="5dp" />
-
-        <View
-            android:id="@+id/settings_line0"
-            android:layout_width="230dp"
-            android:layout_height="1dp"
-            android:layout_below="@+id/settings_back"
-            android:layout_alignStart="@+id/settings_back"
-            android:background="@color/text"/>
 
         <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
             android:id="@+id/settings_soundfx"
             style="@style/textSubheading"
-            android:layout_below="@+id/settings_line0"
+            android:layout_below="@+id/settings_title1"
             android:layout_marginEnd="130dp"
+            android:layout_marginTop="37dp"
             android:textAlignment="textStart"
             android:text="Sound FX"
             app:outlineColor="@color/outline"
@@ -217,5 +198,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout="@layout/fragment_help" />
+
+    <FrameLayout
+        android:id="@+id/settings_framelayout2"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout="@layout/fragment_bottom_btns" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

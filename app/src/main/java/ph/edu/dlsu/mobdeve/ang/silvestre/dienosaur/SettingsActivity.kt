@@ -1,14 +1,17 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.view.animation.AlphaAnimation
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.ActivitySettingsBinding
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentBottomBtns
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentCredits
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentCustomize
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentHelp
@@ -20,6 +23,7 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
 
+        val buttonClick = AlphaAnimation(1F, 0.8F);
         // Hides title bar
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -29,20 +33,28 @@ class SettingsActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        binding.settingsBack.setOnClickListener {
-            finish()
-        }
+        val frame1 = R.id.settings_framelayout
+        val frame2 = R.id.settings_framelayout2
 
         binding.settingsCustomize.setOnClickListener{
-            loadFragment(FragmentCustomize())
+            binding.settingsCustomize.startAnimation(buttonClick)
+            loadFragment(frame1, FragmentCustomize())
         }
         binding.settingsHelp.setOnClickListener{
-            loadFragment(FragmentHelp())
+            binding.settingsHelp.startAnimation(buttonClick)
+            loadFragment(frame1, FragmentHelp())
         }
         binding.settingsCredits.setOnClickListener {
-            loadFragment(FragmentCredits())
+            binding.settingsCredits.startAnimation(buttonClick)
+            loadFragment(frame1, FragmentCredits())
         }
+        loadFragment(frame2, FragmentBottomBtns())
 
+        binding.settingsSaveBtn.setOnClickListener {
+            binding.settingsSaveBtn.startAnimation(buttonClick)
+            val goToHome = Intent(this, MainActivity::class.java)
+            startActivity(goToHome)
+        }
         binding.seekbarSoundfx.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 // intentionally empty; required to override
@@ -77,7 +89,7 @@ class SettingsActivity : AppCompatActivity() {
 
 
 
-    private fun loadFragment(fragment: Fragment) {
+    private fun loadFragment(frame:Int, fragment: Fragment) {
         // create a FragmentManager
         val fm = supportFragmentManager
 
@@ -85,9 +97,13 @@ class SettingsActivity : AppCompatActivity() {
         val fragmentTransaction = fm.beginTransaction()
 
         // replace the FrameLayout with new Fragment
-        fragmentTransaction.replace(R.id.settings_framelayout, fragment)
+        fragmentTransaction.replace(frame, fragment)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit() // save the changes
 
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 }

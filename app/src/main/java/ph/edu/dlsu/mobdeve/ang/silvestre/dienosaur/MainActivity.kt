@@ -16,10 +16,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
+        // Adding button click animation
+        val buttonClick = AlphaAnimation(1F, 0.8F);
         // Hides title bar
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN)
-
         //Hides action bar (bottom)
          getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
@@ -29,8 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         // --- SETTINGS (Button 2) ---
         binding.homeBtn2.setOnClickListener {
-            // Adding button click animation
-            val buttonClick = AlphaAnimation(1F, 0.8F);
+
             binding.homeBtn2.startAnimation(buttonClick)
 
             val goToSettings = Intent(this,SettingsActivity::class.java)

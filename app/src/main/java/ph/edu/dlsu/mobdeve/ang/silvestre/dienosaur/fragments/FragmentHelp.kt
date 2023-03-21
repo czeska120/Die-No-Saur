@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
 import android.widget.TextView
 import androidx.viewpager2.widget.ViewPager2
 import me.relex.circleindicator.CircleIndicator3
@@ -26,6 +27,7 @@ class FragmentHelp : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_help, container, false)
+        val buttonClick = AlphaAnimation(1F, 0.8F)
 
         // Finding IDs
         val backBtn = rootView.findViewById<TextView>(R.id.help_back)
@@ -34,7 +36,7 @@ class FragmentHelp : Fragment() {
 
         // Listeners
         backBtn.setOnClickListener{
-            getActivity()?.onBackPressed()
+            activity?.onBackPressed()
         }
 
         // ViewPager setup

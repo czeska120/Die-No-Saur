@@ -44,7 +44,7 @@ class FragmentCustomize : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_customize, container, false)
 
-        val buttonClick = AlphaAnimation(1F, 0.8F);
+        val buttonClick = AlphaAnimation(1F, 0.8F)
 
         // Plugging data
         val characterArray = ArrayList<Int>()
@@ -76,7 +76,7 @@ class FragmentCustomize : Fragment() {
 
         // Listeners
         backBtn.setOnClickListener{
-            getActivity()?.onBackPressed()
+            activity?.onBackPressed()
         }
 
         saveBtn.setOnClickListener{
