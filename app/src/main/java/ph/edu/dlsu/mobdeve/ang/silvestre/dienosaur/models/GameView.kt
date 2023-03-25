@@ -27,9 +27,12 @@ class GameView(context: Context) : View(context) {
     var rectBottom: Rect
     var UPDATE_MILLIS: Long = 30
     var runnable: Runnable
-    var textScore: Paint = Paint()
+    var textScore: Paint = Paint(). apply {
+        color = Color.BLACK
+        textSize = 100F
+    }
     var health: Paint = Paint()
-    var TEXT_SIZE: Float = 120F
+    var TEXT_SIZE: Float = 100F
     var score: Int = 0
     var life: Int = 3
     var random: Random
@@ -52,17 +55,17 @@ class GameView(context: Context) : View(context) {
         display.getSize(size)
         dWidth = size.x
         dHeight = size.y
-        rectTop = Rect(0, 0, dWidth, dHeight)
-        rectBottom = Rect(0, dHeight - bgBottom.height, dWidth, dHeight)
+        rectTop = Rect(0, 0, dWidth, bgTop.height)
+        rectBottom = Rect(0, bgTop.height, dWidth, dHeight)
         runnable = Runnable(){
             invalidate()
         }
         random = Random
-        dinoX = (dWidth / 2 - dinoRun.width / 2).toFloat()
-        dinoY = (dHeight - bgBottom.height - dinoRun.height).toFloat()
+        dinoX = ((dWidth - dinoRun.width) / 2).toFloat()
+        dinoY = (dHeight - rectBottom.height() - dinoRun.height + 70).toFloat()
         asteroids = ArrayList<Asteroid>()
         explosions = ArrayList<Explosion>()
-        for (count in 0 until 3){
+        for (count in 0 until 2){
             var asteroid: Asteroid = Asteroid(context)
             asteroids.add(asteroid)
         }
@@ -76,24 +79,28 @@ class GameView(context: Context) : View(context) {
         canvas.drawBitmap(dinoRun, dinoX, dinoY, null)
 
         for (i in 0 until asteroids.size){
-            canvas.drawBitmap(asteroids[i].getAsteroid(), asteroids[i].asteroidX.toFloat(), asteroids[i].asteroidY.toFloat(), null)
+            canvas.drawBitmap(asteroids[i].getAsteroid(asteroids[i].asteroidFrame), asteroids[i].asteroidX.toFloat(), asteroids[i].asteroidY.toFloat(), null)
+            asteroids[i].asteroidFrame++
+            if (asteroids[i].asteroidFrame > 4){
+                asteroids[i].asteroidFrame = 0
+            }
             asteroids[i].asteroidY += asteroids[i].velocity
-            if (asteroids[i].asteroidY + asteroids[i].getAsteroid().height >= dHeight - bgBottom.height) {
+            if (asteroids[i].asteroidY + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).height >= dHeight - rectBottom.height()) {
                 score += 10
-                var explosion = Explosion(context)
+                /*var explosion = Explosion(context)
                 explosion.explosionX = asteroids[i].asteroidX
                 explosion.explosionY = asteroids[i].asteroidY
-                explosions.add(explosion)
+                explosions.add(explosion)*/
                 asteroids[i].resetPosition()
             }
         }
 
         for (i in 0 until asteroids.size - 1){
             //collision
-            if (asteroids[i].asteroidX + asteroids[i].getAsteroid().width >= dinoX
+            if (asteroids[i].asteroidX + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).width >= dinoX
             && asteroids[i].asteroidX <= dinoX + dinoRun.width
-            && asteroids[i].asteroidY + asteroids[i].getAsteroid().width >= dinoY
-            && asteroids[i].asteroidY + asteroids[i].getAsteroid().width <= dinoY + dinoRun.height){
+            && asteroids[i].asteroidY + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).width >= dinoY
+            && asteroids[i].asteroidY + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).width <= dinoY + dinoRun.height){
                 life--
                 asteroids[i].resetPosition()
                 if (life == 0){
@@ -105,6 +112,7 @@ class GameView(context: Context) : View(context) {
             }
         }
 
+        /*
         for (i in 0 until explosions.size){
             canvas.drawBitmap(explosions[i].getExplosion(), explosions[i].explosionX.toFloat(), explosions[i].explosionY.toFloat(), null)
 
@@ -114,6 +122,7 @@ class GameView(context: Context) : View(context) {
                 explosions.removeAt(i)
             }
         }
+        */
 
         //modify life = 28:36
         if (life == 2){
@@ -123,7 +132,7 @@ class GameView(context: Context) : View(context) {
         }
 
         canvas.drawRect((dWidth - 200).toFloat(), 30F, (dWidth - 200 + 60 * life).toFloat(), 80F, health)
-        canvas.drawText("" + score, 20F, TEXT_SIZE, textScore)
+        canvas.drawText("Score: $score", 20F, TEXT_SIZE, textScore)
         handler.postDelayed(runnable, UPDATE_MILLIS)
     }
 

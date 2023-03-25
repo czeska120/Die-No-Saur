@@ -6,4 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".GameActivity">
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/bg_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/bg_falltop" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/bg_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bg_top"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/bg_fallbot" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/dino"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/bg_top"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/nico_run" />
 </androidx.constraintlayout.widget.ConstraintLayout>
