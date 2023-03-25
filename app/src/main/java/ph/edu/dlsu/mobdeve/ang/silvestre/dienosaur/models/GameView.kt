@@ -95,7 +95,7 @@ class GameView(context: Context) : View(context), SensorEventListener {
         asteroids = ArrayList<Asteroid>()
         //explosions = ArrayList<Explosion>()
 
-        for (count in 0 until 2){ //2 = number of asteroids on screen at a time
+        for (count in 0 until 3){ //3 = number of asteroids on screen at a time
             var asteroid = Asteroid(context)
             asteroids.add(asteroid)
         }
@@ -115,13 +115,20 @@ class GameView(context: Context) : View(context), SensorEventListener {
         canvas.drawBitmap(dinoRun, dinoX, dinoY, null)
 
         for (i in 0 until asteroids.size){
+            //draw asteroid
             canvas.drawBitmap(asteroids[i].getAsteroid(asteroids[i].asteroidFrame), asteroids[i].asteroidX.toFloat(), asteroids[i].asteroidY.toFloat(), null)
+
+            //animate asteroid sprites
             asteroids[i].asteroidFrame++
             if (asteroids[i].asteroidFrame > 4){
                 asteroids[i].asteroidFrame = 0
             }
+
+            //move asteroid down screen
             asteroids[i].asteroidY += asteroids[i].velocity
-            if (asteroids[i].asteroidY + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).height >= dHeight - rectBottom.height()) {
+
+            //if asteroid reached ground
+            if (asteroids[i].asteroidY + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).height >= dHeight - rectBottom.height() +100) {
                 score += 10
                 /*var explosion = Explosion(context)
                 explosion.explosionX = asteroids[i].asteroidX
@@ -132,13 +139,15 @@ class GameView(context: Context) : View(context), SensorEventListener {
         }
 
         for (i in 0 until asteroids.size - 1){
-            //collision
+            //if asteroid collides with dinosaur
             if (asteroids[i].asteroidX + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).width >= dinoX
             && asteroids[i].asteroidX <= dinoX + dinoRun.width
             && asteroids[i].asteroidY + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).width >= dinoY
             && asteroids[i].asteroidY + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).width <= dinoY + dinoRun.height){
-                life--
+                life-- //subtract life
                 asteroids[i].resetPosition()
+
+                //if player is out of lives
                 if (life == 0){
                     val intent = Intent(context, GameOverActivity::class.java) //34.09
                     intent.putExtra("score", score)
@@ -174,6 +183,7 @@ class GameView(context: Context) : View(context), SensorEventListener {
     }
 
     /*
+    //touch controls
     override fun onTouchEvent(event: MotionEvent): Boolean {
         var touchX: Float = event.x
         var touchY: Float = event.y
@@ -201,7 +211,7 @@ class GameView(context: Context) : View(context), SensorEventListener {
     }
     */
 
-    //sensors
+    //sensors: tilt controls
     override fun onSensorChanged(event: SensorEvent?) {
         if(event?.sensor?.type == Sensor.TYPE_ACCELEROMETER) {
             val motionX = event.values[0] //left/right tilt
