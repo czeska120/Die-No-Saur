@@ -9,7 +9,9 @@ import android.os.Handler
 import android.view.Display
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.content.res.ResourcesCompat
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.GameOverActivity
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.R
 import kotlin.random.Random
 
 class GameView(context: Context) : View(context) {
@@ -27,10 +29,14 @@ class GameView(context: Context) : View(context) {
     var rectBottom: Rect
     var UPDATE_MILLIS: Long = 30
     var runnable: Runnable
+
+    val fibberish = ResourcesCompat.getFont(context, R.font.fibberish)
     var textScore: Paint = Paint(). apply {
         color = Color.BLACK
         textSize = 100F
+        typeface = fibberish
     }
+
     var health: Paint = Paint()
     var TEXT_SIZE: Float = 100F
     var score: Int = 0
