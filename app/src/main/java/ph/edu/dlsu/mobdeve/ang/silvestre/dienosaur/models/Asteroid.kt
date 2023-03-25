@@ -32,6 +32,6 @@ class Asteroid(context: Context) {
     fun resetPosition() {
         asteroidX = random.nextInt(GameView.dWidth - asteroid[0].width)
         asteroidY = -100 + random.nextInt(600) * -1
-        velocity = 35 + random.nextInt(10)
+        velocity = 20 + random.nextInt(31)
     }
 }
