@@ -3,11 +3,11 @@ package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.R
 
 class DinoSprite(
-    name: String,
-    walk: Int,
-    run: Int,
-    hit: Int,
-    dead: Int
+    val name: String,
+    val walk: Int,
+    val run: Int,
+    val hit: Int,
+    val dead: Int
 ) {
 
 }

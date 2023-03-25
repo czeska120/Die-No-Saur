@@ -8,6 +8,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.view.animation.AlphaAnimation
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.ActivityMainBinding
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.GameView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -27,6 +28,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // --- PLAY (Button 1) ---
+        binding.homeBtn1.setOnClickListener{
+            val startGame = Intent(this, GameActivity::class.java)
+            startActivity(startGame)
+        }
 
         // --- SETTINGS (Button 2) ---
         binding.homeBtn2.setOnClickListener {

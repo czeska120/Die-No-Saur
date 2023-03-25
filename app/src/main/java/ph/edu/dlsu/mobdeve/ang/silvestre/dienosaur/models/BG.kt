@@ -3,10 +3,10 @@ package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.R
 
 class BG (
-    name: String,
-    dark: Int,
-    top: Int,
-    bottom: Int
+    val name: String,
+    val dark: Int,
+    val top: Int,
+    val bottom: Int
 ){
 
 }
