@@ -19,9 +19,11 @@ class GameView(context: Context) : View(context) {
         var dWidth: Int = 0
         var dHeight: Int = 0
     }
+
     var bg: BG
     var bgTop: Bitmap
     var bgBottom: Bitmap
+
     var dino: DinoSprite
     var dinoRun: Bitmap
     var dinoHit: Bitmap
@@ -31,48 +33,61 @@ class GameView(context: Context) : View(context) {
     var runnable: Runnable
 
     val fibberish = ResourcesCompat.getFont(context, R.font.fibberish)
+    var TEXT_SIZE: Float = 100F
     var textScore: Paint = Paint(). apply {
         color = Color.BLACK
-        textSize = 100F
+        textSize = TEXT_SIZE
         typeface = fibberish
     }
+    var score: Int = 0
 
     var health: Paint = Paint()
-    var TEXT_SIZE: Float = 100F
-    var score: Int = 0
     var life: Int = 3
+
     var random: Random
+
     var dinoX: Float
     var dinoY: Float
     var oldX: Float = 0.0f
     var oldDinoX: Float = 0.0f
+
     var asteroids: ArrayList<Asteroid>
-    var explosions: ArrayList<Explosion>
+    //var explosions: ArrayList<Explosion>
 
     init {
+        //change based on user preferences
         bg = BGs[0]
+        dino = Dinos[0]
+
         bgTop = BitmapFactory.decodeResource(context.resources, bg.top)
         bgBottom = BitmapFactory.decodeResource(context.resources, bg.bottom)
-        dino = Dinos[0]
+
         dinoRun = BitmapFactory.decodeResource(context.resources, dino.run)
         dinoHit = BitmapFactory.decodeResource(context.resources, dino.hit)
+
         val display: Display = (context as Activity).windowManager.defaultDisplay
         var size = Point()
         display.getSize(size)
         dWidth = size.x
         dHeight = size.y
+
         rectTop = Rect(0, 0, dWidth, bgTop.height)
         rectBottom = Rect(0, bgTop.height, dWidth, dHeight)
+
         runnable = Runnable(){
             invalidate()
         }
+
         random = Random
+
         dinoX = ((dWidth - dinoRun.width) / 2).toFloat()
         dinoY = (dHeight - rectBottom.height() - dinoRun.height + 70).toFloat()
+
         asteroids = ArrayList<Asteroid>()
-        explosions = ArrayList<Explosion>()
+        //explosions = ArrayList<Explosion>()
+
         for (count in 0 until 2){
-            var asteroid: Asteroid = Asteroid(context)
+            var asteroid = Asteroid(context)
             asteroids.add(asteroid)
         }
     }
