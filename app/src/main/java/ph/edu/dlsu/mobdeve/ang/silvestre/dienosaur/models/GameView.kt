@@ -3,9 +3,13 @@ package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.content.Context.SENSOR_SERVICE
 import android.content.Intent
 import android.graphics.*
-import android.os.Handler
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.view.Display
 import android.view.MotionEvent
 import android.view.View
@@ -14,7 +18,7 @@ import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.GameOverActivity
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.R
 import kotlin.random.Random
 
-class GameView(context: Context) : View(context) {
+class GameView(context: Context) : View(context), SensorEventListener {
     companion object{
         var dWidth: Int = 0
         var dHeight: Int = 0
@@ -26,9 +30,11 @@ class GameView(context: Context) : View(context) {
 
     var dino: DinoSprite
     var dinoRun: Bitmap
-    var dinoHit: Bitmap
+    //var dinoHit: Bitmap
+
     var rectTop: Rect
     var rectBottom: Rect
+
     var UPDATE_MILLIS: Long = 30
     var runnable: Runnable
 
@@ -54,6 +60,9 @@ class GameView(context: Context) : View(context) {
     var asteroids: ArrayList<Asteroid>
     //var explosions: ArrayList<Explosion>
 
+    //sensors
+    private lateinit var sensorManager: SensorManager
+
     init {
         //change based on user preferences
         bg = BGs[0]
@@ -63,7 +72,7 @@ class GameView(context: Context) : View(context) {
         bgBottom = BitmapFactory.decodeResource(context.resources, bg.bottom)
 
         dinoRun = BitmapFactory.decodeResource(context.resources, dino.run)
-        dinoHit = BitmapFactory.decodeResource(context.resources, dino.hit)
+        //dinoHit = BitmapFactory.decodeResource(context.resources, dino.hit)
 
         val display: Display = (context as Activity).windowManager.defaultDisplay
         var size = Point()
@@ -86,9 +95,15 @@ class GameView(context: Context) : View(context) {
         asteroids = ArrayList<Asteroid>()
         //explosions = ArrayList<Explosion>()
 
-        for (count in 0 until 2){
+        for (count in 0 until 2){ //2 = number of asteroids on screen at a time
             var asteroid = Asteroid(context)
             asteroids.add(asteroid)
+        }
+
+        //sensors
+        sensorManager = context.getSystemService(SENSOR_SERVICE) as SensorManager
+        sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)?.also {
+            sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_GAME, SensorManager.SENSOR_DELAY_GAME)
         }
     }
 
@@ -128,6 +143,7 @@ class GameView(context: Context) : View(context) {
                     val intent = Intent(context, GameOverActivity::class.java) //34.09
                     intent.putExtra("score", score)
                     context.startActivity(intent)
+                    sensorManager.unregisterListener(this)
                     (context as Activity).finish()
                 }
             }
@@ -157,20 +173,21 @@ class GameView(context: Context) : View(context) {
         handler.postDelayed(runnable, UPDATE_MILLIS)
     }
 
+    /*
     override fun onTouchEvent(event: MotionEvent): Boolean {
         var touchX: Float = event.x
         var touchY: Float = event.y
 
         if (touchY >= dinoY) {
             var action: Int = event.action
-            if (action == MotionEvent.ACTION_DOWN){
+            if (action == MotionEvent.ACTION_DOWN) {
                 oldX = event.x
                 oldDinoX = dinoX
             }
-            if (action == MotionEvent.ACTION_MOVE){
+            if (action == MotionEvent.ACTION_MOVE) {
                 var shift: Float = oldX - touchX
                 var newDinoX: Float = oldDinoX - shift
-                if (newDinoX <= 0){
+                if (newDinoX <= 0) {
                     dinoX = 0F
                 } else if (newDinoX >= dWidth - dinoRun.width) {
                     dinoX = dWidth - dinoRun.width.toFloat()
@@ -181,5 +198,30 @@ class GameView(context: Context) : View(context) {
         }
 
         return true
+    }
+    */
+
+    //sensors
+    override fun onSensorChanged(event: SensorEvent?) {
+        if(event?.sensor?.type == Sensor.TYPE_ACCELEROMETER) {
+            val motionX = event.values[0] //left/right tilt
+
+            //map tilt
+            val moveDino = -motionX / 100 * dWidth //100 = sensitivity of tilt
+            val newDinoX = dinoX + moveDino
+
+            //keep within screen bounds
+            if (newDinoX <= 0) {
+                dinoX = 0f
+            } else if (newDinoX >= dWidth - dinoRun.width) {
+                dinoX = (dWidth - dinoRun.width).toFloat()
+            } else {
+                dinoX = newDinoX
+            }
+        }
+    }
+
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+        return
     }
 }
