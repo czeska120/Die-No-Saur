@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LeaderboardActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/leaderboardbg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/dark_fall"
+            android:backgroundTint="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/leaderboardboard"
+            android:layout_width="wrap_content"
+            android:layout_height="500dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="125dp"
+            android:src="@drawable/board_long" />
+
+        <ImageView
+            android:id="@+id/leaderboardplate"
+            style="@style/btnStyle2"
+            android:layout_alignBottom="@+id/leaderboardboard"
+            android:layout_marginBottom="480dp"/>
+
+        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+            android:id="@+id/leaderboardtitle1"
+            style="@style/textSubheading"
+            android:textSize="29sp"
+            android:layout_alignTop="@id/leaderboardplate"
+            android:layout_marginTop="2dp"
+            android:text="LEADERBOARD"
+            app:outlineColor="@color/outline"
+            app:outlineSize="5dp" />
+
+
+        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+            android:id="@+id/leaderboardsoundfx"
+            style="@style/textSubheading"
+            android:layout_below="@+id/leaderboardtitle1"
+            android:layout_marginEnd="130dp"
+            android:layout_marginTop="37dp"
+            android:textAlignment="textStart"
+            android:text="Sound FX"
+            app:outlineColor="@color/outline"
+            app:outlineSize="5dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/leaderboard_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="70dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="300dp"
+            android:layout_below="@+id/leaderboardtitle1"/>
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/leaderboardframelayout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout="@layout/fragment_bottom_btns" />
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

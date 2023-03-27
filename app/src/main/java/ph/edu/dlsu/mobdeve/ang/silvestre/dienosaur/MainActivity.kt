@@ -29,20 +29,24 @@ class MainActivity : AppCompatActivity() {
 
         // --- PLAY (Button 1) ---
         binding.homeBtn1.setOnClickListener{
+            binding.homeBtn1.startAnimation(buttonClick)
             val startGame = Intent(this, GameActivity::class.java)
             startActivity(startGame)
         }
 
         // --- SETTINGS (Button 2) ---
         binding.homeBtn2.setOnClickListener {
-
             binding.homeBtn2.startAnimation(buttonClick)
-
             val goToSettings = Intent(this,SettingsActivity::class.java)
             startActivity(goToSettings)
         }
 
         // --- LEADERBOARD (Button 3) ---
+        binding.homeBtn3.setOnClickListener {
+            binding.homeBtn3.startAnimation(buttonClick)
+            val goToLeaderboard = Intent(this, LeaderboardActivity::class.java)
+            startActivity(goToLeaderboard)
+        }
     }
 
 
