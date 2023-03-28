@@ -7,15 +7,18 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.view.animation.AlphaAnimation
+import com.google.firebase.auth.FirebaseAuth
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.ActivityMainBinding
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.GameView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var mAuth : FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        mAuth = FirebaseAuth.getInstance()
 
         // Adding button click animation
         val buttonClick = AlphaAnimation(1F, 0.8F);
@@ -26,6 +29,8 @@ class MainActivity : AppCompatActivity() {
          getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
         setContentView(binding.root)
+
+
 
         // --- PLAY AS GUEST ---
         binding.homeBtnGuest.setOnClickListener{
@@ -62,5 +67,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
+    public override fun onStart() {
+        super.onStart()
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = mAuth.currentUser
+        if(currentUser != null){
+            startActivity(Intent(this,MainLoggedInActivity::class.java))
+            this.overridePendingTransition(0, 0)
+        }
+    }
 }

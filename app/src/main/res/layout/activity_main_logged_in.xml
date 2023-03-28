@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainLoggedInActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,7 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
-            android:src="@drawable/bg_falltop" />
+            android:src="@drawable/bg_falltop"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/bg_bot"
@@ -29,7 +29,8 @@
             android:layout_height="match_parent"
             android:scaleType="fitXY"
             android:layout_below="@id/bg_top"
-            android:src="@drawable/bg_fallbot" />
+            android:src="@drawable/bg_fallbot"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
 
         <pl.droidsonroids.gif.GifImageView
@@ -39,7 +40,7 @@
             android:layout_above="@+id/bg_bot"/>
 
         <ImageView
-            android:id="@+id/home_titlecard"
+            android:id="@+id/mainlogged_titlecard"
             android:layout_width="347dp"
             android:layout_height="137dp"
             android:layout_centerHorizontal="true"
@@ -49,9 +50,9 @@
 
 
         <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
-            android:id="@+id/home_title1"
+            android:id="@+id/mainlogged_title1"
             style="@style/textHeader"
-            android:layout_alignTop="@id/home_titlecard"
+            android:layout_alignTop="@id/mainlogged_titlecard"
             android:layout_marginTop="30dp"
             android:text="DIE-NO-SAUR"
             android:textSize="58sp"
@@ -59,87 +60,66 @@
             app:outlineSize="5dp" />
 
         <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
-            android:id="@+id/home_title2"
+            android:id="@+id/mainlogged_title2"
             style="@style/textSubheading"
-            android:layout_below="@+id/home_title1"
+            android:layout_below="@+id/mainlogged_title1"
             android:text="It's the end of the world!"
             app:outlineColor="@color/outline"
             app:outlineSize="5dp" />
 
         <ImageButton
-            android:id="@+id/home_btn_guest"
+            android:id="@+id/mainlogged_btn_play"
             style="@style/btnStyle"
-            android:layout_below="@+id/home_titlecard"
-            android:layout_alignStart="@+id/home_titlecard"
+            android:layout_below="@+id/mainlogged_titlecard"
             android:layout_marginTop="280dp" />
 
         <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
-            android:id="@+id/home_tv_guest"
+            android:id="@+id/mainlogged_tv_play"
             style="@style/textSubheading"
-            android:layout_alignTop="@+id/home_btn_guest"
-            android:layout_alignStart="@+id/home_btn_guest"
-            android:layout_alignEnd="@+id/home_btn_guest"
-            android:text="Play as Guest"
+            android:layout_alignStart="@+id/mainlogged_btn_play"
+            android:layout_alignTop="@+id/mainlogged_btn_play"
+            android:layout_alignEnd="@+id/mainlogged_btn_play"
+            android:text="PLAY"
             android:textSize="26dp"
             app:outlineColor="@color/outline"
             app:outlineSize="5dp" />
 
         <ImageButton
-            android:id="@+id/home_btn_signin"
+            android:id="@+id/mainlogged_btn_settings"
             style="@style/btnStyle"
-            android:layout_below="@+id/home_titlecard"
-            android:layout_alignEnd="@+id/home_titlecard"
-            android:layout_marginTop="280dp" />
+            android:layout_below="@+id/mainlogged_btn_play"
+            android:layout_marginTop="5dp" />
 
         <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
-            android:id="@+id/home_tv_signin"
-            style="@style/textSubheading"
-            android:layout_alignTop="@+id/home_btn_signin"
-            android:layout_alignStart="@+id/home_btn_signin"
-            android:layout_alignEnd="@+id/home_btn_signin"
-            android:text="Sign-in"
-            android:textSize="26dp"
-            app:outlineColor="@color/outline"
-            app:outlineSize="5dp" />
-
-
-
-        <ImageButton
-            android:id="@+id/home_btn_settings"
-            style="@style/btnStyle"
-            android:layout_below="@+id/home_btn_guest"
-            android:layout_marginTop="20dp" />
-
-        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
-            android:id="@+id/home_tv_settings"
+            android:id="@+id/mainlogged_tv_settings"
             style="@style/textNoSize"
-            android:layout_alignTop="@+id/home_btn_settings"
+            android:layout_alignTop="@+id/mainlogged_btn_settings"
             android:text="SETTINGS"
             android:textSize="28dp"
             app:outlineColor="@color/outline"
             app:outlineSize="5dp" />
 
         <ImageButton
-            android:id="@+id/home_btn_leaderboard"
+            android:id="@+id/mainlogged_btn_leaderboard"
             style="@style/btnStyle"
-            android:layout_below="@+id/home_btn_settings"
+            android:layout_below="@+id/mainlogged_btn_settings"
             android:layout_marginTop="5dp" />
 
         <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
-            android:id="@+id/home_tv_leaderboard"
+            android:id="@+id/mainlogged_tv_leaderboard"
             style="@style/textNoSize"
-            android:layout_alignTop="@+id/home_btn_leaderboard"
+            android:layout_alignTop="@+id/mainlogged_btn_leaderboard"
             android:text="LEADERBOARD"
             android:textSize="26dp"
             app:outlineColor="@color/outline"
             app:outlineSize="5dp" />
 
         <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
-            android:id="@+id/home_tv_login_prompt"
+            android:id="@+id/mainlogged_tv_logout"
             style="@style/textNoSize"
-            android:layout_below="@+id/home_btn_leaderboard"
+            android:layout_below="@+id/mainlogged_btn_leaderboard"
             android:layout_marginTop="10dp"
-            android:text="Already have an account? Log-in here"
+            android:text="Log-out"
             android:textSize="20dp"
             app:outlineColor="@color/outline"
             app:outlineSize="5dp" />
