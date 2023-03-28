@@ -2,9 +2,11 @@ package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Context.SENSOR_SERVICE
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.*
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -13,9 +15,12 @@ import android.hardware.SensorManager
 import android.view.Display
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.content.ContextCompat.registerReceiver
 import androidx.core.content.res.ResourcesCompat
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.GameOverActivity
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.R
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TimerService
+import kotlin.math.roundToInt
 import kotlin.random.Random
 
 class GameView(context: Context) : View(context), SensorEventListener {
@@ -45,7 +50,18 @@ class GameView(context: Context) : View(context), SensorEventListener {
         textSize = TEXT_SIZE
         typeface = fibberish
     }
-    var score: Int = 0
+
+    //timer
+    var score = 0.0 //var score: Int = 0
+    var scoreString: String = ""
+    private var timerStarted = false
+    private var serviceIntent: Intent
+    private val updateTime: BroadcastReceiver = object: BroadcastReceiver(){
+        override fun onReceive(context: Context, intent: Intent) {
+            score = intent.getDoubleExtra(TimerService.TIME_EXTRA, 0.0)
+            scoreString = getTimeStringFromDouble(score)
+        }
+    }
 
     var health: Paint = Paint()
     var life: Int = 3
@@ -95,6 +111,12 @@ class GameView(context: Context) : View(context), SensorEventListener {
         asteroids = ArrayList<Asteroid>()
         //explosions = ArrayList<Explosion>()
 
+        //timer
+        serviceIntent = Intent(context, TimerService::class.java)
+        context.registerReceiver(updateTime, IntentFilter(TimerService.TIMER_UPDATED))
+        startTimer()
+
+        //asteroids
         for (count in 0 until 3){ //3 = number of asteroids on screen at a time
             var asteroid = Asteroid(context)
             asteroids.add(asteroid)
@@ -129,7 +151,7 @@ class GameView(context: Context) : View(context), SensorEventListener {
 
             //if asteroid reached ground
             if (asteroids[i].asteroidY + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).height >= dHeight - rectBottom.height() +100) {
-                score += 10
+                //score += 10
                 /*var explosion = Explosion(context)
                 explosion.explosionX = asteroids[i].asteroidX
                 explosion.explosionY = asteroids[i].asteroidY
@@ -150,9 +172,10 @@ class GameView(context: Context) : View(context), SensorEventListener {
                 //if player is out of lives
                 if (life == 0){
                     val intent = Intent(context, GameOverActivity::class.java) //34.09
-                    intent.putExtra("score", score)
+                    intent.putExtra("score", scoreString)
                     context.startActivity(intent)
                     sensorManager.unregisterListener(this)
+                    resetTimer()
                     (context as Activity).finish()
                 }
             }
@@ -178,7 +201,7 @@ class GameView(context: Context) : View(context), SensorEventListener {
         }
 
         canvas.drawRect((dWidth - 200).toFloat(), 30F, (dWidth - 200 + 60 * life).toFloat(), 80F, health)
-        canvas.drawText("Score: $score", 20F, TEXT_SIZE, textScore)
+        canvas.drawText("$scoreString", 20F, TEXT_SIZE, textScore)
         handler.postDelayed(runnable, UPDATE_MILLIS)
     }
 
@@ -233,5 +256,33 @@ class GameView(context: Context) : View(context), SensorEventListener {
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
         return
+    }
+
+    //timer
+    private fun getTimeStringFromDouble(score: Double): String {
+        val resultInt = score.roundToInt()
+        val minutes = resultInt / 60000
+        val seconds = (resultInt / 1000) % 60
+        val milliseconds = resultInt % 1000
+        return makeTimeString(minutes, seconds, milliseconds)
+    }
+
+    private fun makeTimeString(m: Int, s: Int, ms: Int): String = String.format("%02d:%02d.%02d", m, s, ms/10)
+
+    private fun resetTimer(){
+        stopTimer()
+        score = 0.0
+        scoreString = getTimeStringFromDouble(score)
+    }
+
+    private fun startTimer(){
+        serviceIntent.putExtra(TimerService.TIME_EXTRA, score)
+        context.startService(serviceIntent)
+        timerStarted = true
+    }
+
+    private fun stopTimer(){
+        context.stopService(serviceIntent)
+        timerStarted = false
     }
 }

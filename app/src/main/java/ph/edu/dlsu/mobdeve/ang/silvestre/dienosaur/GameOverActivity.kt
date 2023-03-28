@@ -19,8 +19,8 @@ class GameOverActivity : AppCompatActivity() {
         loadFragment(frame2, FragmentBottomBtns())
 
         val data = intent.extras
-        val score = data?.getInt("score")
-        binding.playerScore.text = score.toString()
+        val score = data?.getString("score")
+        binding.playerScore.text = score
 
         binding.btnPlayAgain.setOnClickListener{
             val startGame = Intent(this, GameActivity::class.java)
