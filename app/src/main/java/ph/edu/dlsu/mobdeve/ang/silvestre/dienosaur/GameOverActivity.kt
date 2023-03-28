@@ -43,7 +43,7 @@ class GameOverActivity : AppCompatActivity() {
             val name = username.substring(0,index)
 
 
-            val check = dbreference.child("Scores").child(name)
+            val check = dbreference.child("Scores").child(currentUser.uid)
             check.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     if(dataSnapshot.hasChild("score")){
@@ -52,10 +52,12 @@ class GameOverActivity : AppCompatActivity() {
                         val newScoreString = score
                         val finalString = compare(oldScoreString, newScoreString!!)
 
-                        dbreference.child("Scores").child(name).child("score").setValue(finalString)
+                        dbreference.child("Scores").child(currentUser.uid).child("name").setValue(name)
+                        dbreference.child("Scores").child(currentUser.uid).child("score").setValue(finalString)
                     }
                     else{
-                        dbreference.child("Scores").child(name).child("score").setValue(score)
+                        dbreference.child("Scores").child(currentUser.uid).child("name").setValue(name)
+                        dbreference.child("Scores").child(currentUser.uid).child("score").setValue(score)
                     }
                 }
 
