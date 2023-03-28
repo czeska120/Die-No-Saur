@@ -52,25 +52,25 @@
             app:outlineSize="5dp" />
 
 
-        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
-            android:id="@+id/leaderboardsoundfx"
-            style="@style/textSubheading"
-            android:layout_below="@+id/leaderboardtitle1"
-            android:layout_marginEnd="130dp"
-            android:layout_marginTop="37dp"
-            android:textAlignment="textStart"
-            android:text="Sound FX"
-            app:outlineColor="@color/outline"
-            app:outlineSize="5dp"/>
+<!--        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline-->
+<!--            android:id="@+id/leaderboardsoundfx"-->
+<!--            style="@style/textSubheading"-->
+<!--            android:layout_below="@+id/leaderboardtitle1"-->
+<!--            android:layout_marginEnd="130dp"-->
+<!--            android:layout_marginTop="37dp"-->
+<!--            android:textAlignment="textStart"-->
+<!--            android:text="Sound FX"-->
+<!--            app:outlineColor="@color/outline"-->
+<!--            app:outlineSize="5dp"/>-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/leaderboard_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="70dp"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="300dp"
-            android:layout_below="@+id/leaderboardtitle1"/>
+            android:layout_marginBottom="40dp"
+            android:layout_alignTop="@+id/leaderboardboard"
+            android:layout_alignBottom="@+id/leaderboardboard"/>
 
     </RelativeLayout>
 
