@@ -87,7 +87,7 @@
         android:id="@+id/dino_dead"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:src="@drawable/nico_dead"
         app:layout_constraintTop_toBottomOf="@+id/end_scoreboard"
         app:layout_constraintStart_toStartOf="parent"
@@ -100,7 +100,7 @@
         app:layout_constraintTop_toBottomOf="@+id/end_scoreboard"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="130dp" />
+        android:layout_marginTop="150dp" />
 
     <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
         android:id="@+id/lbl_play_again"
@@ -165,7 +165,7 @@
     <FrameLayout
         android:id="@+id/settings_framelayout2"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
