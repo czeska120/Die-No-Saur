@@ -37,7 +37,6 @@ class LeaderboardActivity : AppCompatActivity() {
 
         // replace the FrameLayout with new Fragment
         fragmentTransaction.replace(frame, fragment)
-        fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit() // save the changes
 
     }
