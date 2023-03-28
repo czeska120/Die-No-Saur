@@ -30,7 +30,7 @@ private val mono_hit = arrayOf<Int>(R.drawable.mono_hit_1, R.drawable.mono_hit_2
 private val olaf_hit = arrayOf<Int>(R.drawable.olaf_hit_1, R.drawable.olaf_hit_2, R.drawable.olaf_hit_3, R.drawable.olaf_hit_4)
 
 val Dinos = arrayListOf<DinoSprite>(
-    DinoSprite("Nico", R.drawable.nico, nico_run, nico_hit, R.drawable.nico_run),
+    DinoSprite("Nico", R.drawable.nico, nico_run, nico_hit, R.drawable.nico_dead),
     DinoSprite("Doux", R.drawable.doux, doux_run, doux_hit, R.drawable.doux_dead),
     DinoSprite("Kira", R.drawable.kira, kira_run, kira_hit, R.drawable.kira_dead),
     DinoSprite("Kuro", R.drawable.kuro, kuro_run, kuro_hit, R.drawable.kuro_dead),
