@@ -7,10 +7,13 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.ActivityGameOverBinding
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentBottomBtns
+import java.math.RoundingMode
+import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 class GameOverActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGameOverBinding
@@ -34,18 +37,34 @@ class GameOverActivity : AppCompatActivity() {
         val currentUser = mAuth.currentUser
         dbreference = FirebaseDatabase.getInstance().reference
 
-//        if(user != null){
         if (currentUser != null) {
-            dbreference.child("Score").child(currentUser.uid).child("result").setValue(score)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        Toast.makeText(this, "Score added", Toast.LENGTH_SHORT).show()
-                    }else{
-                        Toast.makeText(this, "Something went wrong.", Toast.LENGTH_SHORT).show()
+            val username = currentUser?.email.toString()
+            val index = username.indexOf('@')
+            val name = username.substring(0,index)
+
+
+            val check = dbreference.child("Scores").child(name)
+            check.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    if(dataSnapshot.hasChild("score")){
+                        //compare existing score
+                        val oldScoreString = dataSnapshot.child("score").value.toString()
+                        val newScoreString = score
+                        val finalString = compare(oldScoreString, newScoreString!!)
+
+                        dbreference.child("Scores").child(name).child("score").setValue(finalString)
+                    }
+                    else{
+                        dbreference.child("Scores").child(name).child("score").setValue(score)
                     }
                 }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    // Handle any errors
+                }
+            })
+
         }
-//        }
 
 
         binding.btnPlayAgain.setOnClickListener{
@@ -53,6 +72,23 @@ class GameOverActivity : AppCompatActivity() {
             startActivity(startGame)
             finish()
         }
+    }
+
+    private fun compare(oldScore: String, newScore: String): String{
+        val sdf = SimpleDateFormat("mm:ss.SS")
+        sdf.timeZone = TimeZone.getTimeZone("UTC")
+
+        val time1 = sdf.parse(oldScore).time
+        val time2 = sdf.parse(newScore).time
+
+        val longerTime = if (time1 > time2) time1 else time2
+
+        val cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        cal.timeInMillis = longerTime
+
+        val resultString = sdf.format(cal.time)
+
+        return resultString
     }
 
     private fun loadFragment(frame:Int, fragment: Fragment) {
