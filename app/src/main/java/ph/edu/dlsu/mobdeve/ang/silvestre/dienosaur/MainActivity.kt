@@ -27,6 +27,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // --- PLAY (Button 1) ---
+        binding.homeBtn1.setOnClickListener{
+            val startGame = Intent(this, GameActivity::class.java)
+            startActivity(startGame)
+        }
 
         // --- SETTINGS (Button 2) ---
         binding.homeBtn2.setOnClickListener {

@@ -2,4 +2,12 @@
     <string name="app_name">DieNoSaur</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Game Over Activity -->
+    <string name="game_over">GAME OVER</string>
+    <string name="game_over_subtitle">welcome to extinction!</string>
+    <string name="score_label">your score:</string>
+    <string name="play_again">Play again</string>
+    <string name="share">Share</string>
+    <string name="leaderboard">Leaderboard</string>
 </resources>
