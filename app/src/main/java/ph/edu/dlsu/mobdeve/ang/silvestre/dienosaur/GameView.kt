@@ -59,7 +59,7 @@ class GameView(context: Context) : View(context), SensorEventListener {
     private val timerCard = resources.getDrawable(R.drawable.timercard, null)
     private val textScore = Paint().apply {
         textSize = TEXT_SIZE
-        color = resources.getColor(R.color.outline, null)
+        color = resources.getColor(R.color.white, null)
         textAlign = Paint.Align.CENTER
         typeface = fibberish
     }
