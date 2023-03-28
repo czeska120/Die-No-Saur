@@ -25,6 +25,7 @@ class GameOverActivity : AppCompatActivity() {
         binding.btnPlayAgain.setOnClickListener{
             val startGame = Intent(this, GameActivity::class.java)
             startActivity(startGame)
+            finish()
         }
     }
 
