@@ -74,6 +74,12 @@ class GameOverActivity : AppCompatActivity() {
             startActivity(startGame)
             finish()
         }
+
+        binding.btnLeaderboard.setOnClickListener {
+            val goToLeaderboard = Intent(this, LeaderboardActivity::class.java)
+            startActivity(goToLeaderboard)
+            finish()
+        }
     }
 
     private fun compare(oldScore: String, newScore: String): String{

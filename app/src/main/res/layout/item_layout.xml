@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+            android:id="@+id/item_name"
+            style="@style/textSubheading"
+            android:layout_marginEnd="130dp"
+            android:layout_marginTop="37dp"
+            android:textAlignment="textStart"
+            android:text="Name"
+            app:outlineColor="@color/outline"
+            app:outlineSize="5dp"/>
+
+        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+            android:id="@+id/item_score"
+            style="@style/textSubheading"
+            android:layout_marginEnd="130dp"
+            android:layout_marginTop="37dp"
+            android:textAlignment="textEnd"
+            android:text="Score"
+            app:outlineColor="@color/outline"
+            app:outlineSize="5dp"/>
+
+        <View
+            android:id="@+id/item_line"
+            android:layout_width="230dp"
+            android:layout_height="1dp"
+            android:layout_alignStart="@+id/item_score"
+            android:layout_below="@+id/item_score"
+            android:layout_marginVertical="10dp"
+            android:background="@color/white"/>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
