@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".GameActivity">
-
-    <!--
+<!--
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/bg_top"
         android:layout_width="match_parent"
@@ -36,6 +35,65 @@
         app:layout_constraintBottom_toBottomOf="@+id/bg_top"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/nico_run" />
-     -->
+        app:srcCompat="@drawable/nico_run_1" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/timer_card"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginTop="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/timercard" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/heart1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/timer_card"
+        app:layout_constraintEnd_toStartOf="@+id/heart2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="70dp"
+        android:layout_marginBottom="30dp"
+        app:srcCompat="@drawable/heart_1" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/heart2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/timer_card"
+        app:layout_constraintStart_toEndOf="@+id/heart1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/heart3"
+        android:layout_marginBottom="30dp"
+        app:srcCompat="@drawable/heart_1" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/heart3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/timer_card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/heart2"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="30dp"
+        app:srcCompat="@drawable/heart_1" />
+
+    <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+        android:id="@+id/player_score"
+        style="@style/textHeader"
+        android:layout_marginTop="35dp"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/timer_card"
+        app:layout_constraintStart_toStartOf="@+id/timer_card"
+        app:layout_constraintEnd_toEndOf="@id/timer_card"
+        android:text="00:00.00"
+        android:textSize="54sp"
+        app:outlineColor="@color/outline"
+        app:outlineSize="5dp" />
+-->
 </androidx.constraintlayout.widget.ConstraintLayout>
