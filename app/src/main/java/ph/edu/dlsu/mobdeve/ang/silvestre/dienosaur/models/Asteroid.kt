@@ -3,6 +3,7 @@ package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.GameView
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.R
 import kotlin.random.Random
 

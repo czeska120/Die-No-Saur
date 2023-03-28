@@ -8,7 +8,6 @@ import android.view.Window
 import android.view.WindowManager
 import android.view.animation.AlphaAnimation
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.ActivityMainBinding
-import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.GameView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

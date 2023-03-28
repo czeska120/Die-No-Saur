@@ -1,4 +1,4 @@
-package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models
+package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -13,13 +13,9 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.view.Display
-import android.view.MotionEvent
 import android.view.View
-import androidx.core.content.ContextCompat.registerReceiver
 import androidx.core.content.res.ResourcesCompat
-import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.GameOverActivity
-import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.R
-import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TimerService
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.*
 import kotlin.math.roundToInt
 import kotlin.random.Random
 
