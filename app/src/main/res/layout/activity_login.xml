@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/login_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/dark_fall"
+            android:backgroundTint="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/login_board"
+            android:layout_width="wrap_content"
+            android:layout_height="500dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="125dp"
+            android:src="@drawable/board_long" />
+
+        <ImageView
+            android:id="@+id/login_plate"
+            style="@style/btnStyle2"
+            android:layout_alignTop="@+id/login_board"
+            android:layout_marginTop="40dp"/>
+
+        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+            android:id="@+id/login_title1"
+            style="@style/textSubheading"
+            android:textSize="32sp"
+            android:layout_alignTop="@id/login_plate"
+            android:layout_marginTop="2dp"
+            android:text="LOGIN"
+            app:outlineColor="@color/outline"
+            app:outlineSize="5dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/login_il_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_below="@+id/login_plate"
+            android:layout_marginHorizontal="80dp"
+            android:layout_marginTop="40dp"
+
+            app:boxBackgroundMode="filled"
+            app:boxBackgroundColor="?android:attr/colorBackground">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/login_et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="Email"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/login_il_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_below="@+id/login_il_email"
+            android:layout_marginHorizontal="80dp"
+            android:layout_marginTop="10dp"
+            app:boxBackgroundMode="filled"
+            app:boxBackgroundColor="?android:attr/colorBackground">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/login_et_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="Password"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <ImageButton
+            android:id="@+id/login_btn_register"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:background="@drawable/btn_rectshort"
+            android:layout_below="@+id/login_il_password"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="90dp"
+            />
+
+        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+            android:id="@+id/login_tv_register"
+            style="@style/textSubheading"
+            android:layout_below="@+id/login_il_password"
+            android:layout_alignTop="@+id/login_btn_register"
+            android:layout_centerInParent="true"
+            android:text="Login"
+            android:textSize="30sp"
+            app:outlineColor="@color/outline"
+            app:outlineSize="5dp" />
+
+        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+            android:id="@+id/login_tv_signin_prompt"
+            style="@style/textNoSize"
+            android:layout_below="@+id/login_btn_register"
+            android:layout_marginTop="15dp"
+            android:text="Not yet registered? Sign-in here."
+            android:textSize="17dp"
+            app:outlineColor="@color/outline"
+            app:outlineSize="5dp" />
+
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/login_framelayout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout="@layout/fragment_bottom_btns" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

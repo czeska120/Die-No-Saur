@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignInActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/signin_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/dark_fall"
+            android:backgroundTint="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/signin_board"
+            android:layout_width="wrap_content"
+            android:layout_height="500dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="125dp"
+            android:src="@drawable/board_long" />
+
+        <ImageView
+            android:id="@+id/signin_plate"
+            style="@style/btnStyle2"
+            android:layout_alignTop="@+id/signin_board"
+            android:layout_marginTop="40dp"/>
+
+        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+            android:id="@+id/signin_title1"
+            style="@style/textSubheading"
+            android:textSize="32sp"
+            android:layout_alignTop="@id/signin_plate"
+            android:layout_marginTop="2dp"
+            android:text="REGISTER"
+            app:outlineColor="@color/outline"
+            app:outlineSize="5dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/signin_il_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_below="@+id/signin_plate"
+            android:layout_marginHorizontal="80dp"
+            android:layout_marginTop="40dp"
+
+            app:boxBackgroundMode="filled"
+            app:boxBackgroundColor="?android:attr/colorBackground">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signin_et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="Email"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/signin_il_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_below="@+id/signin_il_email"
+            android:layout_marginHorizontal="80dp"
+            android:layout_marginTop="40dp"
+            app:boxBackgroundMode="filled"
+            app:boxBackgroundColor="?android:attr/colorBackground">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signin_et_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="Password"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/signin_il_confirmpass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_below="@+id/signin_il_password"
+            android:layout_marginHorizontal="80dp"
+            android:layout_marginTop="10dp"
+            app:boxBackgroundMode="filled"
+            app:boxBackgroundColor="?android:attr/colorBackground">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signin_et_confirmpass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Confirm password"
+                android:inputType="textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <ImageButton
+            android:id="@+id/signin_btn_register"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:background="@drawable/btn_rectshort"
+            android:layout_below="@+id/signin_il_confirmpass"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="28dp"
+            />
+
+        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+            android:id="@+id/signin_tv_register"
+            style="@style/textSubheading"
+            android:textSize="30sp"
+            android:text="Confirm"
+            android:layout_below="@+id/signin_il_confirmpass"
+            android:layout_centerInParent="true"
+            android:layout_alignTop="@+id/signin_btn_register"
+            app:outlineColor="@color/outline"
+            app:outlineSize="5dp" />
+
+        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+            android:id="@+id/signin_tv_login_prompt"
+            style="@style/textNoSize"
+            android:layout_below="@+id/signin_btn_register"
+            android:layout_marginTop="15dp"
+            android:text="Already registered? Log-in here."
+            android:textSize="17dp"
+            app:outlineColor="@color/outline"
+            app:outlineSize="5dp" />
+
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/signin_framelayout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout="@layout/fragment_bottom_btns" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

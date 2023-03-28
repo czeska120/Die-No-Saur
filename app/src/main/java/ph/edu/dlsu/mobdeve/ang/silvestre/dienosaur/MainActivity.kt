@@ -27,25 +27,38 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        // --- PLAY (Button 1) ---
-        binding.homeBtn1.setOnClickListener{
-            binding.homeBtn1.startAnimation(buttonClick)
+        // --- PLAY AS GUEST ---
+        binding.homeBtnGuest.setOnClickListener{
+            binding.homeBtnGuest.startAnimation(buttonClick)
             val startGame = Intent(this, GameActivity::class.java)
             startActivity(startGame)
         }
 
-        // --- SETTINGS (Button 2) ---
-        binding.homeBtn2.setOnClickListener {
-            binding.homeBtn2.startAnimation(buttonClick)
+        // --- SIGN-IN ---
+        binding.homeBtnSignin.setOnClickListener {
+            binding.homeBtnSignin.startAnimation(buttonClick)
+            val signIn = Intent(this, SignInActivity::class.java)
+            startActivity(signIn)
+        }
+
+        // --- SETTINGS ---
+        binding.homeBtnSettings.setOnClickListener {
+            binding.homeBtnSettings.startAnimation(buttonClick)
             val goToSettings = Intent(this,SettingsActivity::class.java)
             startActivity(goToSettings)
         }
 
-        // --- LEADERBOARD (Button 3) ---
-        binding.homeBtn3.setOnClickListener {
-            binding.homeBtn3.startAnimation(buttonClick)
+        // --- LEADERBOARD ---
+        binding.homeBtnLeaderboard.setOnClickListener {
+            binding.homeBtnLeaderboard.startAnimation(buttonClick)
             val goToLeaderboard = Intent(this, LeaderboardActivity::class.java)
             startActivity(goToLeaderboard)
+        }
+
+        // --- LOGIN PROMPT ---
+        binding.homeTvLoginPrompt.setOnClickListener {
+            val logIn = Intent(this, LoginActivity::class.java)
+            startActivity(logIn)
         }
     }
 

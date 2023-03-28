@@ -3,7 +3,7 @@
     <!-- Base application theme. -->
     <style name="Theme.DieNoSaur" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimary">@color/outline</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
@@ -80,8 +80,8 @@
     </style>
 
     <style name="btnStyle">
-        <item name="android:layout_width">245dp</item>
-        <item name="android:layout_height">55dp</item>
+        <item name="android:layout_width">170dp</item>
+        <item name="android:layout_height">46dp</item>
         <item name="android:layout_centerInParent">true</item>
         <item name="android:background">@drawable/btn_round</item>
     </style>
