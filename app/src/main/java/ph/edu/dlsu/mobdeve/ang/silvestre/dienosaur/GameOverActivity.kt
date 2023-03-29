@@ -35,8 +35,8 @@ class GameOverActivity : AppCompatActivity() {
         binding.playerScore.text = score
 
         // customize based on user preferences
-        binding.gameOver.background = ContextCompat.getDrawable(applicationContext, BGs[1].dark)
-        binding.dinoDead.setImageResource(Dinos[1].dead)
+        //binding.gameOver.background = ContextCompat.getDrawable(applicationContext, BGs[1].dark)
+        //binding.dinoDead.setImageResource(Dinos[1].dead)
 
         val currentUser = mAuth.currentUser
         dbreference = FirebaseDatabase.getInstance().reference
