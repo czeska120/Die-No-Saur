@@ -23,13 +23,13 @@ class FragmentBottomBtns : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_bottom_btns, container, false)
+    ): View {
+        val rootView = binding.root
         val buttonClick = AlphaAnimation(1F, 0.8F)
 
         // Finding IDs
-        val homeBtn = rootView.findViewById<ImageButton>(R.id.btn_home)
-        val soundBtn = rootView.findViewById<ImageButton>(R.id.btn_sound)
+        val homeBtn = binding.btnHome
+        val soundBtn = binding.btnSound
 
         // Listeners
         homeBtn.setOnClickListener {
