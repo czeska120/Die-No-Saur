@@ -12,18 +12,15 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.util.AttributeSet
 import android.view.Display
-import android.view.MotionEvent
 import android.view.View
-import android.widget.FrameLayout
-import android.widget.ImageButton
 import androidx.core.content.res.ResourcesCompat
-import com.google.android.material.snackbar.Snackbar
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.*
 import kotlin.math.roundToInt
 
 @Suppress("DEPRECATION")
-class GameView(context: Context) : View(context), SensorEventListener {
+class GameView(context: Context, attributes: AttributeSet? = null) : View(context), SensorEventListener {
     companion object{
         var dWidth: Int = 0
         var dHeight: Int = 0
@@ -91,15 +88,6 @@ class GameView(context: Context) : View(context), SensorEventListener {
 
     //sensors
     private var sensorManager: SensorManager
-
-    //pause btn
-    private val btnPadding = 50
-    private val btnDimens = 150
-    private val pauseBitmap: Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.btn_pause)
-    private val pauseBtn: Bitmap = Bitmap.createScaledBitmap(pauseBitmap, btnDimens, btnDimens, false)
-    private val btnX = btnPadding.toFloat()
-    private var btnY: Float
-    private var btnBounds: Rect
 
     init {
         //display size
@@ -172,10 +160,6 @@ class GameView(context: Context) : View(context), SensorEventListener {
             val heart = Heart(context)
             hearts.add(heart)
         }
-
-        //pause
-        btnY = (dHeight - btnDimens - btnPadding).toFloat()
-        btnBounds = Rect(btnX.toInt(), btnY.toInt(), (btnDimens + btnX).toInt(), (btnDimens + btnY).toInt())
     }
 
     @SuppressLint("DrawAllocation")
@@ -185,9 +169,6 @@ class GameView(context: Context) : View(context), SensorEventListener {
         //draw bg
         canvas.drawBitmap(bgTop, null, rectTop, null)
         canvas.drawBitmap(bgBottom, null, rectBottom, null)
-
-        //draw pause
-        canvas.drawBitmap(pauseBtn, btnX, btnY, null)
 
         //draw dino
         if (isHit) {
@@ -312,23 +293,9 @@ class GameView(context: Context) : View(context), SensorEventListener {
         handler.postDelayed(runnable, UPDATE_MILLIS)
     }
 
+    /*
+    //touch controls
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        //onClickListener for pause
-        if (event.action == MotionEvent.ACTION_DOWN) {
-            val touchX = event.x.toInt()
-            val touchY = event.y.toInt()
-
-            if (btnBounds.contains(touchX, touchY)) {
-                // TODO: pause game logic here
-                Snackbar.make(this, "Pause button clicked!", Snackbar.LENGTH_SHORT).show()
-
-                return true
-            }
-        }
-        return super.onTouchEvent(event)
-
-        /*
-        //touch controls
         var touchX: Float = event.x
         var touchY: Float = event.y
 
@@ -350,10 +317,10 @@ class GameView(context: Context) : View(context), SensorEventListener {
                 }
             }
         }
-        */
 
         return true
     }
+    */
 
     //sensors: tilt controls
     override fun onSensorChanged(event: SensorEvent?) {
