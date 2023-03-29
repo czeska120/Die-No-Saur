@@ -17,6 +17,9 @@ import android.view.Display
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.*
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.concurrent.schedule
 import kotlin.math.roundToInt
 
 @Suppress("DEPRECATION")
@@ -24,6 +27,9 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
     companion object{
         var dWidth: Int = 0
         var dHeight: Int = 0
+
+        // pause game
+        var isPaused: Boolean = false
     }
 
     private var UPDATE_MILLIS: Long = 30
@@ -114,22 +120,28 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
             dinoHit.add(BitmapFactory.decodeResource(context.resources, dinoHitInt[i]))
         }
 
-        runnable = Runnable{
-            //animate dino
-            if (isHit){
-                dino.hitFrame++
-                if(dino.hitFrame == dinoHit.size){
-                    dino.hitFrame = 0
+        runnable = object: Runnable{
+            override fun run() {
+                //animate dino
+                if (isHit){
+                    dino.hitFrame++
+                    if(dino.hitFrame == dinoHit.size){
+                        dino.hitFrame = 0
+                    }
+                } else {
+                    dino.runFrame++
+                    if(dino.runFrame == dinoRun.size){
+                        dino.runFrame = 0
+                    }
                 }
-            } else {
-                dino.runFrame++
-                if(dino.runFrame == dinoRun.size){
-                    dino.runFrame = 0
-                }
-            }
 
-            //loop game
-            invalidate()
+                //update screen
+                if(!isPaused){
+                    postInvalidate()
+                }
+
+                postDelayed(this, UPDATE_MILLIS)
+            }
         }
 
         dinoX = ((dWidth - dinoRun[0].width) / 2).toFloat()
@@ -219,9 +231,9 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
         for (i in 0 until asteroids.size - 1){
             //if asteroid collides with dinosaur
             if (asteroids[i].asteroidX + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).width >= dinoX
-            && asteroids[i].asteroidX <= dinoX + dinoRun[0].width
-            && asteroids[i].asteroidY + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).width >= dinoY
-            && asteroids[i].asteroidY + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).width <= dinoY + dinoRun[0].height){
+                && asteroids[i].asteroidX <= dinoX + dinoRun[0].width
+                && asteroids[i].asteroidY + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).width >= dinoY
+                && asteroids[i].asteroidY + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).width <= dinoY + dinoRun[0].height){
                 life-- //subtract life
                 isHit = true //set boolean to true
                 asteroids[i].resetPosition()
@@ -357,19 +369,19 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
 
     private fun makeTimeString(m: Int, s: Int, ms: Int): String = String.format("%02d:%02d.%02d", m, s, ms/10)
 
-    private fun resetTimer(){
+    fun resetTimer(){
         stopTimer()
         score = 0.0
         scoreString = getTimeStringFromDouble(score)
     }
 
-    private fun startTimer(){
+    fun startTimer(){
         serviceIntent.putExtra(TimerService.TIME_EXTRA, score)
         context.startService(serviceIntent)
         timerStarted = true
     }
 
-    private fun stopTimer(){
+    fun stopTimer(){
         context.stopService(serviceIntent)
         timerStarted = false
     }
