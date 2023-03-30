@@ -24,8 +24,8 @@ class GameActivity : AppCompatActivity() {
         //setContentView(GameView(this))
 
         val parent = binding.gameParent
-        game = GameView(this)
-        parent.addView(game, 0)
+        game = parent.getChildAt(0) as GameView
+        game.reset()
 
         val frame = binding.gameFramelayout.id
 

@@ -98,6 +98,7 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
         dWidth = size.x
         dHeight = size.y
 
+        //reset() :
         //bg
         bgTop = BitmapFactory.decodeResource(context.resources, bg.top)
         bgBottom = BitmapFactory.decodeResource(context.resources, bg.bottom)
@@ -168,9 +169,7 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
                 invalidate()
             }
 
-            if (isPaused) {
-                start()
-            }
+            start()
         }
     }
 
@@ -294,7 +293,7 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
             ).width + 50
         canvas.drawBitmap(hearts[0].getHeart(hearts[0].heartFrame), heart3X, 50f, null)
 
-        //modify life = 28:36
+        //modify life
         if (life == 3) {
             hearts[0].heartFrame++
             if (hearts[0].heartFrame == 4) {
@@ -317,8 +316,14 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
         val textX = width / 2f
         val textY = 200 + timerCardHeight / 2f - (textScore.ascent() + textScore.descent()) / 2f
         canvas.drawText(scoreString, textX, textY, textScore)
+    }
 
-        start()
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        handler.postDelayed({
+            reset()
+            start()
+        }, 100)
     }
 
     /*
@@ -404,6 +409,83 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
     }
 
     // pause game
+    fun reset() {
+        isPaused = false
+
+        //bg
+        bgTop = BitmapFactory.decodeResource(context.resources, bg.top)
+        bgBottom = BitmapFactory.decodeResource(context.resources, bg.bottom)
+        rectTop = Rect(0, 0, dWidth, bgTop.height)
+        rectBottom = Rect(0, bgTop.height, dWidth, dHeight)
+
+        //dino
+        dinoRunInt = dino.run
+        for (i in dinoRunInt.indices) {
+            dinoRun.add(BitmapFactory.decodeResource(context.resources, dinoRunInt[i]))
+        }
+
+        dinoHitInt = dino.hit
+        for (i in dinoHitInt.indices) {
+            dinoHit.add(BitmapFactory.decodeResource(context.resources, dinoHitInt[i]))
+        }
+
+        dinoX = ((dWidth - dinoRun[0].width) / 2).toFloat()
+        dinoY = (dHeight - rectBottom.height() - dinoRun[0].height + 70).toFloat()
+
+        //timer
+        resetTimer()
+        startTimer()
+
+        //asteroids
+        asteroids = ArrayList()
+        explosions = ArrayList()
+        for (count in 0 until 3) { //3 = number of asteroids on screen at a time
+            val asteroid = Asteroid(context)
+            asteroids.add(asteroid)
+        }
+
+        //sensors
+        sensorManager.unregisterListener(this)
+        sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)?.also {
+            sensorManager.registerListener(
+                this,
+                it,
+                SensorManager.SENSOR_DELAY_GAME,
+                SensorManager.SENSOR_DELAY_GAME
+            )
+        }
+
+        //hearts
+        hearts = ArrayList()
+        for (count in 0 until 3) {
+            val heart = Heart(context)
+            hearts.add(heart)
+        }
+
+        //run
+        //run
+        runnable = Runnable { //animate dino
+            if (isHit) {
+                dino.hitFrame++
+                if (dino.hitFrame == dinoHit.size) {
+                    dino.hitFrame = 0
+                }
+            } else {
+                dino.runFrame++
+                if (dino.runFrame == dinoRun.size) {
+                    dino.runFrame = 0
+                }
+            }
+
+            //update screen
+            if (!isPaused) {
+                invalidate()
+            }
+
+            start()
+        }
+    }
+
     fun start() {
         this.handler.postDelayed(runnable, UPDATE_MILLIS)
     }
