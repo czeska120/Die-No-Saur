@@ -57,11 +57,16 @@ class FragmentGamePause : Fragment() {
             val fragmentManager = requireActivity().supportFragmentManager
             fragmentManager.beginTransaction().remove(this).commit()
 
-//            game!!.quit()
-//            game!!.reset()
-//            game!!.start()
+            game!!.reset()
+            game!!.start()
+
+            pauseBtn.visibility = View.VISIBLE //show pause button
+
+            /*
             val startGame = Intent(requireActivity(), GameActivity::class.java)
             startActivity(startGame)
+            handler.postDelayed({ activity?.finish() }, 1000)
+            */
         }
 
         binding.btnQuit.setOnClickListener{
@@ -77,6 +82,7 @@ class FragmentGamePause : Fragment() {
                  goToHome = Intent(requireActivity(), MainActivity::class.java)
             }
             startActivity(goToHome)
+            requireActivity().finish()
         }
 
         // Inflate the layout for this fragment
