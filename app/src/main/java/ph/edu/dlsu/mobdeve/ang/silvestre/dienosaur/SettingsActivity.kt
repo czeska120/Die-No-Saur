@@ -54,6 +54,7 @@ class SettingsActivity : AppCompatActivity() {
             binding.settingsSaveBtn.startAnimation(buttonClick)
             val goToHome = Intent(this, MainActivity::class.java)
             startActivity(goToHome)
+            finish()
         }
         binding.seekbarSoundfx.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
@@ -86,8 +87,6 @@ class SettingsActivity : AppCompatActivity() {
         })
 
     }
-
-
 
     private fun loadFragment(frame:Int, fragment: Fragment) {
         // create a FragmentManager

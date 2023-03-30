@@ -32,6 +32,7 @@ class MainLoggedInActivity : AppCompatActivity() {
             binding.mainloggedBtnPlay.startAnimation(buttonClick)
             val startGame = Intent(this, GameActivity::class.java)
             startActivity(startGame)
+            finish()
         }
 
         // --- SETTINGS ---
@@ -39,6 +40,7 @@ class MainLoggedInActivity : AppCompatActivity() {
             binding.mainloggedBtnSettings.startAnimation(buttonClick)
             val goToSettings = Intent(this,SettingsActivity::class.java)
             startActivity(goToSettings)
+            finish()
         }
 
         // --- LEADERBOARD ---
@@ -46,6 +48,7 @@ class MainLoggedInActivity : AppCompatActivity() {
             binding.mainloggedBtnLeaderboard.startAnimation(buttonClick)
             val goToLeaderboard = Intent(this, LeaderboardActivity::class.java)
             startActivity(goToLeaderboard)
+            finish()
         }
 
         // --- LOGOUT PROMPT ---
@@ -53,6 +56,7 @@ class MainLoggedInActivity : AppCompatActivity() {
             mAuth.signOut()
             val returnMain = Intent(this, MainActivity::class.java)
             startActivity(returnMain)
+            finish()
         }
     }
 

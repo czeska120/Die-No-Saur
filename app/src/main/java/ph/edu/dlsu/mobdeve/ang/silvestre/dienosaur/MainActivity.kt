@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
             binding.homeBtnGuest.startAnimation(buttonClick)
             val startGame = Intent(this, GameActivity::class.java)
             startActivity(startGame)
+            finish()
         }
 
         // --- SIGN-IN ---
@@ -43,6 +44,7 @@ class MainActivity : AppCompatActivity() {
             binding.homeBtnSignin.startAnimation(buttonClick)
             val signIn = Intent(this, SignInActivity::class.java)
             startActivity(signIn)
+            finish()
         }
 
         // --- SETTINGS ---
@@ -50,6 +52,7 @@ class MainActivity : AppCompatActivity() {
             binding.homeBtnSettings.startAnimation(buttonClick)
             val goToSettings = Intent(this,SettingsActivity::class.java)
             startActivity(goToSettings)
+            finish()
         }
 
         // --- LEADERBOARD ---
@@ -57,12 +60,14 @@ class MainActivity : AppCompatActivity() {
             binding.homeBtnLeaderboard.startAnimation(buttonClick)
             val goToLeaderboard = Intent(this, LeaderboardActivity::class.java)
             startActivity(goToLeaderboard)
+            finish()
         }
 
         // --- LOGIN PROMPT ---
         binding.homeTvLoginPrompt.setOnClickListener {
             val logIn = Intent(this, LoginActivity::class.java)
             startActivity(logIn)
+            finish()
         }
     }
 

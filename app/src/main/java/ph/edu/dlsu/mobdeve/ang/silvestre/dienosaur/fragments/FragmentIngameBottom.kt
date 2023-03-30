@@ -33,7 +33,6 @@ class FragmentIngameBottom : Fragment() {
         val backBtn = binding.btnBack
         val soundBtn = binding.btnSound
 
-
         // Listeners
         backBtn.setOnClickListener{
             backBtn.startAnimation(buttonClick)

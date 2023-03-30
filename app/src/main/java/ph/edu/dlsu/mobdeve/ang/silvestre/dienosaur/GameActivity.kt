@@ -69,7 +69,7 @@ class GameActivity : AppCompatActivity() {
         fragmentTransaction.commit() // save the changes
     }
 
-    override fun onBackPressed() {
+    /*override fun onBackPressed() {
         val currentUser = mAuth.currentUser
         val goBack: Intent
 
@@ -80,5 +80,5 @@ class GameActivity : AppCompatActivity() {
             goBack = Intent(this, MainActivity::class.java )
         }
         startActivity(goBack)
-    }
+    }*/
 }

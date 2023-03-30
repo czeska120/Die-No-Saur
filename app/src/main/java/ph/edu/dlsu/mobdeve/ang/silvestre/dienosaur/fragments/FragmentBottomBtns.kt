@@ -36,6 +36,7 @@ class FragmentBottomBtns : Fragment() {
             homeBtn.startAnimation(buttonClick)
             val goToHome = Intent(activity, MainActivity::class.java)
             startActivity(goToHome)
+            requireActivity().finish()
         }
 
         var tick = 0

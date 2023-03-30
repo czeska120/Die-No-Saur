@@ -31,11 +31,11 @@ class FragmentCredits : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_credits, container, false)
+    ): View {
+        val rootView = binding.root
         val fragmentManager = requireActivity().supportFragmentManager
         // Finding IDs
-        val backBtn = rootView.findViewById<TextView>(R.id.credits_back)
+        val backBtn = binding.creditsBack
 
         // Listeners
         backBtn.setOnClickListener{
