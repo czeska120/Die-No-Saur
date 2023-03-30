@@ -25,7 +25,7 @@ class FragmentGamePause : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding.btnResume.setOnClickListener {
-            game.resume()
+            game!!.resume()
 
             pauseBtn.visibility = View.VISIBLE //show pause button
 

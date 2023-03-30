@@ -2,6 +2,7 @@ package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.Fragment
@@ -12,9 +13,10 @@ import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentGamePause
 class GameActivity : AppCompatActivity() {
     companion object{
         lateinit var pauseBtn: AppCompatImageButton
-        lateinit var game: GameView
+        var game: GameView? = null
     }
 
+    private lateinit var parent: ViewGroup
     private lateinit var binding: ActivityGameBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,16 +25,16 @@ class GameActivity : AppCompatActivity() {
         setContentView(binding.root)
         //setContentView(GameView(this))
 
-        val parent = binding.gameParent
+        parent = binding.gameParent
         game = parent.getChildAt(0) as GameView
-        game.reset()
+        game!!.reset()
 
         val frame = binding.gameFramelayout.id
 
         pauseBtn = binding.btnPause
 
         pauseBtn.setOnClickListener{
-            game.pause()
+            game!!.pause()
 
             pauseBtn.visibility = View.INVISIBLE //hide pause button
             loadFragment(frame, FragmentGamePause()) //show pause screen
@@ -41,12 +43,12 @@ class GameActivity : AppCompatActivity() {
 
     override fun onPause(){
         super.onPause()
-        game.pause()
+        game!!.pause()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        game.quit()
+        game!!.quit()
     }
 
     private fun loadFragment(frame:Int, fragment: Fragment) {

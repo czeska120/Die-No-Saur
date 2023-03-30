@@ -90,6 +90,9 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
     //sensors
     private var sensorManager: SensorManager
 
+    //activity
+    private var gameActivity: GameActivity? = null
+
     init {
         //display size
         val display: Display = (context as Activity).windowManager.defaultDisplay
@@ -110,11 +113,13 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
         for (i in dinoRunInt.indices) {
             dinoRun.add(BitmapFactory.decodeResource(context.resources, dinoRunInt[i]))
         }
+        dino.runFrame = 0
 
         dinoHitInt = dino.hit
         for (i in dinoHitInt.indices) {
             dinoHit.add(BitmapFactory.decodeResource(context.resources, dinoHitInt[i]))
         }
+        dino.hitFrame = 0
 
         dinoX = ((dWidth - dinoRun[0].width) / 2).toFloat()
         dinoY = (dHeight - rectBottom.height() - dinoRun[0].height + 70).toFloat()
@@ -148,6 +153,11 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
         for (count in 0 until 3) {
             val heart = Heart(context)
             hearts.add(heart)
+        }
+
+        //activity
+        if (context is GameActivity){
+            gameActivity = context
         }
 
         //run
@@ -253,7 +263,7 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
 
                         quit()
                         context.startActivity(intent)
-                        (context as Activity).finish()
+                        gameActivity?.finish()
                     }, 500)
                 }
             }
@@ -423,11 +433,13 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
         for (i in dinoRunInt.indices) {
             dinoRun.add(BitmapFactory.decodeResource(context.resources, dinoRunInt[i]))
         }
+        dino.runFrame = 0
 
         dinoHitInt = dino.hit
         for (i in dinoHitInt.indices) {
             dinoHit.add(BitmapFactory.decodeResource(context.resources, dinoHitInt[i]))
         }
+        dino.hitFrame = 0
 
         dinoX = ((dWidth - dinoRun[0].width) / 2).toFloat()
         dinoY = (dHeight - rectBottom.height() - dinoRun[0].height + 70).toFloat()
