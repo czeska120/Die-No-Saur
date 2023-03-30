@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.GameActivity
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.GameActivity.Companion.game
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.GameActivity.Companion.pauseBtn
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.GameView
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.GameView.Companion.isPaused
@@ -24,9 +25,9 @@ class FragmentGamePause : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding.btnResume.setOnClickListener {
-            isPaused = false
+            game.resume()
+
             pauseBtn.visibility = View.VISIBLE //show pause button
-            //TODO: RESUME TIMER
 
             // close fragment
             val fragmentManager = requireActivity().supportFragmentManager

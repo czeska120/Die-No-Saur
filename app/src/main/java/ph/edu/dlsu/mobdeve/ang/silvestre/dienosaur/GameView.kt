@@ -1,6 +1,5 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -17,12 +16,8 @@ import android.view.Display
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.*
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.concurrent.schedule
 import kotlin.math.roundToInt
 
-@Suppress("DEPRECATION")
 class GameView(context: Context, attributes: AttributeSet? = null) : View(context), SensorEventListener {
     companion object{
         var dWidth: Int = 0
@@ -62,7 +57,6 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
     private var TEXT_SIZE: Float = 150F
 
     private val timerCardHeight = 240F
-    @SuppressLint("UseCompatLoadingForDrawables")
     private val timerCard = resources.getDrawable(R.drawable.timercard, null)
     private val textScore = Paint().apply {
         textSize = TEXT_SIZE
@@ -120,30 +114,6 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
             dinoHit.add(BitmapFactory.decodeResource(context.resources, dinoHitInt[i]))
         }
 
-        runnable = object: Runnable{
-            override fun run() {
-                //animate dino
-                if (isHit){
-                    dino.hitFrame++
-                    if(dino.hitFrame == dinoHit.size){
-                        dino.hitFrame = 0
-                    }
-                } else {
-                    dino.runFrame++
-                    if(dino.runFrame == dinoRun.size){
-                        dino.runFrame = 0
-                    }
-                }
-
-                //update screen
-                if(!isPaused){
-                    postInvalidate()
-                }
-
-                postDelayed(this, UPDATE_MILLIS)
-            }
-        }
-
         dinoX = ((dWidth - dinoRun[0].width) / 2).toFloat()
         dinoY = (dHeight - rectBottom.height() - dinoRun[0].height + 70).toFloat()
 
@@ -172,217 +142,267 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
             val heart = Heart(context)
             hearts.add(heart)
         }
-    }
 
-    @SuppressLint("DrawAllocation")
-    override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
-
-        //draw bg
-        canvas.drawBitmap(bgTop, null, rectTop, null)
-        canvas.drawBitmap(bgBottom, null, rectBottom, null)
-
-        //draw dino
-        if (isHit) {
-            canvas.drawBitmap(dinoHit[dino.hitFrame], dinoX, dinoY, null)
-            postDelayed({
-                isHit = false
-            }, 500)
-        } else {
-            if (motionX > 0) {
-                val flippedDinoRun = Bitmap.createBitmap(
-                    dinoRun[dino.runFrame],
-                    0,
-                    0,
-                    dinoRun[dino.runFrame].width,
-                    dinoRun[dino.runFrame].height,
-                    flipMatrix,
-                    true
-                )
-                canvas.drawBitmap(flippedDinoRun, dinoX, dinoY, null)
+        //run
+        runnable = Runnable { //animate dino
+            if (isHit){
+                dino.hitFrame++
+                if(dino.hitFrame == dinoHit.size){
+                    dino.hitFrame = 0
+                }
             } else {
-                canvas.drawBitmap(dinoRun[dino.runFrame], dinoX, dinoY, null)
-            }
-        }
-
-        for (i in 0 until asteroids.size){
-            //draw asteroids
-            canvas.drawBitmap(asteroids[i].getAsteroid(asteroids[i].asteroidFrame), asteroids[i].asteroidX.toFloat(), asteroids[i].asteroidY.toFloat(), null)
-
-            //animate asteroid sprites
-            asteroids[i].asteroidFrame++
-            if (asteroids[i].asteroidFrame > 4){
-                asteroids[i].asteroidFrame = 0
-            }
-
-            //move asteroid down screen
-            asteroids[i].asteroidY += asteroids[i].velocity
-
-            //if asteroid reached ground
-            if (asteroids[i].asteroidY + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).height >= dHeight - rectBottom.height() +100) {
-                val explosion = Explosion(context)
-                explosion.explosionX = asteroids[i].asteroidX
-                explosion.explosionY = asteroids[i].asteroidY
-                explosions.add(explosion)
-                asteroids[i].resetPosition()
-            }
-        }
-
-        for (i in 0 until asteroids.size - 1){
-            //if asteroid collides with dinosaur
-            if (asteroids[i].asteroidX + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).width >= dinoX
-                && asteroids[i].asteroidX <= dinoX + dinoRun[0].width
-                && asteroids[i].asteroidY + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).width >= dinoY
-                && asteroids[i].asteroidY + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).width <= dinoY + dinoRun[0].height){
-                life-- //subtract life
-                isHit = true //set boolean to true
-                asteroids[i].resetPosition()
-
-                //if player is out of lives
-                if (life == 0){
-                    hearts[2].heartFrame = 4
-                    stopTimer()
-
-                    postDelayed({
-                        val intent = Intent(context, GameOverActivity::class.java) //34.09
-                        intent.putExtra("score", scoreString)
-                        sensorManager.unregisterListener(this)
-                        resetTimer()
-                        context.startActivity(intent)
-                        (context as Activity).finish()
-                    }, 500)
+                dino.runFrame++
+                if(dino.runFrame == dinoRun.size){
+                    dino.runFrame = 0
                 }
             }
-        }
 
-        for (i in explosions.size -1  downTo 0){
-            //draw explosions
-            canvas.drawBitmap(explosions[i].getExplosion(explosions[i].explosionFrame), explosions[i].explosionX.toFloat(), explosions[i].explosionY.toFloat(), null)
-            explosions[i].explosionFrame++
+            //update screen
+            if(!isPaused){
+                invalidate()
+            }
 
-            if(explosions[i].explosionFrame > 5){
-                explosions.removeAt(i)
+            if(isPaused){
+                start()
             }
         }
 
-        timerCard.setBounds(100, 100, width - 100, 200 + timerCardHeight.toInt())
-        timerCard.draw(canvas)
+        override fun onDraw(canvas: Canvas) {
+            super.onDraw(canvas)
 
-        //left heart
-        val heart1X = (dWidth - hearts[2].getHeart(hearts[2].heartFrame).width)/2f - hearts[2].getHeart(hearts[2].heartFrame).width -50
-        canvas.drawBitmap(hearts[2].getHeart(hearts[2].heartFrame), heart1X, 50f, null)
-        //center heart
-        val heart2X = (dWidth - hearts[1].getHeart(hearts[1].heartFrame).width)/2f
-        canvas.drawBitmap(hearts[1].getHeart(hearts[1].heartFrame), heart2X, 50f, null)
-        //right heart
-        val heart3X = (dWidth - hearts[0].getHeart(hearts[0].heartFrame).width)/2f + hearts[0].getHeart(hearts[0].heartFrame).width +50
-        canvas.drawBitmap(hearts[0].getHeart(hearts[0].heartFrame), heart3X, 50f, null)
+            //draw bg
+            canvas.drawBitmap(bgTop, null, rectTop, null)
+            canvas.drawBitmap(bgBottom, null, rectBottom, null)
 
-        //modify life = 28:36
-        if (life == 3){
-            hearts[0].heartFrame++
-            if(hearts[0].heartFrame == 4){
-                hearts[0].heartFrame = 0
+            //draw dino
+            if (isHit) {
+                canvas.drawBitmap(dinoHit[dino.hitFrame], dinoX, dinoY, null)
+                postDelayed({
+                    isHit = false
+                }, 500)
+            } else {
+                if (motionX > 0) {
+                    val flippedDinoRun = Bitmap.createBitmap(
+                        dinoRun[dino.runFrame],
+                        0,
+                        0,
+                        dinoRun[dino.runFrame].width,
+                        dinoRun[dino.runFrame].height,
+                        flipMatrix,
+                        true
+                    )
+                    canvas.drawBitmap(flippedDinoRun, dinoX, dinoY, null)
+                } else {
+                    canvas.drawBitmap(dinoRun[dino.runFrame], dinoX, dinoY, null)
+                }
             }
-        } else if (life == 2){
-            hearts[0].heartFrame = 4
-            hearts[1].heartFrame++
-            if(hearts[1].heartFrame == 4){
-                hearts[1].heartFrame = 0
+
+            for (i in 0 until asteroids.size){
+                //draw asteroids
+                canvas.drawBitmap(asteroids[i].getAsteroid(asteroids[i].asteroidFrame), asteroids[i].asteroidX.toFloat(), asteroids[i].asteroidY.toFloat(), null)
+
+                //animate asteroid sprites
+                asteroids[i].asteroidFrame++
+                if (asteroids[i].asteroidFrame > 4){
+                    asteroids[i].asteroidFrame = 0
+                }
+
+                //move asteroid down screen
+                asteroids[i].asteroidY += asteroids[i].velocity
+
+                //if asteroid reached ground
+                if (asteroids[i].asteroidY + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).height >= dHeight - rectBottom.height() +100) {
+                    val explosion = Explosion(context)
+                    explosion.explosionX = asteroids[i].asteroidX
+                    explosion.explosionY = asteroids[i].asteroidY
+                    explosions.add(explosion)
+                    asteroids[i].resetPosition()
+                }
             }
-        } else if (life == 1){
-            hearts[1].heartFrame = 4
-            hearts[2].heartFrame++
-            if(hearts[2].heartFrame == 4){
-                hearts[2].heartFrame = 0
+
+            for (i in 0 until asteroids.size - 1){
+                //if asteroid collides with dinosaur
+                if (asteroids[i].asteroidX + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).width >= dinoX
+                    && asteroids[i].asteroidX <= dinoX + dinoRun[0].width
+                    && asteroids[i].asteroidY + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).width >= dinoY
+                    && asteroids[i].asteroidY + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).width <= dinoY + dinoRun[0].height){
+                    life-- //subtract life
+                    isHit = true //set boolean to true
+                    asteroids[i].resetPosition()
+
+                    //if player is out of lives
+                    if (life == 0){
+                        hearts[2].heartFrame = 4
+                        stopTimer()
+
+                        postDelayed({
+                            val intent = Intent(context, GameOverActivity::class.java) //34.09
+                            intent.putExtra("score", scoreString)
+
+                            quit()
+                            context.startActivity(intent)
+                            (context as Activity).finish()
+                        }, 500)
+                    }
+                }
             }
+
+            for (i in explosions.size -1  downTo 0){
+                //draw explosions
+                canvas.drawBitmap(explosions[i].getExplosion(explosions[i].explosionFrame), explosions[i].explosionX.toFloat(), explosions[i].explosionY.toFloat(), null)
+                explosions[i].explosionFrame++
+
+                if(explosions[i].explosionFrame > 5){
+                    explosions.removeAt(i)
+                }
+            }
+
+            timerCard.setBounds(100, 100, width - 100, 200 + timerCardHeight.toInt())
+            timerCard.draw(canvas)
+
+            //left heart
+            val heart1X = (dWidth - hearts[2].getHeart(hearts[2].heartFrame).width)/2f - hearts[2].getHeart(hearts[2].heartFrame).width -50
+            canvas.drawBitmap(hearts[2].getHeart(hearts[2].heartFrame), heart1X, 50f, null)
+            //center heart
+            val heart2X = (dWidth - hearts[1].getHeart(hearts[1].heartFrame).width)/2f
+            canvas.drawBitmap(hearts[1].getHeart(hearts[1].heartFrame), heart2X, 50f, null)
+            //right heart
+            val heart3X = (dWidth - hearts[0].getHeart(hearts[0].heartFrame).width)/2f + hearts[0].getHeart(hearts[0].heartFrame).width +50
+            canvas.drawBitmap(hearts[0].getHeart(hearts[0].heartFrame), heart3X, 50f, null)
+
+            //modify life = 28:36
+            if (life == 3){
+                hearts[0].heartFrame++
+                if(hearts[0].heartFrame == 4){
+                    hearts[0].heartFrame = 0
+                }
+            } else if (life == 2){
+                hearts[0].heartFrame = 4
+                hearts[1].heartFrame++
+                if(hearts[1].heartFrame == 4){
+                    hearts[1].heartFrame = 0
+                }
+            } else if (life == 1){
+                hearts[1].heartFrame = 4
+                hearts[2].heartFrame++
+                if(hearts[2].heartFrame == 4){
+                    hearts[2].heartFrame = 0
+                }
+            }
+
+            val textX = width / 2f
+            val textY = 200 + timerCardHeight / 2f - (textScore.ascent() + textScore.descent()) / 2f
+            canvas.drawText(scoreString, textX, textY, textScore)
+
+            start()
         }
 
-        val textX = width / 2f
-        val textY = 200 + timerCardHeight / 2f - (textScore.ascent() + textScore.descent()) / 2f
-        canvas.drawText(scoreString, textX, textY, textScore)
+        /*
+        //touch controls
+        override fun onTouchEvent(event: MotionEvent): Boolean {
+            var touchX: Float = event.x
+            var touchY: Float = event.y
 
-        handler.postDelayed(runnable, UPDATE_MILLIS)
-    }
-
-    /*
-    //touch controls
-    override fun onTouchEvent(event: MotionEvent): Boolean {
-        var touchX: Float = event.x
-        var touchY: Float = event.y
-
-        if (touchY >= dinoY) {
-            var action: Int = event.action
-            if (action == MotionEvent.ACTION_DOWN) {
-                oldX = event.x
-                oldDinoX = dinoX
+            if (touchY >= dinoY) {
+                var action: Int = event.action
+                if (action == MotionEvent.ACTION_DOWN) {
+                    oldX = event.x
+                    oldDinoX = dinoX
+                }
+                if (action == MotionEvent.ACTION_MOVE) {
+                    var shift: Float = oldX - touchX
+                    var newDinoX: Float = oldDinoX - shift
+                    if (newDinoX <= 0) {
+                        dinoX = 0F
+                    } else if (newDinoX >= dWidth - dinoRun.width) {
+                        dinoX = dWidth - dinoRun.width.toFloat()
+                    } else {
+                        dinoX = newDinoX
+                    }
+                }
             }
-            if (action == MotionEvent.ACTION_MOVE) {
-                var shift: Float = oldX - touchX
-                var newDinoX: Float = oldDinoX - shift
+
+            return true
+        }
+        */
+
+        //sensors: tilt controls
+        override fun onSensorChanged(event: SensorEvent?) {
+            if(event?.sensor?.type == Sensor.TYPE_ACCELEROMETER) {
+                motionX = event.values[0] //left/right tilt
+
+                //map tilt
+                val moveDino = -motionX / 100 * dWidth //100 = sensitivity of tilt
+                val newDinoX = dinoX + moveDino
+
+                //keep within screen bounds
                 if (newDinoX <= 0) {
-                    dinoX = 0F
-                } else if (newDinoX >= dWidth - dinoRun.width) {
-                    dinoX = dWidth - dinoRun.width.toFloat()
+                    dinoX = 0f
+                } else if (newDinoX >= dWidth - dinoRun[0].width) {
+                    dinoX = (dWidth - dinoRun[0].width).toFloat()
                 } else {
                     dinoX = newDinoX
                 }
             }
         }
 
-        return true
-    }
-    */
+        override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+            return
+        }
 
-    //sensors: tilt controls
-    override fun onSensorChanged(event: SensorEvent?) {
-        if(event?.sensor?.type == Sensor.TYPE_ACCELEROMETER) {
-            motionX = event.values[0] //left/right tilt
+        //timer
+        private fun getTimeStringFromDouble(score: Double): String {
+            val resultInt = score.roundToInt()
+            val minutes = resultInt / 60000
+            val seconds = (resultInt / 1000) % 60
+            val milliseconds = resultInt % 1000
+            return makeTimeString(minutes, seconds, milliseconds)
+        }
 
-            //map tilt
-            val moveDino = -motionX / 100 * dWidth //100 = sensitivity of tilt
-            val newDinoX = dinoX + moveDino
+        private fun makeTimeString(m: Int, s: Int, ms: Int): String = String.format("%02d:%02d.%02d", m, s, ms/10)
 
-            //keep within screen bounds
-            if (newDinoX <= 0) {
-                dinoX = 0f
-            } else if (newDinoX >= dWidth - dinoRun[0].width) {
-                dinoX = (dWidth - dinoRun[0].width).toFloat()
-            } else {
-                dinoX = newDinoX
+        private fun resetTimer(){
+            stopTimer()
+            score = 0.0
+            scoreString = getTimeStringFromDouble(score)
+        }
+
+        private fun startTimer(){
+            serviceIntent.putExtra(TimerService.TIME_EXTRA, score)
+            context.startService(serviceIntent)
+            timerStarted = true
+        }
+
+        private fun stopTimer(){
+            context.stopService(serviceIntent)
+            timerStarted = false
+        }
+
+        // pause game
+        fun start(){
+            this.handler.postDelayed(runnable, UPDATE_MILLIS)
+        }
+
+        fun pause(){
+            isPaused = true
+            stopTimer()
+            sensorManager.unregisterListener(this)
+            this.handler.removeCallbacks(runnable)
+        }
+
+        fun resume(){
+            isPaused = false
+            startTimer()
+            sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)?.also {
+                sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_GAME, SensorManager.SENSOR_DELAY_GAME)
             }
+            start()
+        }
+
+        fun quit(){
+            isPaused = false
+            resetTimer()
+            sensorManager.unregisterListener(this)
+            this.handler.removeCallbacks(runnable)
         }
     }
-
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-        return
-    }
-
-    //timer
-    private fun getTimeStringFromDouble(score: Double): String {
-        val resultInt = score.roundToInt()
-        val minutes = resultInt / 60000
-        val seconds = (resultInt / 1000) % 60
-        val milliseconds = resultInt % 1000
-        return makeTimeString(minutes, seconds, milliseconds)
-    }
-
-    private fun makeTimeString(m: Int, s: Int, ms: Int): String = String.format("%02d:%02d.%02d", m, s, ms/10)
-
-    fun resetTimer(){
-        stopTimer()
-        score = 0.0
-        scoreString = getTimeStringFromDouble(score)
-    }
-
-    fun startTimer(){
-        serviceIntent.putExtra(TimerService.TIME_EXTRA, score)
-        context.startService(serviceIntent)
-        timerStarted = true
-    }
-
-    fun stopTimer(){
-        context.stopService(serviceIntent)
-        timerStarted = false
-    }
-}
