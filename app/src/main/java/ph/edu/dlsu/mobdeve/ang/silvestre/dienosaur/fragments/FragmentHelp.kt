@@ -12,6 +12,7 @@ import me.relex.circleindicator.CircleIndicator3
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.R
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.ViewPagerAdapter
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.FragmentHelpBinding
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.Dinos
 
 class FragmentHelp : Fragment() {
     private lateinit var binding: FragmentHelpBinding
@@ -26,23 +27,23 @@ class FragmentHelp : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_help, container, false)
-        val buttonClick = AlphaAnimation(1F, 0.8F)
+        val rootView = binding.root
+        val fragmentManager = requireActivity().supportFragmentManager
 
         // Finding IDs
-        val backBtn = rootView.findViewById<TextView>(R.id.help_back)
-        val vp = rootView.findViewById<ViewPager2>(R.id.help_viewpager)
-        val indicator = rootView.findViewById<CircleIndicator3>(R.id.help_indicator)
+        val backBtn = binding.helpBack
+        val vp = binding.helpViewpager
+        val indicator = binding.helpIndicator
 
         // Listeners
         backBtn.setOnClickListener{
-            activity?.onBackPressed()
+            fragmentManager.beginTransaction().remove(this).commit()
         }
 
         // ViewPager setup
-        addToList("Tilt left and right to control your dinosaur", R.drawable.nico)
-        addToList("Avoid the falling meteors", R.drawable.nico)
-        addToList("You have 3 lives to run as long as you can!", R.drawable.nico)
+        addToList("Tilt left and right to control your dinosaur", Dinos[0].walk)
+        addToList("Avoid the falling meteors", Dinos[0].walk)
+        addToList("You have 3 lives to run as long as you can!", Dinos[0].walk)
         vp.adapter = ViewPagerAdapter(stepsList,imagesList)
         indicator.setViewPager(vp)
 

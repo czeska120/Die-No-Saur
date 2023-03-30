@@ -53,6 +53,7 @@ class MainLoggedInActivity : AppCompatActivity() {
             mAuth.signOut()
             val returnMain = Intent(this, MainActivity::class.java)
             startActivity(returnMain)
+            finish()
         }
     }
 

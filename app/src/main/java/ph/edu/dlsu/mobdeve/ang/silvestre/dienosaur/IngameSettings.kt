@@ -10,23 +10,20 @@ import android.view.animation.AlphaAnimation
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.ActivitySettingsBinding
-import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentBottomBtns
-import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentCredits
-import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentCustomize
-import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentHelp
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.ActivityIngameSettingsBinding
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.*
 
-class SettingsActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySettingsBinding
+class IngameSettings : AppCompatActivity() {
+    private lateinit var binding: ActivityIngameSettingsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySettingsBinding.inflate(layoutInflater)
+        binding = ActivityIngameSettingsBinding.inflate(layoutInflater)
 
         val buttonClick = AlphaAnimation(1F, 0.8F);
         // Hides title bar
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
         //Hides action bar (bottom)
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
@@ -35,11 +32,6 @@ class SettingsActivity : AppCompatActivity() {
 
         val frame1 = R.id.settings_framelayout
         val frame2 = R.id.settings_framelayout2
-
-        binding.settingsCustomize.setOnClickListener{
-            binding.settingsCustomize.startAnimation(buttonClick)
-            loadFragment(frame1, FragmentCustomize())
-        }
         binding.settingsHelp.setOnClickListener{
             binding.settingsHelp.startAnimation(buttonClick)
             loadFragment(frame1, FragmentHelp())
@@ -48,13 +40,11 @@ class SettingsActivity : AppCompatActivity() {
             binding.settingsCredits.startAnimation(buttonClick)
             loadFragment(frame1, FragmentCredits())
         }
-        loadFragment(frame2, FragmentBottomBtns())
+        loadFragment(frame2, FragmentIngameBottom())
 
         binding.settingsSaveBtn.setOnClickListener {
             binding.settingsSaveBtn.startAnimation(buttonClick)
-            val goToHome = Intent(this, MainActivity::class.java)
-            startActivity(goToHome)
-            finishAffinity()
+            finish()
         }
         binding.seekbarSoundfx.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
@@ -87,6 +77,8 @@ class SettingsActivity : AppCompatActivity() {
         })
 
     }
+
+
 
     private fun loadFragment(frame:Int, fragment: Fragment) {
         // create a FragmentManager

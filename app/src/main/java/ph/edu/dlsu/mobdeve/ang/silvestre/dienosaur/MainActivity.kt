@@ -25,10 +25,9 @@ class MainActivity : AppCompatActivity() {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN)
         //Hides action bar (bottom)
-         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
         setContentView(binding.root)
-
 
 
         // --- PLAY AS GUEST ---
@@ -73,6 +72,7 @@ class MainActivity : AppCompatActivity() {
         if(currentUser != null){
             startActivity(Intent(this,MainLoggedInActivity::class.java))
             this.overridePendingTransition(0, 0)
+            finish()
         }
     }
 }

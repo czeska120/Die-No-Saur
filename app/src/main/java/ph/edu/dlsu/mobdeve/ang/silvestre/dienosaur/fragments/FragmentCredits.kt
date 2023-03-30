@@ -10,16 +10,6 @@ import androidx.fragment.app.FragmentManager
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.R
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.FragmentCreditsBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentCredits.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FragmentCredits : Fragment() {
     private lateinit var binding: FragmentCreditsBinding
 
@@ -31,14 +21,15 @@ class FragmentCredits : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_credits, container, false)
+    ): View {
+        val rootView = binding.root
+        val fragmentManager = requireActivity().supportFragmentManager
         // Finding IDs
-        val backBtn = rootView.findViewById<TextView>(R.id.credits_back)
+        val backBtn = binding.creditsBack
 
         // Listeners
         backBtn.setOnClickListener{
-            activity?.onBackPressed()
+            fragmentManager.beginTransaction().remove(this).commit()
         }
         return rootView
     }

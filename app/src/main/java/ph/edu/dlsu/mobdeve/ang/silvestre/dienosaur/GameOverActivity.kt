@@ -1,17 +1,19 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import android.os.Handler
+import android.os.Looper
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.ActivityGameOverBinding
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentBottomBtns
-import java.math.RoundingMode
-import java.text.DecimalFormat
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.BGs
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.Dinos
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -33,6 +35,12 @@ class GameOverActivity : AppCompatActivity() {
         val data = intent.extras
         val score = data?.getString("score")
         binding.playerScore.text = score
+
+        val handler = Handler(Looper.getMainLooper())
+
+        // customize based on user preferences
+        //binding.gameOver.background = ContextCompat.getDrawable(applicationContext, BGs[1].dark)
+        //binding.dinoDead.setImageResource(Dinos[1].dead)
 
         val currentUser = mAuth.currentUser
         dbreference = FirebaseDatabase.getInstance().reference
@@ -68,17 +76,15 @@ class GameOverActivity : AppCompatActivity() {
 
         }
 
-
         binding.btnPlayAgain.setOnClickListener{
             val startGame = Intent(this, GameActivity::class.java)
             startActivity(startGame)
-            finish()
+            handler.postDelayed({ finish() }, 1000)
         }
 
         binding.btnLeaderboard.setOnClickListener {
             val goToLeaderboard = Intent(this, LeaderboardActivity::class.java)
             startActivity(goToLeaderboard)
-            finish()
         }
     }
 

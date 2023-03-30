@@ -1,6 +1,5 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -12,33 +11,37 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.util.AttributeSet
 import android.view.Display
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.*
 import kotlin.math.roundToInt
-import kotlin.random.Random
 
-@Suppress("DEPRECATION")
-class GameView(context: Context) : View(context), SensorEventListener {
-    companion object{
+class GameView(context: Context, attributes: AttributeSet? = null) : View(context),
+    SensorEventListener {
+    companion object {
         var dWidth: Int = 0
         var dHeight: Int = 0
+
+        // pause game
+        var isPaused: Boolean = false
     }
 
     private var UPDATE_MILLIS: Long = 30
     private var runnable: Runnable
-    private var random: Random
+
+    // customize based on user preferences
+    private var bg: BG = BGs[0]
+    private var dino: DinoSprite = Dinos[0]
 
     // background
-    private var bg: BG = BGs[0]
     private var bgTop: Bitmap
     private var bgBottom: Bitmap
     private var rectTop: Rect
     private var rectBottom: Rect
 
     // dino
-    private var dino: DinoSprite = Dinos[0]
     private var dinoRunInt: Array<Int>
     private var dinoRun = ArrayList<Bitmap>()
     private var dinoHitInt: Array<Int>
@@ -55,11 +58,10 @@ class GameView(context: Context) : View(context), SensorEventListener {
     private var TEXT_SIZE: Float = 150F
 
     private val timerCardHeight = 240F
-    @SuppressLint("UseCompatLoadingForDrawables")
     private val timerCard = resources.getDrawable(R.drawable.timercard, null)
     private val textScore = Paint().apply {
         textSize = TEXT_SIZE
-        color = resources.getColor(R.color.white, null)
+        color = resources.getColor(R.color.text, null)
         textAlign = Paint.Align.CENTER
         typeface = fibberish
     }
@@ -78,7 +80,7 @@ class GameView(context: Context) : View(context), SensorEventListener {
     private var scoreString: String = ""
     private var timerStarted = false
     private var serviceIntent: Intent
-    private val updateTime: BroadcastReceiver = object: BroadcastReceiver(){
+    private val updateTime: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             score = intent.getDoubleExtra(TimerService.TIME_EXTRA, 0.0)
             scoreString = getTimeStringFromDouble(score)
@@ -88,48 +90,36 @@ class GameView(context: Context) : View(context), SensorEventListener {
     //sensors
     private var sensorManager: SensorManager
 
+    //activity
+    private var gameActivity: GameActivity? = null
+
     init {
-        bgTop = BitmapFactory.decodeResource(context.resources, bg.top)
-        bgBottom = BitmapFactory.decodeResource(context.resources, bg.bottom)
-
-        dinoRunInt = dino.run
-        for(i in dinoRunInt.indices){
-            dinoRun.add(BitmapFactory.decodeResource(context.resources, dinoRunInt[i]))
-        }
-
-        dinoHitInt = dino.hit
-        for(i in dinoHitInt.indices){
-            dinoHit.add(BitmapFactory.decodeResource(context.resources, dinoHitInt[i]))
-        }
-
+        //display size
         val display: Display = (context as Activity).windowManager.defaultDisplay
         val size = Point()
         display.getSize(size)
         dWidth = size.x
         dHeight = size.y
 
+        //reset() :
+        //bg
+        bgTop = BitmapFactory.decodeResource(context.resources, bg.top)
+        bgBottom = BitmapFactory.decodeResource(context.resources, bg.bottom)
         rectTop = Rect(0, 0, dWidth, bgTop.height)
         rectBottom = Rect(0, bgTop.height, dWidth, dHeight)
 
-        runnable = Runnable{
-            //animate dino
-            if (isHit){
-                dino.hitFrame++
-                if(dino.hitFrame == dinoHit.size){
-                    dino.hitFrame = 0
-                }
-            } else {
-                dino.runFrame++
-                if(dino.runFrame == dinoRun.size){
-                    dino.runFrame = 0
-                }
-            }
-
-            //loop game
-            invalidate()
+        //dino
+        dinoRunInt = dino.run
+        for (i in dinoRunInt.indices) {
+            dinoRun.add(BitmapFactory.decodeResource(context.resources, dinoRunInt[i]))
         }
+        dino.runFrame = 0
 
-        random = Random
+        dinoHitInt = dino.hit
+        for (i in dinoHitInt.indices) {
+            dinoHit.add(BitmapFactory.decodeResource(context.resources, dinoHitInt[i]))
+        }
+        dino.hitFrame = 0
 
         dinoX = ((dWidth - dinoRun[0].width) / 2).toFloat()
         dinoY = (dHeight - rectBottom.height() - dinoRun[0].height + 70).toFloat()
@@ -142,7 +132,7 @@ class GameView(context: Context) : View(context), SensorEventListener {
         //asteroids
         asteroids = ArrayList()
         explosions = ArrayList()
-        for (count in 0 until 3){ //3 = number of asteroids on screen at a time
+        for (count in 0 until 3) { //3 = number of asteroids on screen at a time
             val asteroid = Asteroid(context)
             asteroids.add(asteroid)
         }
@@ -150,20 +140,53 @@ class GameView(context: Context) : View(context), SensorEventListener {
         //sensors
         sensorManager = context.getSystemService(SENSOR_SERVICE) as SensorManager
         sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)?.also {
-            sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_GAME, SensorManager.SENSOR_DELAY_GAME)
+            sensorManager.registerListener(
+                this,
+                it,
+                SensorManager.SENSOR_DELAY_GAME,
+                SensorManager.SENSOR_DELAY_GAME
+            )
         }
 
         //hearts
         hearts = ArrayList()
-        for (count in 0 until 3){
+        for (count in 0 until 3) {
             val heart = Heart(context)
             hearts.add(heart)
         }
+
+        //activity
+        if (context is GameActivity){
+            gameActivity = context
+        }
+
+        //run
+        runnable = Runnable { //animate dino
+            if (isHit) {
+                dino.hitFrame++
+                if (dino.hitFrame == dinoHit.size) {
+                    dino.hitFrame = 0
+                }
+            } else {
+                dino.runFrame++
+                if (dino.runFrame == dinoRun.size) {
+                    dino.runFrame = 0
+                }
+            }
+
+            //update screen
+            if (!isPaused) {
+                invalidate()
+            }
+
+            start()
+        }
     }
 
-    @SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+
+        //draw bg
         canvas.drawBitmap(bgTop, null, rectTop, null)
         canvas.drawBitmap(bgBottom, null, rectBottom, null)
 
@@ -190,13 +213,18 @@ class GameView(context: Context) : View(context), SensorEventListener {
             }
         }
 
-        for (i in 0 until asteroids.size){
+        for (i in 0 until asteroids.size) {
             //draw asteroids
-            canvas.drawBitmap(asteroids[i].getAsteroid(asteroids[i].asteroidFrame), asteroids[i].asteroidX.toFloat(), asteroids[i].asteroidY.toFloat(), null)
+            canvas.drawBitmap(
+                asteroids[i].getAsteroid(asteroids[i].asteroidFrame),
+                asteroids[i].asteroidX.toFloat(),
+                asteroids[i].asteroidY.toFloat(),
+                null
+            )
 
             //animate asteroid sprites
             asteroids[i].asteroidFrame++
-            if (asteroids[i].asteroidFrame > 4){
+            if (asteroids[i].asteroidFrame > 4) {
                 asteroids[i].asteroidFrame = 0
             }
 
@@ -204,7 +232,7 @@ class GameView(context: Context) : View(context), SensorEventListener {
             asteroids[i].asteroidY += asteroids[i].velocity
 
             //if asteroid reached ground
-            if (asteroids[i].asteroidY + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).height >= dHeight - rectBottom.height() +100) {
+            if (asteroids[i].asteroidY + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).height >= dHeight - rectBottom.height() + 100) {
                 val explosion = Explosion(context)
                 explosion.explosionX = asteroids[i].asteroidX
                 explosion.explosionY = asteroids[i].asteroidY
@@ -213,39 +241,45 @@ class GameView(context: Context) : View(context), SensorEventListener {
             }
         }
 
-        for (i in 0 until asteroids.size - 1){
+        for (i in 0 until asteroids.size - 1) {
             //if asteroid collides with dinosaur
             if (asteroids[i].asteroidX + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).width >= dinoX
-            && asteroids[i].asteroidX <= dinoX + dinoRun[0].width
-            && asteroids[i].asteroidY + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).width >= dinoY
-            && asteroids[i].asteroidY + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).width <= dinoY + dinoRun[0].height){
+                && asteroids[i].asteroidX <= dinoX + dinoRun[0].width
+                && asteroids[i].asteroidY + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).width >= dinoY
+                && asteroids[i].asteroidY + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).width <= dinoY + dinoRun[0].height
+            ) {
                 life-- //subtract life
                 isHit = true //set boolean to true
                 asteroids[i].resetPosition()
 
                 //if player is out of lives
-                if (life == 0){
+                if (life == 0) {
                     hearts[2].heartFrame = 4
                     stopTimer()
 
                     postDelayed({
                         val intent = Intent(context, GameOverActivity::class.java) //34.09
                         intent.putExtra("score", scoreString)
-                        sensorManager.unregisterListener(this)
-                        resetTimer()
+
+                        quit()
                         context.startActivity(intent)
-                        (context as Activity).finish()
+                        gameActivity?.finish()
                     }, 500)
                 }
             }
         }
 
-        for (i in explosions.size -1  downTo 0){
+        for (i in explosions.size - 1 downTo 0) {
             //draw explosions
-            canvas.drawBitmap(explosions[i].getExplosion(explosions[i].explosionFrame), explosions[i].explosionX.toFloat(), explosions[i].explosionY.toFloat(), null)
+            canvas.drawBitmap(
+                explosions[i].getExplosion(explosions[i].explosionFrame),
+                explosions[i].explosionX.toFloat(),
+                explosions[i].explosionY.toFloat(),
+                null
+            )
             explosions[i].explosionFrame++
 
-            if(explosions[i].explosionFrame > 5){
+            if (explosions[i].explosionFrame > 5) {
                 explosions.removeAt(i)
             }
         }
@@ -254,31 +288,37 @@ class GameView(context: Context) : View(context), SensorEventListener {
         timerCard.draw(canvas)
 
         //left heart
-        val heart1X = (dWidth - hearts[2].getHeart(hearts[2].heartFrame).width)/2f - hearts[2].getHeart(hearts[2].heartFrame).width
+        val heart1X =
+            (dWidth - hearts[2].getHeart(hearts[2].heartFrame).width) / 2f - hearts[2].getHeart(
+                hearts[2].heartFrame
+            ).width - 50
         canvas.drawBitmap(hearts[2].getHeart(hearts[2].heartFrame), heart1X, 50f, null)
         //center heart
-        val heart2X = (dWidth - hearts[1].getHeart(hearts[1].heartFrame).width)/2f
+        val heart2X = (dWidth - hearts[1].getHeart(hearts[1].heartFrame).width) / 2f
         canvas.drawBitmap(hearts[1].getHeart(hearts[1].heartFrame), heart2X, 50f, null)
         //right heart
-        val heart3X = (dWidth - hearts[0].getHeart(hearts[0].heartFrame).width)/2f + hearts[0].getHeart(hearts[0].heartFrame).width
+        val heart3X =
+            (dWidth - hearts[0].getHeart(hearts[0].heartFrame).width) / 2f + hearts[0].getHeart(
+                hearts[0].heartFrame
+            ).width + 50
         canvas.drawBitmap(hearts[0].getHeart(hearts[0].heartFrame), heart3X, 50f, null)
 
-        //modify life = 28:36
-        if (life == 3){
+        //modify life
+        if (life == 3) {
             hearts[0].heartFrame++
-            if(hearts[0].heartFrame == 4){
+            if (hearts[0].heartFrame == 4) {
                 hearts[0].heartFrame = 0
             }
-        } else if (life == 2){
+        } else if (life == 2) {
             hearts[0].heartFrame = 4
             hearts[1].heartFrame++
-            if(hearts[1].heartFrame == 4){
+            if (hearts[1].heartFrame == 4) {
                 hearts[1].heartFrame = 0
             }
-        } else if (life == 1){
+        } else if (life == 1) {
             hearts[1].heartFrame = 4
             hearts[2].heartFrame++
-            if(hearts[2].heartFrame == 4){
+            if (hearts[2].heartFrame == 4) {
                 hearts[2].heartFrame = 0
             }
         }
@@ -286,10 +326,14 @@ class GameView(context: Context) : View(context), SensorEventListener {
         val textX = width / 2f
         val textY = 200 + timerCardHeight / 2f - (textScore.ascent() + textScore.descent()) / 2f
         canvas.drawText(scoreString, textX, textY, textScore)
+    }
 
-
-
-        handler.postDelayed(runnable, UPDATE_MILLIS)
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        handler.postDelayed({
+            reset()
+            start()
+        }, 100)
     }
 
     /*
@@ -323,7 +367,7 @@ class GameView(context: Context) : View(context), SensorEventListener {
 
     //sensors: tilt controls
     override fun onSensorChanged(event: SensorEvent?) {
-        if(event?.sensor?.type == Sensor.TYPE_ACCELEROMETER) {
+        if (event?.sensor?.type == Sensor.TYPE_ACCELEROMETER) {
             motionX = event.values[0] //left/right tilt
 
             //map tilt
@@ -354,22 +398,135 @@ class GameView(context: Context) : View(context), SensorEventListener {
         return makeTimeString(minutes, seconds, milliseconds)
     }
 
-    private fun makeTimeString(m: Int, s: Int, ms: Int): String = String.format("%02d:%02d.%02d", m, s, ms/10)
+    private fun makeTimeString(m: Int, s: Int, ms: Int): String =
+        String.format("%02d:%02d.%02d", m, s, ms / 10)
 
-    private fun resetTimer(){
+    private fun resetTimer() {
         stopTimer()
         score = 0.0
         scoreString = getTimeStringFromDouble(score)
     }
 
-    private fun startTimer(){
+    private fun startTimer() {
         serviceIntent.putExtra(TimerService.TIME_EXTRA, score)
         context.startService(serviceIntent)
         timerStarted = true
     }
 
-    private fun stopTimer(){
+    private fun stopTimer() {
         context.stopService(serviceIntent)
         timerStarted = false
+    }
+
+    // pause game
+    fun reset() {
+        isPaused = false
+
+        //bg
+        bgTop = BitmapFactory.decodeResource(context.resources, bg.top)
+        bgBottom = BitmapFactory.decodeResource(context.resources, bg.bottom)
+        rectTop = Rect(0, 0, dWidth, bgTop.height)
+        rectBottom = Rect(0, bgTop.height, dWidth, dHeight)
+
+        //dino
+        dinoRunInt = dino.run
+        for (i in dinoRunInt.indices) {
+            dinoRun.add(BitmapFactory.decodeResource(context.resources, dinoRunInt[i]))
+        }
+        dino.runFrame = 0
+
+        dinoHitInt = dino.hit
+        for (i in dinoHitInt.indices) {
+            dinoHit.add(BitmapFactory.decodeResource(context.resources, dinoHitInt[i]))
+        }
+        dino.hitFrame = 0
+
+        dinoX = ((dWidth - dinoRun[0].width) / 2).toFloat()
+        dinoY = (dHeight - rectBottom.height() - dinoRun[0].height + 70).toFloat()
+
+        //timer
+        resetTimer()
+        startTimer()
+
+        //asteroids
+        asteroids = ArrayList()
+        explosions = ArrayList()
+        for (count in 0 until 3) { //3 = number of asteroids on screen at a time
+            val asteroid = Asteroid(context)
+            asteroids.add(asteroid)
+        }
+
+        //sensors
+        sensorManager.unregisterListener(this)
+        sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)?.also {
+            sensorManager.registerListener(
+                this,
+                it,
+                SensorManager.SENSOR_DELAY_GAME,
+                SensorManager.SENSOR_DELAY_GAME
+            )
+        }
+
+        //hearts
+        hearts = ArrayList()
+        for (count in 0 until 3) {
+            val heart = Heart(context)
+            hearts.add(heart)
+        }
+
+        //run
+        //run
+        runnable = Runnable { //animate dino
+            if (isHit) {
+                dino.hitFrame++
+                if (dino.hitFrame == dinoHit.size) {
+                    dino.hitFrame = 0
+                }
+            } else {
+                dino.runFrame++
+                if (dino.runFrame == dinoRun.size) {
+                    dino.runFrame = 0
+                }
+            }
+
+            //update screen
+            if (!isPaused) {
+                invalidate()
+            }
+
+            start()
+        }
+    }
+
+    fun start() {
+        this.handler.postDelayed(runnable, UPDATE_MILLIS)
+    }
+
+    fun pause() {
+        isPaused = true
+        stopTimer()
+        sensorManager.unregisterListener(this)
+        this.handler.removeCallbacks(runnable)
+    }
+
+    fun resume() {
+        isPaused = false
+        startTimer()
+        sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)?.also {
+            sensorManager.registerListener(
+                this,
+                it,
+                SensorManager.SENSOR_DELAY_GAME,
+                SensorManager.SENSOR_DELAY_GAME
+            )
+        }
+        start()
+    }
+
+    fun quit() {
+        isPaused = false
+        resetTimer()
+        sensorManager.unregisterListener(this)
+        this.handler.removeCallbacks(runnable)
     }
 }
