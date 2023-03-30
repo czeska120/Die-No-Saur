@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".IngameSettings">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/settings_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/dark_fall"
+            android:backgroundTint="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/settings_board"
+            android:layout_width="wrap_content"
+            android:layout_height="500dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="125dp"
+            android:src="@drawable/board_long" />
+
+        <ImageView
+            android:id="@+id/settings_plate"
+            style="@style/btnStyle2"
+            android:layout_alignBottom="@+id/settings_board"
+            android:layout_marginBottom="480dp"/>
+
+        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+            android:id="@+id/settings_title1"
+            style="@style/textSubheading"
+            android:textSize="32sp"
+            android:layout_alignTop="@id/settings_plate"
+            android:layout_marginTop="2dp"
+            android:text="SETTINGS"
+            app:outlineColor="@color/outline"
+            app:outlineSize="5dp" />
+
+
+        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+            android:id="@+id/settings_soundfx"
+            style="@style/textSubheading"
+            android:layout_below="@+id/settings_title1"
+            android:layout_marginEnd="130dp"
+            android:layout_marginTop="37dp"
+            android:textAlignment="textStart"
+            android:text="Sound FX"
+            app:outlineColor="@color/outline"
+            app:outlineSize="5dp" />
+
+        <SeekBar
+            android:id="@+id/seekbar_soundfx"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/settings_line1"
+            android:layout_alignEnd="@+id/settings_line1"
+            />
+
+        <View
+            android:id="@+id/settings_line1"
+            android:layout_width="230dp"
+            android:layout_height="1dp"
+            android:layout_alignStart="@+id/settings_soundfx"
+            android:layout_below="@+id/settings_soundfx"
+            android:layout_marginVertical="10dp"
+            android:background="@color/text"/>
+
+        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+            android:id="@+id/settings_music"
+            style="@style/textSubheading"
+            android:layout_below="@+id/settings_line1"
+            android:layout_marginEnd="130dp"
+            android:textAlignment="textStart"
+            android:text="Music"
+            app:outlineColor="@color/outline"
+            app:outlineSize="5dp" />
+
+        <SeekBar
+            android:id="@+id/seekbar_music"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/settings_line2"
+            android:layout_alignEnd="@+id/settings_line2"
+            />
+
+        <View
+            android:id="@+id/settings_line2"
+            android:layout_width="230dp"
+            android:layout_height="1dp"
+            android:layout_alignStart="@+id/settings_music"
+            android:layout_below="@+id/settings_music"
+            android:layout_marginVertical="10dp"
+            android:background="@color/text"/>
+
+
+        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+            android:id="@+id/settings_help"
+            style="@style/textSubheading"
+            android:layout_below="@+id/settings_line2"
+            android:layout_marginEnd="130dp"
+            android:textAlignment="textStart"
+            android:text="Help"
+            app:outlineColor="@color/outline"
+            app:outlineSize="5dp" />
+
+        <View
+            android:id="@+id/settings_line3"
+            android:layout_width="230dp"
+            android:layout_height="1dp"
+            android:layout_alignStart="@+id/settings_help"
+            android:layout_below="@+id/settings_help"
+            android:layout_marginVertical="10dp"
+            android:background="@color/text"/>
+
+        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+            android:id="@+id/settings_credits"
+            style="@style/textSubheading"
+            android:layout_below="@+id/settings_line3"
+            android:layout_marginEnd="130dp"
+            android:textAlignment="textStart"
+            android:text="Credits"
+            app:outlineColor="@color/outline"
+            app:outlineSize="5dp" />
+
+        <View
+            android:id="@+id/settings_line4"
+            android:layout_width="230dp"
+            android:layout_height="1dp"
+            android:layout_alignStart="@+id/settings_credits"
+            android:layout_below="@+id/settings_help"
+            android:layout_marginVertical="10dp"
+            android:background="@color/text"/>
+
+        <ImageButton
+            android:id="@+id/settings_save_btn"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:background="@drawable/btn_rectshort"
+            android:layout_below="@+id/settings_credits"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="48dp"
+            />
+
+        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
+            android:id="@+id/settings_save_tv"
+            style="@style/textSubheading"
+            android:layout_below="@+id/settings_credits"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="50dp"
+            android:text="SAVE"
+            android:textSize="40sp"
+            app:outlineColor="@color/outline"
+            app:outlineSize="5dp" />
+
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/settings_framelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_help" />
+
+    <FrameLayout
+        android:id="@+id/settings_framelayout2"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout="@layout/fragment_ingame_bottom" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

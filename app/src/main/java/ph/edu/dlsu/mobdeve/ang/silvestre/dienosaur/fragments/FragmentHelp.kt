@@ -27,7 +27,7 @@ class FragmentHelp : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_help, container, false)
-        val buttonClick = AlphaAnimation(1F, 0.8F)
+        val fragmentManager = requireActivity().supportFragmentManager
 
         // Finding IDs
         val backBtn = rootView.findViewById<TextView>(R.id.help_back)
@@ -36,7 +36,7 @@ class FragmentHelp : Fragment() {
 
         // Listeners
         backBtn.setOnClickListener{
-            activity?.onBackPressed()
+            fragmentManager.beginTransaction().remove(this).commit()
         }
 
         // ViewPager setup

@@ -33,12 +33,13 @@ class FragmentCredits : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_credits, container, false)
+        val fragmentManager = requireActivity().supportFragmentManager
         // Finding IDs
         val backBtn = rootView.findViewById<TextView>(R.id.credits_back)
 
         // Listeners
         backBtn.setOnClickListener{
-            activity?.onBackPressed()
+            fragmentManager.beginTransaction().remove(this).commit()
         }
         return rootView
     }

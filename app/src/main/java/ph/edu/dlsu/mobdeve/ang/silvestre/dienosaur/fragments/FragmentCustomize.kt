@@ -43,6 +43,7 @@ class FragmentCustomize : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_customize, container, false)
+        val fragmentManager = requireActivity().supportFragmentManager
 
         val buttonClick = AlphaAnimation(1F, 0.8F)
 
@@ -76,7 +77,7 @@ class FragmentCustomize : Fragment() {
 
         // Listeners
         backBtn.setOnClickListener{
-            activity?.onBackPressed()
+            fragmentManager.beginTransaction().remove(this).commit()
         }
 
         saveBtn.setOnClickListener{
