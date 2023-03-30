@@ -85,7 +85,6 @@ class GameOverActivity : AppCompatActivity() {
         binding.btnLeaderboard.setOnClickListener {
             val goToLeaderboard = Intent(this, LeaderboardActivity::class.java)
             startActivity(goToLeaderboard)
-            finish()
         }
     }
 

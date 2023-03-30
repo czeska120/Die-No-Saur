@@ -25,10 +25,9 @@ class MainActivity : AppCompatActivity() {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN)
         //Hides action bar (bottom)
-         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
         setContentView(binding.root)
-
 
 
         // --- PLAY AS GUEST ---
@@ -36,7 +35,6 @@ class MainActivity : AppCompatActivity() {
             binding.homeBtnGuest.startAnimation(buttonClick)
             val startGame = Intent(this, GameActivity::class.java)
             startActivity(startGame)
-            finish()
         }
 
         // --- SIGN-IN ---
@@ -44,7 +42,6 @@ class MainActivity : AppCompatActivity() {
             binding.homeBtnSignin.startAnimation(buttonClick)
             val signIn = Intent(this, SignInActivity::class.java)
             startActivity(signIn)
-            finish()
         }
 
         // --- SETTINGS ---
@@ -52,7 +49,6 @@ class MainActivity : AppCompatActivity() {
             binding.homeBtnSettings.startAnimation(buttonClick)
             val goToSettings = Intent(this,SettingsActivity::class.java)
             startActivity(goToSettings)
-            finish()
         }
 
         // --- LEADERBOARD ---
@@ -60,14 +56,12 @@ class MainActivity : AppCompatActivity() {
             binding.homeBtnLeaderboard.startAnimation(buttonClick)
             val goToLeaderboard = Intent(this, LeaderboardActivity::class.java)
             startActivity(goToLeaderboard)
-            finish()
         }
 
         // --- LOGIN PROMPT ---
         binding.homeTvLoginPrompt.setOnClickListener {
             val logIn = Intent(this, LoginActivity::class.java)
             startActivity(logIn)
-            finish()
         }
     }
 
@@ -78,6 +72,7 @@ class MainActivity : AppCompatActivity() {
         if(currentUser != null){
             startActivity(Intent(this,MainLoggedInActivity::class.java))
             this.overridePendingTransition(0, 0)
+            finish()
         }
     }
 }

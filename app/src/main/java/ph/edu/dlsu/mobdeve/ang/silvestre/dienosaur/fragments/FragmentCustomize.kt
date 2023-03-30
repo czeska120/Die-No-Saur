@@ -20,11 +20,6 @@ import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.FragmentCustomize
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.BGs
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.Dinos
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentCustomize.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FragmentCustomize : Fragment() {
     private lateinit var binding: FragmentCustomizeBinding
 
@@ -33,12 +28,10 @@ class FragmentCustomize : Fragment() {
         binding = FragmentCustomizeBinding.inflate(layoutInflater)
     }
 
-
-    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val rootView = binding.root
         val fragmentManager = requireActivity().supportFragmentManager
 

@@ -65,7 +65,7 @@ class SignInActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     Toast.makeText(applicationContext,"User registered!", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this,LoginActivity::class.java))
-                    finish()
+                    finishAffinity()
                 } else {
                     // If sign in fails, display a message to the user.
                     Toast.makeText(applicationContext,"Registration error: "+ task.exception!!.message, Toast.LENGTH_SHORT).show()

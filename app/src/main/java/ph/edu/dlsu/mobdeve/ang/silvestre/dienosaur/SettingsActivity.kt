@@ -54,7 +54,7 @@ class SettingsActivity : AppCompatActivity() {
             binding.settingsSaveBtn.startAnimation(buttonClick)
             val goToHome = Intent(this, MainActivity::class.java)
             startActivity(goToHome)
-            finish()
+            finishAffinity()
         }
         binding.seekbarSoundfx.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
