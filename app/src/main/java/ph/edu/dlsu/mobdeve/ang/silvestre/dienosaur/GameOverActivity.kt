@@ -2,6 +2,8 @@ package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -33,6 +35,8 @@ class GameOverActivity : AppCompatActivity() {
         val data = intent.extras
         val score = data?.getString("score")
         binding.playerScore.text = score
+
+        val handler = Handler(Looper.getMainLooper())
 
         // customize based on user preferences
         //binding.gameOver.background = ContextCompat.getDrawable(applicationContext, BGs[1].dark)
@@ -72,11 +76,10 @@ class GameOverActivity : AppCompatActivity() {
 
         }
 
-
         binding.btnPlayAgain.setOnClickListener{
             val startGame = Intent(this, GameActivity::class.java)
             startActivity(startGame)
-            finish()
+            handler.postDelayed({ finish() }, 1000)
         }
 
         binding.btnLeaderboard.setOnClickListener {
