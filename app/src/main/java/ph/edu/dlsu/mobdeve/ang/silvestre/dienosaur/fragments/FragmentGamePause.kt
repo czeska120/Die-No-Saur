@@ -82,7 +82,7 @@ class FragmentGamePause : Fragment() {
                  goToHome = Intent(requireActivity(), MainActivity::class.java)
             }
             startActivity(goToHome)
-            requireActivity().finish()
+            requireActivity().finishAffinity()
         }
 
         // Inflate the layout for this fragment

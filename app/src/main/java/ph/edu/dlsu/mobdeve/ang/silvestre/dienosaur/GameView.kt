@@ -430,7 +430,11 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
 
     // pause game
     fun reset() {
+        //reset variables
         isPaused = false
+        dino.runFrame = 0
+        dino.hitFrame = 0
+        life = 4
 
         //bg
         bgTop = BitmapFactory.decodeResource(context.resources, bg.top)
@@ -443,13 +447,10 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
         for (i in dinoRunInt.indices) {
             dinoRun.add(BitmapFactory.decodeResource(context.resources, dinoRunInt[i]))
         }
-        dino.runFrame = 0
-
         dinoHitInt = dino.hit
         for (i in dinoHitInt.indices) {
             dinoHit.add(BitmapFactory.decodeResource(context.resources, dinoHitInt[i]))
         }
-        dino.hitFrame = 0
 
         dinoX = ((dWidth - dinoRun[0].width) / 2).toFloat()
         dinoY = (dHeight - rectBottom.height() - dinoRun[0].height + 70).toFloat()
@@ -483,7 +484,6 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
             val heart = Heart(context)
             hearts.add(heart)
         }
-        life = 4
 
         //run
         runnable = Runnable { //animate dino
