@@ -232,7 +232,10 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
             asteroids[i].asteroidY += asteroids[i].velocity
 
             //if asteroid reached ground
-            if (asteroids[i].asteroidY + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).height >= dHeight - rectBottom.height() + 100) {
+            val asteroidY = asteroids[i].asteroidY
+            val asteroidHeight = asteroids[i].getAsteroid(asteroids[i].asteroidFrame).height
+
+            if (asteroidY + asteroidHeight >= dHeight - rectBottom.height() + 100) {
                 val explosion = Explosion(context)
                 explosion.explosionX = asteroids[i].asteroidX
                 explosion.explosionY = asteroids[i].asteroidY
@@ -243,10 +246,17 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
 
         for (i in 0 until asteroids.size - 1) {
             //if asteroid collides with dinosaur
-            if (asteroids[i].asteroidX + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).width >= dinoX
-                && asteroids[i].asteroidX <= dinoX + dinoRun[0].width
-                && asteroids[i].asteroidY + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).width >= dinoY
-                && asteroids[i].asteroidY + asteroids[i].getAsteroid(asteroids[i].asteroidFrame).width <= dinoY + dinoRun[0].height
+            val asteroidX = asteroids[i].asteroidX
+            val asteroidY = asteroids[i].asteroidY
+            val asteroidWidth = asteroids[i].getAsteroid(asteroids[i].asteroidFrame).width
+            val asteroidHeight = asteroids[i].getAsteroid(asteroids[i].asteroidFrame).height
+            val dinoWidth = dinoRun[0].width
+            val dinoHeight = dinoRun[0].height
+
+            if (asteroidX + asteroidWidth >= dinoX
+                && asteroidX <= dinoX + dinoWidth
+                && asteroidY + asteroidHeight >= dinoY
+                && asteroidY + asteroidHeight <= dinoY + dinoHeight
             ) {
                 life-- //subtract life
                 isHit = true //set boolean to true
