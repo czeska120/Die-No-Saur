@@ -473,8 +473,8 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
             val heart = Heart(context)
             hearts.add(heart)
         }
+        life = 4
 
-        //run
         //run
         runnable = Runnable { //animate dino
             if (isHit) {
