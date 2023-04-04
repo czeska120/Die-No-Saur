@@ -13,6 +13,7 @@ import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.ActivityMainBindi
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var mAuth : FirebaseAuth
+    private lateinit var serviceIntent: Intent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +64,8 @@ class MainActivity : AppCompatActivity() {
             val logIn = Intent(this, LoginActivity::class.java)
             startActivity(logIn)
         }
+        serviceIntent =  Intent(applicationContext, MusicService::class.java)
+        startService(serviceIntent)
     }
 
     public override fun onStart() {
