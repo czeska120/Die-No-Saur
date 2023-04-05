@@ -1,6 +1,7 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -18,6 +19,13 @@ import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentHelp
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingsBinding
+    private var SHARED_PREFS = "sharedPrefs"
+    private var fxKey: String = "fxKey"
+    private var musicKey: String = "musicKey"
+    private var musicValue: Int = 0
+    private var progressFx: Int = 0
+    private var progressMusic: Int = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,8 +74,9 @@ class SettingsActivity : AppCompatActivity() {
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
-                val progress = seekBar.progress
+                var progress = seekBar.progress
                 Toast.makeText(applicationContext, "Sound FX volume: $progress", Toast.LENGTH_SHORT).show()
+
             }
         })
 
@@ -81,13 +90,36 @@ class SettingsActivity : AppCompatActivity() {
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
-                val progress = seekBar.progress
+                var progress =  seekBar.progress
                 Toast.makeText(applicationContext, "Music volume: $progress", Toast.LENGTH_SHORT).show()
             }
         })
 
+        binding.settingsSaveBtn.setOnClickListener{
+            saveData()
+        }
+
+        loadData()
+
     }
 
+    private fun saveData(){
+        var sharedPreferences : SharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
+        var sharedPrefEdit = sharedPreferences.edit()
+        sharedPrefEdit.putInt(fxKey, binding.seekbarSoundfx.progress)
+        sharedPrefEdit.putInt(musicKey, binding.seekbarMusic.progress)
+        sharedPrefEdit.commit()
+        Toast.makeText(this, "Settings saved", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun loadData(){
+        var sharedPreferences : SharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
+        progressFx = sharedPreferences.getInt("fxKey", 100)
+        progressMusic = sharedPreferences.getInt("musicKey", 100)
+        binding.seekbarSoundfx.progress = progressFx
+        binding.seekbarMusic.progress = progressMusic
+        Toast.makeText(this, "Preferences loaded", Toast.LENGTH_SHORT).show()
+    }
     private fun loadFragment(frame:Int, fragment: Fragment) {
         // create a FragmentManager
         val fm = supportFragmentManager
