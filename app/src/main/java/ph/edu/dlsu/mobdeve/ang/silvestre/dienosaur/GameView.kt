@@ -11,6 +11,7 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.os.Handler
 import android.util.AttributeSet
 import android.view.Display
 import android.view.View
@@ -92,7 +93,6 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
 
     //activity
     private var gameActivity: GameActivity? = null
-
     init {
         //display size
         val display: Display = (context as Activity).windowManager.defaultDisplay
@@ -178,7 +178,6 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
             if (!isPaused) {
                 invalidate()
             }
-
             start()
         }
     }

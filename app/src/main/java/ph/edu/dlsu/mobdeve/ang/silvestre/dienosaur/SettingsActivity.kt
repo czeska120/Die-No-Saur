@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -16,15 +17,17 @@ import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentBottomBtns
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentCredits
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentCustomize
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentHelp
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.BGs
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingsBinding
     private var SHARED_PREFS = "sharedPrefs"
     private var fxKey: String = "fxKey"
     private var musicKey: String = "musicKey"
-    private var musicValue: Int = 0
     private var progressFx: Int = 0
     private var progressMusic: Int = 0
+    private var chosenBG = 0
+    private var chosenDino = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,9 +101,34 @@ class SettingsActivity : AppCompatActivity() {
         binding.settingsSaveBtn.setOnClickListener{
             saveData()
         }
-
+//        binding.settingsBg.setImageResource(BGs[testing].dark)
         loadData()
+    }
 
+    override fun onResume() {
+        super.onResume()
+        Log.d("TESTING","U ARE RESUMED!!!!")
+        loadData()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("TESTING","U ARE onStart!!!!")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("TESTING","U ARE onStop!!!!")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("TESTING","U ARE onPause!!!!")
+    }
+
+    override fun onRestart(){
+        super.onRestart()
+        Log.d("TESTING","U ARE onRestart!!!!")
     }
 
     private fun saveData(){
@@ -116,8 +144,13 @@ class SettingsActivity : AppCompatActivity() {
         var sharedPreferences : SharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
         progressFx = sharedPreferences.getInt("fxKey", 100)
         progressMusic = sharedPreferences.getInt("musicKey", 100)
+        chosenBG = sharedPreferences.getInt("bgKey", 0)
+        chosenDino = sharedPreferences.getInt("dinoKey", 0) // transfer to mainactivity and game later
+
         binding.seekbarSoundfx.progress = progressFx
         binding.seekbarMusic.progress = progressMusic
+        binding.settingsBg.setImageResource(BGs[chosenBG].dark)
+        Log.d("TESTING","INSIDE SETTINGS $chosenBG")
         Toast.makeText(this, "Preferences loaded", Toast.LENGTH_SHORT).show()
     }
     private fun loadFragment(frame:Int, fragment: Fragment) {
