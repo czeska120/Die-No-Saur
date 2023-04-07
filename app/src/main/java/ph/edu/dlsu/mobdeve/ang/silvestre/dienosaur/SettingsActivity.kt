@@ -121,7 +121,6 @@ class SettingsActivity : AppCompatActivity() {
         binding.seekbarSoundfx.progress = progressFx
         binding.seekbarMusic.progress = progressMusic
         binding.settingsBg.setImageResource(BGs[chosenBG].dark)
-        Toast.makeText(this, "Preferences loaded", Toast.LENGTH_SHORT).show()
     }
     private fun loadFragment(frame:Int, fragment: Fragment) {
         val fm = supportFragmentManager

@@ -1,5 +1,6 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -12,6 +13,7 @@ import com.google.firebase.database.*
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.ActivityLeaderboardBinding
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentBottomBtns
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentHelp
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.BGs
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.User
 import java.util.*
 import kotlin.Comparator
@@ -23,6 +25,8 @@ class LeaderboardActivity : AppCompatActivity() {
     private lateinit var adapter: LeaderboardAdapter
     private lateinit var list: ArrayList<User>
     private lateinit var dbreference: DatabaseReference
+    private var SHARED_PREFS = "sharedPrefs"
+    private var chosenBG = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLeaderboardBinding.inflate(layoutInflater)
@@ -57,7 +61,6 @@ class LeaderboardActivity : AppCompatActivity() {
                         return o2.score.compareTo(o1.score)
                     }
                 })
-
                 adapter.notifyDataSetChanged()
             }
 
@@ -65,24 +68,23 @@ class LeaderboardActivity : AppCompatActivity() {
                 // Handle any errors
             }
         })
-
-
-
-
         val bottomFrame = R.id.leaderboardframelayout
         loadFragment(bottomFrame, FragmentBottomBtns())
+        loadData()
     }
 
     private fun loadFragment(frame:Int, fragment: Fragment) {
-        // create a FragmentManager
         val fm = supportFragmentManager
-
-        // create a FragmentTransaction to begin the transaction and replace the Fragment
         val fragmentTransaction = fm.beginTransaction()
 
-        // replace the FrameLayout with new Fragment
         fragmentTransaction.replace(frame, fragment)
-        fragmentTransaction.commit() // save the changes
+        fragmentTransaction.commit()
 
+    }
+    fun loadData(){
+        var sharedPreferences : SharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
+        chosenBG = sharedPreferences.getInt("bgKey", 0)
+
+        binding.leaderboardbg.setImageResource(BGs[chosenBG].dark)
     }
 }

@@ -55,6 +55,7 @@ class SignInActivity : AppCompatActivity() {
 
         val frame = R.id.signin_framelayout
         loadFragment(frame, FragmentBottomBtns())
+        loadData()
     }
 
     private fun createUser(email: String, password: String){
@@ -77,25 +78,19 @@ class SignInActivity : AppCompatActivity() {
                 }
             }
         }
-        loadData()
     }
 
     private fun loadFragment(frame:Int, fragment: Fragment) {
-        // create a FragmentManager
         val fm = supportFragmentManager
-
-        // create a FragmentTransaction to begin the transaction and replace the Fragment
         val fragmentTransaction = fm.beginTransaction()
 
-        // replace the FrameLayout with new Fragment
         fragmentTransaction.replace(frame, fragment)
-        fragmentTransaction.commit() // save the changes
+        fragmentTransaction.commit()
     }
     fun loadData(){
         var sharedPreferences : SharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
         chosenBG = sharedPreferences.getInt("bgKey", 0)
 
-        binding.bgTop.setImageResource(BGs[chosenBG].top)
-        binding.bgBot.setImageResource(BGs[chosenBG].bottom)
+        binding.signinBg.setImageResource(BGs[chosenBG].dark)
     }
 }
