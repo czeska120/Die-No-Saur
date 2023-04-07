@@ -37,7 +37,7 @@ class SignInActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.signinBtnRegister.setOnClickListener {
-            soundPoolManager.playSound(R.raw.sfx_confirm)
+            soundPoolManager.playSound(R.raw.sfx_button)
             val email = binding.signinEtEmail.text.toString()
             val password = binding.signinEtPassword.text.toString()
             val confirmpass = binding.signinEtConfirmpass.text.toString()

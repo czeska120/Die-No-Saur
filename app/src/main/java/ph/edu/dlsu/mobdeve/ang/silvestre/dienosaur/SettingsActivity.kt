@@ -73,7 +73,7 @@ class SettingsActivity : AppCompatActivity() {
 
         binding.settingsSaveBtn.setOnClickListener {
             binding.settingsSaveBtn.startAnimation(buttonClick)
-            soundPoolManager.playSound(R.raw.sfx_confirm)
+            soundPoolManager.playSound(R.raw.sfx_button)
             saveData()
             val goToHome = Intent(this, MainActivity::class.java)
             startActivity(goToHome)

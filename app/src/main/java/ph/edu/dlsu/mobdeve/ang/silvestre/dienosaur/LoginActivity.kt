@@ -37,7 +37,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.loginBtnLogin.setOnClickListener {
-            soundPoolManager.playSound(R.raw.sfx_confirm)
+            soundPoolManager.playSound(R.raw.sfx_button)
             binding.loginBtnLogin.startAnimation(buttonClick)
             loginUser()
         }

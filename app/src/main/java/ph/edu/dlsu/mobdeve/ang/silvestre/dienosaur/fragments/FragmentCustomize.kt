@@ -136,7 +136,7 @@ class FragmentCustomize : Fragment() {
         }
 
         saveBtn.setOnClickListener{
-            soundPoolManager.playSound(R.raw.sfx_confirm)
+            soundPoolManager.playSound(R.raw.sfx_button)
             saveBtn.startAnimation(buttonClick)
             Log.d("TESTING","INSIDE SAVE BTN $chosenDino, $chosenBG")
             saveData()

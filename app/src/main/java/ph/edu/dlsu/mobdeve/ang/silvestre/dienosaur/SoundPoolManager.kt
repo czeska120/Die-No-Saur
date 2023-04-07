@@ -12,7 +12,6 @@ class SoundPoolManager private constructor(context: Context) {
         // Load sound effects into the SoundPool
         soundMap[R.raw.sfx_tick] = soundPool.load(context, R.raw.sfx_tick, 1)
         soundMap[R.raw.sfx_button] = soundPool.load(context, R.raw.sfx_button, 1)
-        soundMap[R.raw.sfx_confirm] = soundPool.load(context, R.raw.sfx_confirm, 1)
         soundMap[R.raw.sfx_text] = soundPool.load(context, R.raw.sfx_text, 1)
     }
 

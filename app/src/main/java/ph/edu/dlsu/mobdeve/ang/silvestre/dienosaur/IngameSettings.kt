@@ -47,7 +47,7 @@ class IngameSettings : AppCompatActivity() {
 
         binding.settingsSaveBtn.setOnClickListener {
             binding.settingsSaveBtn.startAnimation(buttonClick)
-            soundPoolManager.playSound(R.raw.sfx_confirm)
+            soundPoolManager.playSound(R.raw.sfx_button)
             finish()
         }
         binding.seekbarSoundfx.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
