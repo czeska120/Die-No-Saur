@@ -1,6 +1,7 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -19,14 +20,18 @@ import java.util.*
 
 class GameOverActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGameOverBinding
-    private lateinit var user: FirebaseUser
     private lateinit var dbreference: DatabaseReference
     private lateinit var mAuth : FirebaseAuth
+    private var SHARED_PREFS = "sharedPrefs"
+    private var chosenBG = 0
+    private var chosenDino = 0
+    private lateinit var soundPoolManager: SoundPoolManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGameOverBinding.inflate(layoutInflater)
         mAuth = FirebaseAuth.getInstance()
+        soundPoolManager = SoundPoolManager.getInstance(applicationContext)
         setContentView(binding.root)
 
         val frame2 = R.id.settings_framelayout2
@@ -37,10 +42,6 @@ class GameOverActivity : AppCompatActivity() {
         binding.playerScore.text = score
 
         val handler = Handler(Looper.getMainLooper())
-
-        // customize based on user preferences
-        //binding.gameOver.background = ContextCompat.getDrawable(applicationContext, BGs[1].dark)
-        //binding.dinoDead.setImageResource(Dinos[1].dead)
 
         val currentUser = mAuth.currentUser
         dbreference = FirebaseDatabase.getInstance().reference
@@ -77,15 +78,18 @@ class GameOverActivity : AppCompatActivity() {
         }
 
         binding.btnPlayAgain.setOnClickListener{
+            soundPoolManager.playSound(R.raw.sfx_button)
             val startGame = Intent(this, GameActivity::class.java)
             startActivity(startGame)
             handler.postDelayed({ finish() }, 1000)
         }
 
         binding.btnLeaderboard.setOnClickListener {
+            soundPoolManager.playSound(R.raw.sfx_button)
             val goToLeaderboard = Intent(this, LeaderboardActivity::class.java)
             startActivity(goToLeaderboard)
         }
+        loadData()
     }
 
     private fun compare(oldScore: String, newScore: String): String{
@@ -116,5 +120,13 @@ class GameOverActivity : AppCompatActivity() {
         fragmentTransaction.replace(frame, fragment)
         fragmentTransaction.commit() // save the changes
 
+    }
+
+    fun loadData(){
+        var sharedPreferences : SharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
+        chosenBG = sharedPreferences.getInt("bgKey", 0)
+        chosenDino = sharedPreferences.getInt("dinoKey", 0)
+        binding.gameOver.background = ContextCompat.getDrawable(applicationContext, BGs[chosenBG].dark)
+        binding.dinoDead.setImageResource(Dinos[chosenDino].dead)
     }
 }

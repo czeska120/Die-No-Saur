@@ -21,11 +21,13 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     private var SHARED_PREFS = "sharedPrefs"
     private var chosenBG = 0
+    private lateinit var soundPoolManager: SoundPoolManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         mAuth = FirebaseAuth.getInstance()
-        val buttonClick = AlphaAnimation(1F, 0.8F);
+        soundPoolManager = SoundPoolManager.getInstance(applicationContext)
+        val buttonClick = AlphaAnimation(1F, 0.8F)
 
         // Hides title bar
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -35,10 +37,12 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.loginBtnLogin.setOnClickListener {
+            soundPoolManager.playSound(R.raw.sfx_confirm)
             binding.loginBtnLogin.startAnimation(buttonClick)
             loginUser()
         }
         binding.loginTvSigninPrompt.setOnClickListener {
+            soundPoolManager.playSound(R.raw.sfx_text)
             val signin = Intent(this, SignInActivity::class.java)
             startActivity(signin)
             finish()

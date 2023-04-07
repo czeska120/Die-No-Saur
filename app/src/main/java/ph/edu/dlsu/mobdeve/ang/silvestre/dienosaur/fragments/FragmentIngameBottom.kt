@@ -11,14 +11,17 @@ import android.view.animation.AlphaAnimation
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.GameActivity
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.MainActivity
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.R
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.SoundPoolManager
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.FragmentIngameBottomBinding
 
 class FragmentIngameBottom : Fragment() {
     private lateinit var binding: FragmentIngameBottomBinding
+    private lateinit var soundPoolManager: SoundPoolManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentIngameBottomBinding.inflate(layoutInflater)
+        soundPoolManager = SoundPoolManager.getInstance(requireContext())
     }
 
     override fun onCreateView(
@@ -27,7 +30,6 @@ class FragmentIngameBottom : Fragment() {
     ): View? {
         val rootView = binding.root
         val buttonClick = AlphaAnimation(1F, 0.8F)
-        val fragmentManager = requireActivity().supportFragmentManager
 
         // Finding IDs
         val backBtn = binding.btnBack
@@ -35,6 +37,7 @@ class FragmentIngameBottom : Fragment() {
 
         // Listeners
         backBtn.setOnClickListener{
+            soundPoolManager.playSound(R.raw.sfx_tick)
             backBtn.startAnimation(buttonClick)
             requireActivity().finish()
         }
@@ -45,6 +48,7 @@ class FragmentIngameBottom : Fragment() {
         soundSwitch.add(R.drawable.btn_sound_mute)
 
         soundBtn.setOnClickListener {
+            soundPoolManager.playSound(R.raw.sfx_tick)
             soundBtn.startAnimation(buttonClick)
             if(tick==0){
                 soundBtn.setBackgroundResource(soundSwitch[1])
@@ -56,18 +60,5 @@ class FragmentIngameBottom : Fragment() {
             }
         }
         return rootView
-    }
-
-    private fun loadFragment(frame:Int, fragment: Fragment) {
-        // create a FragmentManager
-        val fm = requireActivity().supportFragmentManager
-
-        // create a FragmentTransaction to begin the transaction and replace the Fragment
-        val fragmentTransaction = fm.beginTransaction()
-
-        // replace the FrameLayout with new Fragment
-        fragmentTransaction.replace(frame, fragment)
-        fragmentTransaction.commit() // save the changes
-
     }
 }

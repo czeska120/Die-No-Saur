@@ -1,5 +1,6 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -10,6 +11,8 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.ActivityGameBinding
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentGamePause
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.BGs
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.Dinos
 
 class GameActivity : AppCompatActivity() {
     companion object{
@@ -20,6 +23,10 @@ class GameActivity : AppCompatActivity() {
     private lateinit var parent: ViewGroup
     private lateinit var binding: ActivityGameBinding
     private lateinit var mAuth: FirebaseAuth
+    private var SHARED_PREFS = "sharedPrefs"
+    private var chosenBG = 0
+    private var chosenDino = 0
+    private lateinit var soundPoolManager: SoundPoolManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +44,7 @@ class GameActivity : AppCompatActivity() {
         pauseBtn = binding.btnPause
 
         pauseBtn.setOnClickListener{
+            soundPoolManager.playSound(R.raw.sfx_tick)
             game!!.pause()
 
             pauseBtn.visibility = View.INVISIBLE //hide pause button
@@ -64,6 +72,16 @@ class GameActivity : AppCompatActivity() {
         // replace the FrameLayout with new Fragment
         fragmentTransaction.replace(frame, fragment)
         fragmentTransaction.commit() // save the changes
+    }
+
+    fun loadData(){
+        var sharedPreferences : SharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
+        chosenBG = sharedPreferences.getInt("bgKey", 0)
+        chosenDino = sharedPreferences.getInt("dinoKey", 0)
+
+//        binding.bgTop.setImageResource(BGs[chosenBG].top)
+//        binding.bgBot.setImageResource(BGs[chosenBG].bottom)
+//        binding.homeDino.setImageResource(Dinos[chosenDino].walk)
     }
 
     /*override fun onBackPressed() {

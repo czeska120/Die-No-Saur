@@ -55,14 +55,17 @@ class SettingsActivity : AppCompatActivity() {
         val frame2 = R.id.settings_framelayout2
 
         binding.settingsCustomize.setOnClickListener{
+            soundPoolManager.playSound(R.raw.sfx_text)
             binding.settingsCustomize.startAnimation(buttonClick)
             loadFragment(frame1, FragmentCustomize())
         }
         binding.settingsHelp.setOnClickListener{
+            soundPoolManager.playSound(R.raw.sfx_text)
             binding.settingsHelp.startAnimation(buttonClick)
             loadFragment(frame1, FragmentHelp())
         }
         binding.settingsCredits.setOnClickListener {
+            soundPoolManager.playSound(R.raw.sfx_text)
             binding.settingsCredits.startAnimation(buttonClick)
             loadFragment(frame1, FragmentCredits())
         }
@@ -70,6 +73,8 @@ class SettingsActivity : AppCompatActivity() {
 
         binding.settingsSaveBtn.setOnClickListener {
             binding.settingsSaveBtn.startAnimation(buttonClick)
+            soundPoolManager.playSound(R.raw.sfx_confirm)
+            saveData()
             val goToHome = Intent(this, MainActivity::class.java)
             startActivity(goToHome)
             finishAffinity()
@@ -113,10 +118,6 @@ class SettingsActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Music volume: $progress", Toast.LENGTH_SHORT).show()
             }
         })
-
-        binding.settingsSaveBtn.setOnClickListener{
-            saveData()
-        }
         loadData()
     }
 

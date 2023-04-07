@@ -7,17 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
-import android.widget.ImageButton
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.MainActivity
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.R
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.SoundPoolManager
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.FragmentBottomBtnsBinding
 
 class FragmentBottomBtns : Fragment() {
     private lateinit var binding: FragmentBottomBtnsBinding
+    private lateinit var soundPoolManager: SoundPoolManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentBottomBtnsBinding.inflate(layoutInflater)
+        soundPoolManager = SoundPoolManager.getInstance(requireContext())
     }
 
     override fun onCreateView(
@@ -34,6 +36,7 @@ class FragmentBottomBtns : Fragment() {
         // Listeners
         homeBtn.setOnClickListener {
             homeBtn.startAnimation(buttonClick)
+            soundPoolManager.playSound(R.raw.sfx_tick)
             val goToHome = Intent(activity, MainActivity::class.java)
             startActivity(goToHome)
             requireActivity().finishAffinity()
@@ -46,6 +49,7 @@ class FragmentBottomBtns : Fragment() {
 
         soundBtn.setOnClickListener {
             soundBtn.startAnimation(buttonClick)
+            soundPoolManager.playSound(R.raw.sfx_tick)
             if(tick==0){
                 soundBtn.setBackgroundResource(soundSwitch[1])
                 tick++

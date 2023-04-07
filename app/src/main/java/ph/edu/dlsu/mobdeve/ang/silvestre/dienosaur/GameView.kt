@@ -27,6 +27,9 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
 
         // pause game
         var isPaused: Boolean = false
+
+        var chosenBG = 0
+        var chosenDino = 0
     }
 
     private var UPDATE_MILLIS: Long = 30
