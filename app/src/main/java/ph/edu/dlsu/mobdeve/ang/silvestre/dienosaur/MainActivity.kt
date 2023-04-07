@@ -21,11 +21,13 @@ class MainActivity : AppCompatActivity() {
     private var SHARED_PREFS = "sharedPrefs"
     private var chosenBG = 0
     private var chosenDino = 0
+    private lateinit var soundPoolManager: SoundPoolManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         mAuth = FirebaseAuth.getInstance()
+        soundPoolManager = SoundPoolManager.getInstance(applicationContext)
 
         // Adding button click animation
         val buttonClick = AlphaAnimation(1F, 0.8F);
@@ -41,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         // --- PLAY AS GUEST ---
         binding.homeBtnGuest.setOnClickListener{
             binding.homeBtnGuest.startAnimation(buttonClick)
+            soundPoolManager.playSound(R.raw.sfx_button)
             val startGame = Intent(this, GameActivity::class.java)
             startActivity(startGame)
         }
@@ -48,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         // --- SIGN-IN ---
         binding.homeBtnSignin.setOnClickListener {
             binding.homeBtnSignin.startAnimation(buttonClick)
+            soundPoolManager.playSound(R.raw.sfx_button)
             val signIn = Intent(this, SignInActivity::class.java)
             startActivity(signIn)
         }
@@ -55,6 +59,7 @@ class MainActivity : AppCompatActivity() {
         // --- SETTINGS ---
         binding.homeBtnSettings.setOnClickListener {
             binding.homeBtnSettings.startAnimation(buttonClick)
+            soundPoolManager.playSound(R.raw.sfx_button)
             val goToSettings = Intent(this,SettingsActivity::class.java)
             startActivity(goToSettings)
         }
@@ -62,12 +67,14 @@ class MainActivity : AppCompatActivity() {
         // --- LEADERBOARD ---
         binding.homeBtnLeaderboard.setOnClickListener {
             binding.homeBtnLeaderboard.startAnimation(buttonClick)
+            soundPoolManager.playSound(R.raw.sfx_button)
             val goToLeaderboard = Intent(this, LeaderboardActivity::class.java)
             startActivity(goToLeaderboard)
         }
 
         // --- LOGIN PROMPT ---
         binding.homeTvLoginPrompt.setOnClickListener {
+            soundPoolManager.playSound(R.raw.sfx_text)
             val logIn = Intent(this, LoginActivity::class.java)
             startActivity(logIn)
         }

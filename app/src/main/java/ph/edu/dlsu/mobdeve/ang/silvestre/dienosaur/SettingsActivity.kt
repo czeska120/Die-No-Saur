@@ -1,9 +1,12 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.media.AudioManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore.Audio
 import android.util.Log
 import android.view.View
 import android.view.Window
@@ -22,15 +25,21 @@ import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.BGs
 class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingsBinding
     private var SHARED_PREFS = "sharedPrefs"
-    private var progressFx: Int = 0
-    private var progressMusic: Int = 0
+    private var curVolSFX = 0f
+    private var maxVolMusic = 0
+    private var curVolMusic = 0
+    private var progressFx = 0
+    private var progressMusic = 0
     private var chosenBG = 0
     private var chosenDino = 0
+    private lateinit var audioManager: AudioManager
+    private lateinit var soundPoolManager: SoundPoolManager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
+        soundPoolManager = SoundPoolManager.getInstance(applicationContext)
 
         val buttonClick = AlphaAnimation(1F, 0.8F);
         // Hides title bar
@@ -65,7 +74,9 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(goToHome)
             finishAffinity()
         }
-        binding.seekbarSoundfx.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+
+        val fxBtn = binding.seekbarSoundfx
+        fxBtn.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 // intentionally empty; required to override
             }
@@ -77,13 +88,20 @@ class SettingsActivity : AppCompatActivity() {
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 var progress = seekBar.progress
                 Toast.makeText(applicationContext, "Sound FX volume: $progress", Toast.LENGTH_SHORT).show()
-
+                curVolSFX = (progress.toFloat())/100
             }
         })
 
-        binding.seekbarMusic.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        maxVolMusic = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+        curVolMusic = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+
+        val musicBtn = binding.seekbarMusic
+        musicBtn.max = maxVolMusic
+        musicBtn.progress = curVolMusic
+        musicBtn.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                // intentionally empty; required to override
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
@@ -108,13 +126,15 @@ class SettingsActivity : AppCompatActivity() {
         sharedPrefEdit.putInt("fxKey", binding.seekbarSoundfx.progress)
         sharedPrefEdit.putInt("musicKey", binding.seekbarMusic.progress)
         sharedPrefEdit.commit()
+        soundPoolManager.setVolume(curVolSFX)
+        Log.d("TESTING", "$curVolSFX")
         Toast.makeText(this, "Settings saved", Toast.LENGTH_SHORT).show()
     }
 
     fun loadData(){
         var sharedPreferences : SharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
         progressFx = sharedPreferences.getInt("fxKey", 100)
-        progressMusic = sharedPreferences.getInt("musicKey", 100)
+        progressMusic = sharedPreferences.getInt("musicKey", curVolMusic)
         chosenBG = sharedPreferences.getInt("bgKey", 0)
         chosenDino = sharedPreferences.getInt("dinoKey", 0)
 
