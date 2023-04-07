@@ -213,7 +213,7 @@
                 android:textAlignment="textEnd"
                 android:layout_alignEnd="@+id/credits_back"
                 android:layout_below="@+id/credits_tv6"
-                android:text="-"
+                android:text="Creator Assets on YouTube"
                 app:outlineColor="@color/outline"
                 app:outlineSize="5dp" />
 
