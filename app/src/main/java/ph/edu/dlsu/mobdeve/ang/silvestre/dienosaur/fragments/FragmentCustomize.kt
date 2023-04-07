@@ -77,7 +77,6 @@ class FragmentCustomize : Fragment() {
                 i = 5
                 dino.setImageResource(characterArray[i])
             }
-            Toast.makeText(requireActivity(), "Sa letrang I: $i", Toast.LENGTH_SHORT).show()
             chosenDino = i
         }
         charaNext.setOnClickListener {
@@ -91,7 +90,6 @@ class FragmentCustomize : Fragment() {
                 i = 0
                 dino.setImageResource(characterArray[i])
             }
-            Toast.makeText(requireActivity(), "Sa letrang I: $i", Toast.LENGTH_SHORT).show()
             chosenDino = i
         }
 
@@ -108,7 +106,6 @@ class FragmentCustomize : Fragment() {
                 bgText.text = bgArray[j]
                 bgImg.setImageResource(bgImgArray[j])
             }
-            Toast.makeText(requireActivity(), "Sa letrang J: $j", Toast.LENGTH_SHORT).show()
             chosenBG = j
         }
         bgNext.setOnClickListener {
@@ -124,7 +121,6 @@ class FragmentCustomize : Fragment() {
                 bgText.text = bgArray[j]
                 bgImg.setImageResource(bgImgArray[j])
             }
-            Toast.makeText(requireActivity(), "Sa letrang J: $j", Toast.LENGTH_SHORT).show()
             chosenBG = j
         }
         Log.d("TESTING","BEFORE SAVE $chosenDino, $i")
