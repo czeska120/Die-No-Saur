@@ -7,6 +7,7 @@ import android.text.TextUtils
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.view.animation.AlphaAnimation
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
@@ -21,6 +22,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         mAuth = FirebaseAuth.getInstance()
+        val buttonClick = AlphaAnimation(1F, 0.8F);
 
         // Hides title bar
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -30,6 +32,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.loginBtnLogin.setOnClickListener {
+            binding.loginBtnLogin.startAnimation(buttonClick)
             loginUser()
         }
         binding.loginTvSigninPrompt.setOnClickListener {

@@ -1,8 +1,10 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,6 +16,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.R
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.SettingsActivity
@@ -26,12 +29,13 @@ import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.Dinos
 class FragmentCustomize : Fragment() {
     private lateinit var binding: FragmentCustomizeBinding
     private var SHARED_PREFS = "sharedPrefs"
-    private var bgKey = "bgKey"
-    private var dinoKey = "dinoKey"
     private var chosenBG = 0
     private var chosenDino = 0
     private var i = 0
     private var j = 0
+    private val characterArray = ArrayList<Int>()
+    private var bgArray = arrayOf("FALL","SPRING","WINTER")
+    private var bgImgArray = ArrayList<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,10 +51,7 @@ class FragmentCustomize : Fragment() {
 
         val buttonClick = AlphaAnimation(1F, 0.8F)
 
-        // Plugging data
-        val characterArray = ArrayList<Int>()
-        var bgArray = arrayOf("FALL","SPRING","WINTER")
-        var bgImgArray = ArrayList<Int>()
+
 
         characterArray.add(Dinos[0].walk)
         characterArray.add(Dinos[1].walk)
@@ -146,23 +147,37 @@ class FragmentCustomize : Fragment() {
             Log.d("TESTING","INSIDE SAVE BTN $chosenDino, $chosenBG")
             saveData()
         }
+        loadData()
         // Inflate the layout for this fragment
         return rootView
     }
 
     fun saveData(){
-        var sharedPreferences : SharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, AppCompatActivity.MODE_MULTI_PROCESS)
+        var sharedPreferences : SharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, AppCompatActivity.MODE_PRIVATE)
         var sharedPrefEdit = sharedPreferences.edit()
         // store blank new, get to be saved
-        Log.d("TESTING","INSIDE SAVE DATA MISMO $chosenBG")
-        sharedPrefEdit.putInt(bgKey,chosenDino)
-        sharedPrefEdit.putInt(dinoKey,chosenBG)
+        Log.d("TESTING","INSIDE SAVE DATA MISMO BG: $chosenBG")
+        sharedPrefEdit.putInt("bgKey",chosenBG)
+        sharedPrefEdit.putInt("dinoKey",chosenDino)
         sharedPrefEdit.commit()
         // close fragment
         val fragmentManager = requireActivity().supportFragmentManager
         fragmentManager.beginTransaction().remove(this).commit()
     }
-    companion object {
+    fun loadData(){
+        var sharedPreferences : SharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, AppCompatActivity.MODE_PRIVATE)
+        chosenBG = sharedPreferences.getInt("bgKey", 0)
+        chosenDino = sharedPreferences.getInt("dinoKey", 0)
 
+        binding.customizeBg.setImageResource(BGs[chosenBG].dark)
+        binding.customizeDino.setImageResource(Dinos[chosenDino].walk)
+        binding.customizeBgbody.text = bgArray[chosenBG]
+
+        Log.d("TESTING","INSIDE SETTINGS BG: $chosenBG")
+    }
+    override fun onDetach() {
+        super.onDetach()
+        val activity = requireActivity() as SettingsActivity
+        activity.loadData()
     }
 }

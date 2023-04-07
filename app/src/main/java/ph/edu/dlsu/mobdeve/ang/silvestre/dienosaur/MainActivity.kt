@@ -1,6 +1,7 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,11 +11,16 @@ import android.view.WindowManager
 import android.view.animation.AlphaAnimation
 import com.google.firebase.auth.FirebaseAuth
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.ActivityMainBinding
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.BGs
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.Dinos
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var mAuth : FirebaseAuth
     private lateinit var serviceIntent: Intent
+    private var SHARED_PREFS = "sharedPrefs"
+    private var chosenBG = 0
+    private var chosenDino = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +73,7 @@ class MainActivity : AppCompatActivity() {
         }
         serviceIntent =  Intent(applicationContext, MusicService::class.java)
         startService(serviceIntent)
+        loadData()
     }
 
     public override fun onStart() {
@@ -78,5 +85,14 @@ class MainActivity : AppCompatActivity() {
             this.overridePendingTransition(0, 0)
             finish()
         }
+    }
+    fun loadData(){
+        var sharedPreferences : SharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
+        chosenBG = sharedPreferences.getInt("bgKey", 0)
+        chosenDino = sharedPreferences.getInt("dinoKey", 0)
+
+        binding.bgTop.setImageResource(BGs[chosenBG].top)
+        binding.bgBot.setImageResource(BGs[chosenBG].bottom)
+        binding.homeDino.setImageResource(Dinos[chosenDino].walk)
     }
 }

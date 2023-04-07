@@ -1,6 +1,7 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
@@ -12,10 +13,14 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.ActivitySignInBinding
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentBottomBtns
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.BGs
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.Dinos
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignInBinding
     private lateinit var mAuth: FirebaseAuth
+    private var SHARED_PREFS = "sharedPrefs"
+    private var chosenBG = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,6 +77,7 @@ class SignInActivity : AppCompatActivity() {
                 }
             }
         }
+        loadData()
     }
 
     private fun loadFragment(frame:Int, fragment: Fragment) {
@@ -84,5 +90,12 @@ class SignInActivity : AppCompatActivity() {
         // replace the FrameLayout with new Fragment
         fragmentTransaction.replace(frame, fragment)
         fragmentTransaction.commit() // save the changes
+    }
+    fun loadData(){
+        var sharedPreferences : SharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
+        chosenBG = sharedPreferences.getInt("bgKey", 0)
+
+        binding.bgTop.setImageResource(BGs[chosenBG].top)
+        binding.bgBot.setImageResource(BGs[chosenBG].bottom)
     }
 }
