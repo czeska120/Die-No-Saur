@@ -1,11 +1,10 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
+import android.content.*
 import android.media.AudioManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.IBinder
 import android.provider.MediaStore.Audio
 import android.util.Log
 import android.view.View
@@ -35,11 +34,16 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var audioManager: AudioManager
     private lateinit var soundPoolManager: SoundPoolManager
 
+    private lateinit var serviceIntent: Intent
+    private lateinit var service: MusicService
+    private lateinit var serviceConn: ServiceConnection
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         soundPoolManager = SoundPoolManager.getInstance(applicationContext)
+        serviceIntent =  Intent(this, MusicService::class.java)
 
         val buttonClick = AlphaAnimation(1F, 0.8F);
         // Hides title bar
@@ -149,5 +153,21 @@ class SettingsActivity : AppCompatActivity() {
 
         fragmentTransaction.replace(frame, fragment)
         fragmentTransaction.commit()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val serviceConn = object : ServiceConnection{
+            override fun onServiceConnected(p0: ComponentName?, iBinder: IBinder?) {
+                val localBinder = iBinder as MusicService.LocalBinder
+                service = localBinder.getMusicServiceInstance()
+                service.unmuteVolume()
+            }
+
+            override fun onServiceDisconnected(p0: ComponentName?) {
+                TODO("Not yet implemented")
+            }
+        }
+        bindService(serviceIntent, serviceConn, Context.BIND_AUTO_CREATE)
     }
 }

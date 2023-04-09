@@ -31,7 +31,6 @@ class FragmentIngameBottom : Fragment() {
             override fun onServiceConnected(p0: ComponentName?, iBinder: IBinder?) {
                 val localBinder = iBinder as MusicService.LocalBinder
                 service = localBinder.getMusicServiceInstance()
-                service.test()
             }
 
             override fun onServiceDisconnected(p0: ComponentName?) {

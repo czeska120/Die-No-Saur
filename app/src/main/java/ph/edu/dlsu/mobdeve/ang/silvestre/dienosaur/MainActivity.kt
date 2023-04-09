@@ -17,11 +17,16 @@ import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.Dinos
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var mAuth : FirebaseAuth
-    private lateinit var serviceIntent: Intent
+
     private var SHARED_PREFS = "sharedPrefs"
     private var chosenBG = 0
     private var chosenDino = 0
     private lateinit var soundPoolManager: SoundPoolManager
+
+    private lateinit var serviceIntent: Intent
+    private lateinit var service: MusicService
+    private lateinit var serviceConn: ServiceConnection
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         soundPoolManager = SoundPoolManager.getInstance(applicationContext)
 
         // Adding button click animation
-        val buttonClick = AlphaAnimation(1F, 0.8F);
+        val buttonClick = AlphaAnimation(1F, 0.8F)
         // Hides title bar
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -80,18 +85,15 @@ class MainActivity : AppCompatActivity() {
         }
         serviceIntent =  Intent(applicationContext, MusicService::class.java)
 
-        val serviceConn = object : ServiceConnection{
+        serviceConn = object : ServiceConnection{
             override fun onServiceConnected(p0: ComponentName?, iBinder: IBinder?) {
                 val localBinder = iBinder as MusicService.LocalBinder
-                val service = localBinder.getMusicServiceInstance()
-                service.test()
+                service = localBinder.getMusicServiceInstance()
             }
 
             override fun onServiceDisconnected(p0: ComponentName?) {
-                TODO("Not yet implemented")
             }
         }
-
         bindService(serviceIntent, serviceConn, Context.BIND_AUTO_CREATE)
         startService(serviceIntent)
         loadData()
@@ -106,6 +108,18 @@ class MainActivity : AppCompatActivity() {
             this.overridePendingTransition(0, 0)
             finish()
         }
+        serviceConn = object : ServiceConnection{
+            override fun onServiceConnected(p0: ComponentName?, iBinder: IBinder?) {
+                val localBinder = iBinder as MusicService.LocalBinder
+                service = localBinder.getMusicServiceInstance()
+                service.unmuteVolume()
+                Log.d("TESTING", "Service is back")
+            }
+
+            override fun onServiceDisconnected(p0: ComponentName?) {
+            }
+        }
+        bindService(serviceIntent, serviceConn, Context.BIND_AUTO_CREATE)
     }
     fun loadData(){
         var sharedPreferences : SharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
@@ -115,5 +129,10 @@ class MainActivity : AppCompatActivity() {
         binding.bgTop.setImageResource(BGs[chosenBG].top)
         binding.bgBot.setImageResource(BGs[chosenBG].bottom)
         binding.homeDino.setImageResource(Dinos[chosenDino].walk)
+    }
+    override fun onPause() {
+        super.onPause()
+        service.muteVolume()
+//        unbindService(serviceConn)
     }
 }

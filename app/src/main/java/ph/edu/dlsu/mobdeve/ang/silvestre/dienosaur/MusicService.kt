@@ -43,10 +43,6 @@ class MusicService: Service() {
         mediaPlayer.stop()
     }
 
-    fun test(){
-        Log.d("TESTING", "Hello from MusicService!")
-    }
-
     fun muteVolume() {
             mediaPlayer.pause()
     }
