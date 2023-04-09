@@ -3,13 +3,23 @@ package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 import android.app.Service
 import android.content.Intent
 import android.media.MediaPlayer
+import android.os.Binder
 import android.os.IBinder
+import android.util.Log
 
 class MusicService: Service() {
+    companion object {
+        private const val TAG = "MusicService"
+    }
     private lateinit var mediaPlayer : MediaPlayer
-
+    val localBinder = LocalBinder()
+    inner class LocalBinder: Binder(){
+        fun getMusicServiceInstance() : MusicService{
+            return this@MusicService
+        }
+    }
     override fun onBind(p0: Intent?): IBinder? {
-        TODO("Not yet implemented")
+        return localBinder
     }
 
     override fun onCreate() {
@@ -27,9 +37,22 @@ class MusicService: Service() {
         return START_STICKY
     }
 
+
+
     override fun onDestroy() {
         mediaPlayer.stop()
     }
 
+    fun test(){
+        Log.d("TESTING", "Hello from MusicService!")
+    }
+
+    fun muteVolume() {
+            mediaPlayer.pause()
+    }
+
+    fun unmuteVolume() {
+            mediaPlayer.start()
+    }
 
 }

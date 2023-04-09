@@ -1,9 +1,9 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
-import android.content.Intent
-import android.content.SharedPreferences
+import android.content.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.IBinder
 import android.util.Log
 import android.view.View
 import android.view.Window
@@ -79,6 +79,20 @@ class MainActivity : AppCompatActivity() {
             startActivity(logIn)
         }
         serviceIntent =  Intent(applicationContext, MusicService::class.java)
+
+        val serviceConn = object : ServiceConnection{
+            override fun onServiceConnected(p0: ComponentName?, iBinder: IBinder?) {
+                val localBinder = iBinder as MusicService.LocalBinder
+                val service = localBinder.getMusicServiceInstance()
+                service.test()
+            }
+
+            override fun onServiceDisconnected(p0: ComponentName?) {
+                TODO("Not yet implemented")
+            }
+        }
+
+        bindService(serviceIntent, serviceConn, Context.BIND_AUTO_CREATE)
         startService(serviceIntent)
         loadData()
     }
