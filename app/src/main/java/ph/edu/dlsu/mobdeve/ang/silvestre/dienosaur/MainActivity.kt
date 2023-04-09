@@ -99,8 +99,8 @@ class MainActivity : AppCompatActivity() {
         loadData()
     }
 
-    public override fun onStart() {
-        super.onStart()
+    public override fun onResume() {
+        super.onResume()
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = mAuth.currentUser
         if(currentUser != null){
@@ -113,7 +113,6 @@ class MainActivity : AppCompatActivity() {
                 val localBinder = iBinder as MusicService.LocalBinder
                 service = localBinder.getMusicServiceInstance()
                 service.unmuteVolume()
-                Log.d("TESTING", "Service is back")
             }
 
             override fun onServiceDisconnected(p0: ComponentName?) {

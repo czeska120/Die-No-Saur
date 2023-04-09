@@ -1,9 +1,9 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
-import android.content.Intent
-import android.content.SharedPreferences
+import android.content.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.IBinder
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -21,12 +21,16 @@ class MainLoggedInActivity : AppCompatActivity() {
     private var chosenBG = 0
     private var chosenDino = 0
     private lateinit var soundPoolManager: SoundPoolManager
+    private lateinit var serviceIntent: Intent
+    private lateinit var service: MusicService
+    private lateinit var serviceConn: ServiceConnection
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainLoggedInBinding.inflate(layoutInflater)
         mAuth = FirebaseAuth.getInstance()
         soundPoolManager = SoundPoolManager.getInstance(applicationContext)
+        serviceIntent =  Intent(this, MusicService::class.java)
         val buttonClick = AlphaAnimation(1F, 0.8F);
 
         // Hides title bar
@@ -78,5 +82,23 @@ class MainLoggedInActivity : AppCompatActivity() {
         binding.bgTop.setImageResource(BGs[chosenBG].top)
         binding.bgBot.setImageResource(BGs[chosenBG].bottom)
         binding.mainloggedDino.setImageResource(Dinos[chosenDino].walk)
+    }
+    override fun onPause() {
+        super.onPause()
+        service.muteVolume()
+    }
+    override fun onResume() {
+        super.onResume()
+        serviceConn = object : ServiceConnection{
+            override fun onServiceConnected(p0: ComponentName?, iBinder: IBinder?) {
+                val localBinder = iBinder as MusicService.LocalBinder
+                service = localBinder.getMusicServiceInstance()
+                service.unmuteVolume()
+            }
+
+            override fun onServiceDisconnected(p0: ComponentName?) {
+            }
+        }
+        bindService(serviceIntent, serviceConn, Context.BIND_AUTO_CREATE)
     }
 }

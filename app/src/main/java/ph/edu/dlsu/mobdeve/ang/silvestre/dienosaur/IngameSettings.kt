@@ -1,8 +1,12 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
+import android.content.ServiceConnection
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.IBinder
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -16,10 +20,14 @@ import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.*
 class IngameSettings : AppCompatActivity() {
     private lateinit var binding: ActivityIngameSettingsBinding
     private lateinit var soundPoolManager: SoundPoolManager
+    private lateinit var serviceIntent: Intent
+    private lateinit var service: MusicService
+    private lateinit var serviceConn: ServiceConnection
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityIngameSettingsBinding.inflate(layoutInflater)
         soundPoolManager = SoundPoolManager.getInstance(applicationContext)
+        serviceIntent =  Intent(this, MusicService::class.java)
 
         val buttonClick = AlphaAnimation(1F, 0.8F);
         // Hides title bar
@@ -79,11 +87,7 @@ class IngameSettings : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Music volume: $progress", Toast.LENGTH_SHORT).show()
             }
         })
-
     }
-
-
-
     private fun loadFragment(frame:Int, fragment: Fragment) {
         // create a FragmentManager
         val fm = supportFragmentManager
@@ -95,5 +99,23 @@ class IngameSettings : AppCompatActivity() {
         fragmentTransaction.replace(frame, fragment)
         fragmentTransaction.commit() // save the changes
 
+    }
+    override fun onPause() {
+        super.onPause()
+        service.muteVolume()
+    }
+    override fun onResume() {
+        super.onResume()
+        serviceConn = object : ServiceConnection{
+            override fun onServiceConnected(p0: ComponentName?, iBinder: IBinder?) {
+                val localBinder = iBinder as MusicService.LocalBinder
+                service = localBinder.getMusicServiceInstance()
+                service.unmuteVolume()
+            }
+
+            override fun onServiceDisconnected(p0: ComponentName?) {
+            }
+        }
+        bindService(serviceIntent, serviceConn, Context.BIND_AUTO_CREATE)
     }
 }

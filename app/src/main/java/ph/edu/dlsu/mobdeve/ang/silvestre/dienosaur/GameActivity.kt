@@ -1,8 +1,9 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
-import android.content.SharedPreferences
+import android.content.*
 import android.os.Bundle
 import android.os.Handler
+import android.os.IBinder
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,9 @@ import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.BGs
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.Dinos
 
 class GameActivity : AppCompatActivity() {
+    private lateinit var serviceIntent: Intent
+    private lateinit var service: MusicService
+    private lateinit var serviceConn: ServiceConnection
     companion object{
         lateinit var pauseBtn: AppCompatImageButton
         var game: GameView? = null
@@ -33,6 +37,8 @@ class GameActivity : AppCompatActivity() {
         binding = ActivityGameBinding.inflate(layoutInflater)
         setContentView(binding.root)
         mAuth = FirebaseAuth.getInstance()
+        soundPoolManager = SoundPoolManager.getInstance(applicationContext)
+        serviceIntent =  Intent(this, MusicService::class.java)
         //setContentView(GameView(this))
 
         parent = binding.gameParent
@@ -55,6 +61,27 @@ class GameActivity : AppCompatActivity() {
     override fun onPause(){
         super.onPause()
         game!!.pause()
+        service.muteVolume()
+    }
+
+    override fun onResume() {
+        super.onResume()
+//        if() game has already started only will this run
+//        game!!.resume()
+        if(GameView.isPaused){
+            game!!.resume()
+        }
+        serviceConn = object : ServiceConnection{
+            override fun onServiceConnected(p0: ComponentName?, iBinder: IBinder?) {
+                val localBinder = iBinder as MusicService.LocalBinder
+                service = localBinder.getMusicServiceInstance()
+                service.unmuteVolume()
+            }
+
+            override fun onServiceDisconnected(p0: ComponentName?) {
+            }
+        }
+        bindService(serviceIntent, serviceConn, Context.BIND_AUTO_CREATE)
     }
 
     override fun onDestroy() {

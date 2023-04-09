@@ -33,12 +33,9 @@ class SettingsActivity : AppCompatActivity() {
     private var chosenDino = 0
     private lateinit var audioManager: AudioManager
     private lateinit var soundPoolManager: SoundPoolManager
-
     private lateinit var serviceIntent: Intent
     private lateinit var service: MusicService
     private lateinit var serviceConn: ServiceConnection
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
@@ -154,10 +151,13 @@ class SettingsActivity : AppCompatActivity() {
         fragmentTransaction.replace(frame, fragment)
         fragmentTransaction.commit()
     }
-
-    override fun onStart() {
-        super.onStart()
-        val serviceConn = object : ServiceConnection{
+    override fun onPause() {
+        super.onPause()
+        service.muteVolume()
+    }
+    override fun onResume() {
+        super.onResume()
+        serviceConn = object : ServiceConnection{
             override fun onServiceConnected(p0: ComponentName?, iBinder: IBinder?) {
                 val localBinder = iBinder as MusicService.LocalBinder
                 service = localBinder.getMusicServiceInstance()
@@ -165,7 +165,6 @@ class SettingsActivity : AppCompatActivity() {
             }
 
             override fun onServiceDisconnected(p0: ComponentName?) {
-                TODO("Not yet implemented")
             }
         }
         bindService(serviceIntent, serviceConn, Context.BIND_AUTO_CREATE)

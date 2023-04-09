@@ -1,9 +1,9 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
-import android.content.Intent
-import android.content.SharedPreferences
+import android.content.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.IBinder
 import android.text.TextUtils
 import android.view.View
 import android.view.Window
@@ -22,12 +22,16 @@ class SignInActivity : AppCompatActivity() {
     private var SHARED_PREFS = "sharedPrefs"
     private var chosenBG = 0
     private lateinit var soundPoolManager: SoundPoolManager
+    private lateinit var serviceIntent: Intent
+    private lateinit var service: MusicService
+    private lateinit var serviceConn: ServiceConnection
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignInBinding.inflate(layoutInflater)
         mAuth = FirebaseAuth.getInstance()
         soundPoolManager = SoundPoolManager.getInstance(applicationContext)
+        serviceIntent =  Intent(this, MusicService::class.java)
 
         // Hides title bar
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -96,5 +100,24 @@ class SignInActivity : AppCompatActivity() {
         chosenBG = sharedPreferences.getInt("bgKey", 0)
 
         binding.signinBg.setImageResource(BGs[chosenBG].dark)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        service.muteVolume()
+    }
+    override fun onResume() {
+        super.onResume()
+        serviceConn = object : ServiceConnection{
+            override fun onServiceConnected(p0: ComponentName?, iBinder: IBinder?) {
+                val localBinder = iBinder as MusicService.LocalBinder
+                service = localBinder.getMusicServiceInstance()
+                service.unmuteVolume()
+            }
+
+            override fun onServiceDisconnected(p0: ComponentName?) {
+            }
+        }
+        bindService(serviceIntent, serviceConn, Context.BIND_AUTO_CREATE)
     }
 }

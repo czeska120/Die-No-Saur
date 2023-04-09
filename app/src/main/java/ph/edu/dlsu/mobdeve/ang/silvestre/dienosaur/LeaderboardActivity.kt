@@ -1,8 +1,9 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
-import android.content.SharedPreferences
+import android.content.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.IBinder
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -27,9 +28,13 @@ class LeaderboardActivity : AppCompatActivity() {
     private lateinit var dbreference: DatabaseReference
     private var SHARED_PREFS = "sharedPrefs"
     private var chosenBG = 0
+    private lateinit var serviceIntent: Intent
+    private lateinit var service: MusicService
+    private lateinit var serviceConn: ServiceConnection
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLeaderboardBinding.inflate(layoutInflater)
+        serviceIntent =  Intent(this, MusicService::class.java)
 
         // Hides title bar
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -86,5 +91,23 @@ class LeaderboardActivity : AppCompatActivity() {
         chosenBG = sharedPreferences.getInt("bgKey", 0)
 
         binding.leaderboardbg.setImageResource(BGs[chosenBG].dark)
+    }
+    override fun onPause() {
+        super.onPause()
+        service.muteVolume()
+    }
+    override fun onResume() {
+        super.onResume()
+        serviceConn = object : ServiceConnection{
+            override fun onServiceConnected(p0: ComponentName?, iBinder: IBinder?) {
+                val localBinder = iBinder as MusicService.LocalBinder
+                service = localBinder.getMusicServiceInstance()
+                service.unmuteVolume()
+            }
+
+            override fun onServiceDisconnected(p0: ComponentName?) {
+            }
+        }
+        bindService(serviceIntent, serviceConn, Context.BIND_AUTO_CREATE)
     }
 }
