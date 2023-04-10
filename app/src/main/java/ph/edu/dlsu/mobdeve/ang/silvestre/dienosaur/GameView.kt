@@ -454,10 +454,12 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
         rectBottom = Rect(0, bgTop.height, dWidth, dHeight)
 
         //dino
+        dinoRun.clear()
         dinoRunInt = dino.run
         for (i in dinoRunInt.indices) {
             dinoRun.add(BitmapFactory.decodeResource(context.resources, dinoRunInt[i]))
         }
+        dinoHit.clear()
         dinoHitInt = dino.hit
         for (i in dinoHitInt.indices) {
             dinoHit.add(BitmapFactory.decodeResource(context.resources, dinoHitInt[i]))
