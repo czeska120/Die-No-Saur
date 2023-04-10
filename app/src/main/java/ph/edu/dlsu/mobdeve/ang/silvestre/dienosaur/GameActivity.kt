@@ -6,6 +6,8 @@ import android.os.Handler
 import android.os.IBinder
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.Fragment
@@ -36,6 +38,17 @@ class GameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityGameBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Hides title bar
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
+        this.window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+
+        // Hides action bar (bottom)
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+
+        // Prevent screen from sleep
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
         mAuth = FirebaseAuth.getInstance()
         soundPoolManager = SoundPoolManager.getInstance(applicationContext)
         serviceIntent =  Intent(this, MusicService::class.java)

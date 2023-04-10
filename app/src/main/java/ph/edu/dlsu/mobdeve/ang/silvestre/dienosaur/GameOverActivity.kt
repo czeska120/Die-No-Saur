@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -37,6 +40,13 @@ class GameOverActivity : AppCompatActivity() {
         soundPoolManager = SoundPoolManager.getInstance(applicationContext)
         serviceIntent =  Intent(this, MusicService::class.java)
         setContentView(binding.root)
+
+        // Hides title bar
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
+        this.window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+
+        //Hides action bar (bottom)
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
 
         val frame2 = R.id.settings_framelayout2
         loadFragment(frame2, FragmentBottomBtns())

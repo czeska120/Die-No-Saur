@@ -36,11 +36,13 @@ class MainActivity : AppCompatActivity() {
 
         // Adding button click animation
         val buttonClick = AlphaAnimation(1F, 0.8F)
+
         // Hides title bar
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        //Hides action bar (bottom)
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
+        this.window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+
+        // Hides action bar (bottom)
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
 
         setContentView(binding.root)
 
