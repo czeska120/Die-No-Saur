@@ -39,7 +39,6 @@ class GameOverActivity : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
         soundPoolManager = SoundPoolManager.getInstance(applicationContext)
         serviceIntent =  Intent(this, MusicService::class.java)
-        setContentView(binding.root)
 
         // Hides title bar
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -47,6 +46,8 @@ class GameOverActivity : AppCompatActivity() {
 
         //Hides action bar (bottom)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+
+        setContentView(binding.root)
 
         val frame2 = R.id.settings_framelayout2
         loadFragment(frame2, FragmentBottomBtns())

@@ -37,17 +37,15 @@ class GameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGameBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         // Hides title bar
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         this.window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
-        // Hides action bar (bottom)
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-
         // Prevent screen from sleep
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
+        setContentView(binding.root)
 
         mAuth = FirebaseAuth.getInstance()
         soundPoolManager = SoundPoolManager.getInstance(applicationContext)
@@ -56,6 +54,7 @@ class GameActivity : AppCompatActivity() {
 
         parent = binding.gameParent
         game = parent.getChildAt(0) as GameView
+        loadData()
         game!!.reset()
 
         val frame = binding.gameFramelayout.id
@@ -119,6 +118,7 @@ class GameActivity : AppCompatActivity() {
         chosenBG = sharedPreferences.getInt("bgKey", 0)
         chosenDino = sharedPreferences.getInt("dinoKey", 0)
 
+        game!!.setCustom(chosenBG, chosenDino)
 //        binding.bgTop.setImageResource(BGs[chosenBG].top)
 //        binding.bgBot.setImageResource(BGs[chosenBG].bottom)
 //        binding.homeDino.setImageResource(Dinos[chosenDino].walk)

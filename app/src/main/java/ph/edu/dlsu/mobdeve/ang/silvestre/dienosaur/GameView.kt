@@ -28,6 +28,7 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
         // pause game
         var isPaused: Boolean = false
 
+        // defaults
         var chosenBG = 0
         var chosenDino = 0
     }
@@ -36,8 +37,8 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
     private var runnable: Runnable
 
     // customize based on user preferences
-    private var bg: BG = BGs[0]
-    private var dino: DinoSprite = Dinos[0]
+    private var bg: BG
+    private var dino: DinoSprite
 
     // background
     private var bgTop: Bitmap
@@ -105,6 +106,10 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
         dHeight = size.y
 
         //reset() :
+        // customize based on user preferences
+        bg = BGs[chosenBG]
+        dino = Dinos[chosenDino]
+
         //bg
         bgTop = BitmapFactory.decodeResource(context.resources, bg.top)
         bgBottom = BitmapFactory.decodeResource(context.resources, bg.bottom)
@@ -432,6 +437,10 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
 
     // pause game
     fun reset() {
+        // customize based on user preferences
+        bg = BGs[chosenBG]
+        dino = Dinos[chosenDino]
+
         //reset variables
         isPaused = false
         dino.runFrame = 0
@@ -540,5 +549,10 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
         resetTimer()
         sensorManager.unregisterListener(this)
         this.handler.removeCallbacks(runnable)
+    }
+
+    fun setCustom(bgKey: Int, dinoKey: Int){
+        chosenBG = bgKey
+        chosenDino = dinoKey
     }
 }

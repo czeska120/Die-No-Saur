@@ -40,6 +40,8 @@ class LoginActivity : AppCompatActivity() {
         //Hides action bar (bottom)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
 
+        setContentView(binding.root)
+
         binding.loginBtnLogin.setOnClickListener {
             soundPoolManager.playSound(R.raw.sfx_button)
             binding.loginBtnLogin.startAnimation(buttonClick)
