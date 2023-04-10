@@ -553,6 +553,10 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
         this.handler.removeCallbacks(runnable)
     }
 
+    fun getPauseBool() : Boolean {
+        return isPaused
+    }
+
     fun setCustom(bgKey: Int, dinoKey: Int){
         chosenBG = bgKey
         chosenDino = dinoKey

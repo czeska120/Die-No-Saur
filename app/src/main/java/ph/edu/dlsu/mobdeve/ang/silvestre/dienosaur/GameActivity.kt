@@ -78,11 +78,16 @@ class GameActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-//        if() game has already started only will this run
-//        game!!.resume()
-        if(GameView.isPaused){
-            game!!.resume()
+
+        // if game has already started only will this run
+        if(game!!.handler != null){
+            if(!game!!.getPauseBool()){
+                game!!.resume()
+            }else if(game!!.getPauseBool()){
+                game!!.pause()
+            }
         }
+
         serviceConn = object : ServiceConnection{
             override fun onServiceConnected(p0: ComponentName?, iBinder: IBinder?) {
                 val localBinder = iBinder as MusicService.LocalBinder
