@@ -33,6 +33,7 @@ class GameActivity : AppCompatActivity() {
     private var chosenBG = 0
     private var chosenDino = 0
     private lateinit var soundPoolManager: SoundPoolManager
+    private var frame: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +58,7 @@ class GameActivity : AppCompatActivity() {
         loadData()
         game!!.reset()
 
-        val frame = binding.gameFramelayout.id
+        frame = binding.gameFramelayout.id
 
         pauseBtn = binding.btnPause
 
@@ -70,12 +71,19 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
+    // activity removed from foreground
     override fun onPause(){
         super.onPause()
         game!!.pause()
         service.muteVolume()
+
+        if(!game!!.getOverBool()){
+            pauseBtn.visibility = View.INVISIBLE //hide pause button
+            loadFragment(frame, FragmentGamePause()) //show pause screen
+        }
     }
 
+    // activity returned to foreground
     override fun onResume() {
         super.onResume()
 
@@ -101,6 +109,7 @@ class GameActivity : AppCompatActivity() {
         bindService(serviceIntent, serviceConn, Context.BIND_AUTO_CREATE)
     }
 
+    // activity finished
     override fun onDestroy() {
         super.onDestroy()
         game!!.quit()
@@ -124,21 +133,5 @@ class GameActivity : AppCompatActivity() {
         chosenDino = sharedPreferences.getInt("dinoKey", 0)
 
         game!!.setCustom(chosenBG, chosenDino)
-//        binding.bgTop.setImageResource(BGs[chosenBG].top)
-//        binding.bgBot.setImageResource(BGs[chosenBG].bottom)
-//        binding.homeDino.setImageResource(Dinos[chosenDino].walk)
     }
-
-    /*override fun onBackPressed() {
-        val currentUser = mAuth.currentUser
-        val goBack: Intent
-
-        if (currentUser != null) {
-            goBack = Intent(this, MainLoggedInActivity::class.java )
-
-        }else{
-            goBack = Intent(this, MainActivity::class.java )
-        }
-        startActivity(goBack)
-    }*/
 }

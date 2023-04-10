@@ -27,6 +27,7 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
 
         // pause game
         var isPaused: Boolean = false
+        var isOver: Boolean = false
 
         // defaults
         var chosenBG = 0
@@ -442,6 +443,7 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
         dino = Dinos[chosenDino]
 
         //reset variables
+        isOver = false
         isPaused = false
         dino.runFrame = 0
         dino.hitFrame = 0
@@ -547,6 +549,7 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
     }
 
     fun quit() {
+        isOver = true
         isPaused = false
         resetTimer()
         sensorManager.unregisterListener(this)
@@ -555,6 +558,10 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
 
     fun getPauseBool() : Boolean {
         return isPaused
+    }
+
+    fun getOverBool() : Boolean {
+        return isOver
     }
 
     fun setCustom(bgKey: Int, dinoKey: Int){
