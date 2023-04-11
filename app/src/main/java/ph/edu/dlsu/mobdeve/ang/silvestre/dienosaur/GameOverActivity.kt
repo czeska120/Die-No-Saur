@@ -82,6 +82,11 @@ class GameOverActivity : AppCompatActivity() {
             handler.postDelayed({ finish() }, 1000)
         }
 
+        binding.btnShare.setOnClickListener {
+            val goToFacebook = Intent(this, FacebookActivity::class.java).putExtra("score", score)
+            startActivity(goToFacebook)
+        }
+
         binding.btnLeaderboard.setOnClickListener {
             val goToLeaderboard = Intent(this, LeaderboardActivity::class.java)
             startActivity(goToLeaderboard)

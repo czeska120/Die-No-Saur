@@ -3,6 +3,14 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!-- Facebook SDK -->
+    <string name="facebook_app_id">122378540815924</string>
+    <string name="facebook_client_token">cbf795929e2f258e737496660eb1bc71</string>
+    <string name="fb_login_protocol_scheme">fb122378540815924</string>
+
+    <!-- Facebook Activity -->
+    <string name="loggedin_label">Logged-in as:</string>
+
     <!-- Game Over Activity -->
     <string name="game_over">GAME OVER</string>
     <string name="game_over_subtitle">welcome to extinction!</string>
