@@ -11,8 +11,7 @@ import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import org.json.JSONObject
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.ActivityFacebookBinding
-import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentBottomBtns
-import java.util.*
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentIngameBottom
 
 
 class FacebookActivity : AppCompatActivity() {
@@ -42,7 +41,7 @@ class FacebookActivity : AppCompatActivity() {
             loggedinLabel.visibility = View.GONE
         }
 
-        loadFragment(frame, FragmentBottomBtns())
+        loadFragment(frame, FragmentIngameBottom())
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -84,7 +83,7 @@ class FacebookActivity : AppCompatActivity() {
         })
 
         val bundle = Bundle()
-        bundle.putString("fields", "name, id, first_name, last_name")
+        bundle.putString("fields", "name, id")
 
         graphReq.parameters = bundle
         graphReq.executeAsync()
