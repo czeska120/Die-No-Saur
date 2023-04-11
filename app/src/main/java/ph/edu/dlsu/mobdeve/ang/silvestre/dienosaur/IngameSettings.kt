@@ -30,6 +30,7 @@ class IngameSettings : AppCompatActivity() {
     private var curVolMusic = 0
     private var progressFx = 0
     private var progressMusic = 0
+    private var chosenBG = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityIngameSettingsBinding.inflate(layoutInflater)
@@ -122,9 +123,11 @@ class IngameSettings : AppCompatActivity() {
         var sharedPreferences : SharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
         progressFx = sharedPreferences.getInt("fxKey", 100)
         progressMusic = sharedPreferences.getInt("musicKey", curVolMusic)
+        chosenBG = sharedPreferences.getInt("bgKey", 0)
 
         binding.seekbarSoundfx.progress = progressFx
         binding.seekbarMusic.progress = progressMusic
+        binding.settingsBg.setImageResource(BGs[chosenBG].dark)
     }
     private fun loadFragment(frame:Int, fragment: Fragment) {
         // create a FragmentManager
