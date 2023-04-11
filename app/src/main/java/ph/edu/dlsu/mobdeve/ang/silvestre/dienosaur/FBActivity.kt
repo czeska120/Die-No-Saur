@@ -14,7 +14,7 @@ import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.ActivityFacebookB
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentIngameBottom
 
 
-class FacebookActivity : AppCompatActivity() {
+class FBActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFacebookBinding
     private lateinit var callbackManager: CallbackManager
 

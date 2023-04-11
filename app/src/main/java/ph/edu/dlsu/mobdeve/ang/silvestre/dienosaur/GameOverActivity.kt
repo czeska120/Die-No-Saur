@@ -1,19 +1,19 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.facebook.share.model.ShareLinkContent
+import com.facebook.share.widget.ShareDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.ActivityGameOverBinding
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentBottomBtns
-import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.BGs
-import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.Dinos
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -22,6 +22,9 @@ class GameOverActivity : AppCompatActivity() {
     private lateinit var user: FirebaseUser
     private lateinit var dbreference: DatabaseReference
     private lateinit var mAuth : FirebaseAuth
+
+    // fb share
+    private val shareDialog = ShareDialog(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,8 +86,14 @@ class GameOverActivity : AppCompatActivity() {
         }
 
         binding.btnShare.setOnClickListener {
-            val goToFacebook = Intent(this, FacebookActivity::class.java).putExtra("score", score)
-            startActivity(goToFacebook)
+            val shareContent = ShareLinkContent.Builder()
+                .setContentUrl(Uri.parse("https://www.google.com"))
+                .build()
+
+            shareDialog.show(shareContent)
+
+            /*val goToFacebook = Intent(this, FBActivity::class.java).putExtra("score", score)
+            startActivity(goToFacebook)*/
         }
 
         binding.btnLeaderboard.setOnClickListener {

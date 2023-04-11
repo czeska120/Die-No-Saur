@@ -17,7 +17,7 @@
         android:theme="@style/Theme.DieNoSaur"
         tools:targetApi="31">
         <activity
-            android:name=".FacebookActivity"
+            android:name=".FBActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
@@ -81,4 +81,7 @@
         <service android:name=".TimerService" />
     </application>
 
+    <queries>
+        <provider android:authorities="com.facebook.katana.provider.PlatformProvider" />
+    </queries>
 </manifest>
