@@ -1,19 +1,28 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.LayoutInflater
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.facebook.share.model.ShareHashtag
 import com.facebook.share.model.ShareLinkContent
+import com.facebook.share.model.SharePhoto
+import com.facebook.share.model.SharePhotoContent
 import com.facebook.share.widget.ShareDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.ActivityGameOverBinding
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentBottomBtns
+import java.lang.Integer.min
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -86,14 +95,38 @@ class GameOverActivity : AppCompatActivity() {
         }
 
         binding.btnShare.setOnClickListener {
-            val shareContent = ShareLinkContent.Builder()
-                .setContentUrl(Uri.parse("https://www.google.com"))
+            // generate img
+            val view = LayoutInflater.from(applicationContext).inflate(R.layout.game_over_image, null)
+
+            val imgScore = view.findViewById<TextOutline>(R.id.img_score)
+            imgScore.text = score
+
+            view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+            view.layout(0, 0, view.measuredWidth, view.measuredHeight)
+
+            val dimension = min(view.measuredWidth, view.measuredHeight)
+            val bitmap = Bitmap.createBitmap(dimension, dimension, Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(bitmap)
+
+            val x = (dimension - view.measuredWidth) / 2f
+            val y = (dimension - view.measuredHeight) / 2f
+            canvas.translate(x, y)
+            view.draw(canvas)
+
+            // fb share
+            val photo = SharePhoto.Builder()
+                .setBitmap(bitmap)
                 .build()
 
-            shareDialog.show(shareContent)
+            val content = SharePhotoContent.Builder()
+                .addPhoto(photo)
+                .setShareHashtag(
+                    ShareHashtag.Builder()
+                    .setHashtag("Just scored " + score + " on #DieNoSaur!")
+                    .build())
+                .build()
 
-            /*val goToFacebook = Intent(this, FBActivity::class.java).putExtra("score", score)
-            startActivity(goToFacebook)*/
+            shareDialog.show(content)
         }
 
         binding.btnLeaderboard.setOnClickListener {

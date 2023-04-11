@@ -1,15 +1,10 @@
 <resources>
     <string name="app_name">DieNoSaur</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name_dashed">Die-No-Saur</string>
 
     <!-- Facebook SDK -->
-    <string name="facebook_app_id">122378540815924</string>
-    <string name="facebook_client_token">cbf795929e2f258e737496660eb1bc71</string>
-    <string name="fb_login_protocol_scheme">fb122378540815924</string>
-
-    <!-- Facebook Activity -->
-    <string name="loggedin_label">Logged-in as:</string>
+    <string name="facebook_app_id">204277945644779</string>
+    <string name="facebook_client_token">8da527c2ff0e874b1c16969265a9d6f6</string>
 
     <!-- Game Over Activity -->
     <string name="game_over">GAME OVER</string>
@@ -18,6 +13,10 @@
     <string name="play_again">Play again</string>
     <string name="share">Share</string>
     <string name="leaderboard">Leaderboard</string>
+
+    <!-- Game Over Image -->
+    <string name="i_survived">I survived extinction for</string>
+    <string name="beat_me">Can you beat my score?</string>
 
     <!-- Pause Fragment -->
     <string name="pause">PAUSE</string>
