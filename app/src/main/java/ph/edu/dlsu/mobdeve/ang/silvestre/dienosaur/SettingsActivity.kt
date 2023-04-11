@@ -23,6 +23,11 @@ import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.BGs
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingsBinding
+    private lateinit var audioManager: AudioManager
+    private lateinit var soundPoolManager: SoundPoolManager
+    private lateinit var serviceIntent: Intent
+    private lateinit var service: MusicService
+    private lateinit var serviceConn: ServiceConnection
     private var SHARED_PREFS = "sharedPrefs"
     private var curVolSFX = 0f
     private var maxVolMusic = 0
@@ -31,11 +36,6 @@ class SettingsActivity : AppCompatActivity() {
     private var progressMusic = 0
     private var chosenBG = 0
     private var chosenDino = 0
-    private lateinit var audioManager: AudioManager
-    private lateinit var soundPoolManager: SoundPoolManager
-    private lateinit var serviceIntent: Intent
-    private lateinit var service: MusicService
-    private lateinit var serviceConn: ServiceConnection
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
@@ -130,7 +130,6 @@ class SettingsActivity : AppCompatActivity() {
         sharedPrefEdit.putInt("musicKey", binding.seekbarMusic.progress)
         sharedPrefEdit.commit()
         soundPoolManager.setVolume(curVolSFX)
-        Log.d("TESTING", "$curVolSFX")
         Toast.makeText(this, "Settings saved", Toast.LENGTH_SHORT).show()
     }
 
