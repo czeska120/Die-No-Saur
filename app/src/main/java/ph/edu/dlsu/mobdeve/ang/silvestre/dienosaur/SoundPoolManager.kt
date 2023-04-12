@@ -13,6 +13,7 @@ class SoundPoolManager private constructor(context: Context) {
         soundMap[R.raw.sfx_tick] = soundPool.load(context, R.raw.sfx_tick, 1)
         soundMap[R.raw.sfx_button] = soundPool.load(context, R.raw.sfx_button, 1)
         soundMap[R.raw.sfx_text] = soundPool.load(context, R.raw.sfx_text, 1)
+        soundMap[R.raw.sfx_gameover] = soundPool.load(context, R.raw.sfx_gameover, 1)
     }
 
     fun playSound(soundId: Int) {

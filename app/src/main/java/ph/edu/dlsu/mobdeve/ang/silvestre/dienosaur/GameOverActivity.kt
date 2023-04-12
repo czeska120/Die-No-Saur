@@ -60,6 +60,8 @@ class GameOverActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
+        soundPoolManager.playSound(R.raw.sfx_gameover)
+
         val frame2 = R.id.settings_framelayout2
         loadFragment(frame2, FragmentBottomBtns())
 
