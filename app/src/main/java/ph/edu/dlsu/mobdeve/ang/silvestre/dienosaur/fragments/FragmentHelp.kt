@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.viewpager2.widget.ViewPager2
 import me.relex.circleindicator.CircleIndicator3
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.R
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.SoundPoolManager
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.ViewPagerAdapter
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.FragmentHelpBinding
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.Dinos
@@ -18,9 +19,11 @@ class FragmentHelp : Fragment() {
     private lateinit var binding: FragmentHelpBinding
     private var stepsList = mutableListOf<String>()
     private var imagesList = mutableListOf<Int>()
+    private lateinit var soundPoolManager: SoundPoolManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentHelpBinding.inflate(layoutInflater)
+        soundPoolManager = SoundPoolManager.getInstance(requireContext())
     }
 
     override fun onCreateView(
@@ -37,6 +40,7 @@ class FragmentHelp : Fragment() {
 
         // Listeners
         backBtn.setOnClickListener{
+            soundPoolManager.playSound(R.raw.sfx_tick)
             fragmentManager.beginTransaction().remove(this).commit()
         }
 

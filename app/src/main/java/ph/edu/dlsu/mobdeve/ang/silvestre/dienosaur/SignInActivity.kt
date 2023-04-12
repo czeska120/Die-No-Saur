@@ -1,8 +1,9 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
-import android.content.Intent
+import android.content.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.IBinder
 import android.text.TextUtils
 import android.view.View
 import android.view.Window
@@ -12,24 +13,37 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.ActivitySignInBinding
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentBottomBtns
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.BGs
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.Dinos
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignInBinding
     private lateinit var mAuth: FirebaseAuth
+    private var SHARED_PREFS = "sharedPrefs"
+    private var chosenBG = 0
+    private lateinit var soundPoolManager: SoundPoolManager
+    private lateinit var serviceIntent: Intent
+    private lateinit var service: MusicService
+    private lateinit var serviceConn: ServiceConnection
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignInBinding.inflate(layoutInflater)
         mAuth = FirebaseAuth.getInstance()
+        soundPoolManager = SoundPoolManager.getInstance(applicationContext)
+        serviceIntent =  Intent(this, MusicService::class.java)
 
         // Hides title bar
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        this.window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+
         //Hides action bar (bottom)
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+
         setContentView(binding.root)
 
         binding.signinBtnRegister.setOnClickListener {
+            soundPoolManager.playSound(R.raw.sfx_button)
             val email = binding.signinEtEmail.text.toString()
             val password = binding.signinEtPassword.text.toString()
             val confirmpass = binding.signinEtConfirmpass.text.toString()
@@ -43,6 +57,7 @@ class SignInActivity : AppCompatActivity() {
 
         }
         binding.signinTvLoginPrompt.setOnClickListener {
+            soundPoolManager.playSound(R.raw.sfx_text)
             val logIn = Intent(this, LoginActivity::class.java)
             startActivity(logIn)
             finish()
@@ -50,6 +65,7 @@ class SignInActivity : AppCompatActivity() {
 
         val frame = R.id.signin_framelayout
         loadFragment(frame, FragmentBottomBtns())
+        loadData()
     }
 
     private fun createUser(email: String, password: String){
@@ -75,14 +91,35 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun loadFragment(frame:Int, fragment: Fragment) {
-        // create a FragmentManager
         val fm = supportFragmentManager
-
-        // create a FragmentTransaction to begin the transaction and replace the Fragment
         val fragmentTransaction = fm.beginTransaction()
 
-        // replace the FrameLayout with new Fragment
         fragmentTransaction.replace(frame, fragment)
-        fragmentTransaction.commit() // save the changes
+        fragmentTransaction.commit()
+    }
+    fun loadData(){
+        var sharedPreferences : SharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
+        chosenBG = sharedPreferences.getInt("bgKey", 0)
+
+        binding.signinBg.setImageResource(BGs[chosenBG].dark)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        service.muteVolume()
+    }
+    override fun onResume() {
+        super.onResume()
+        serviceConn = object : ServiceConnection{
+            override fun onServiceConnected(p0: ComponentName?, iBinder: IBinder?) {
+                val localBinder = iBinder as MusicService.LocalBinder
+                service = localBinder.getMusicServiceInstance()
+                service.unmuteVolume()
+            }
+
+            override fun onServiceDisconnected(p0: ComponentName?) {
+            }
+        }
+        bindService(serviceIntent, serviceConn, Context.BIND_AUTO_CREATE)
     }
 }

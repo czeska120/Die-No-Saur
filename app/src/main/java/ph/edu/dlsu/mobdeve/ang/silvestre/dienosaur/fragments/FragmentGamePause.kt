@@ -19,10 +19,12 @@ import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.FragmentGamePause
 class FragmentGamePause : Fragment() {
     private lateinit var binding: FragmentGamePauseBinding
     private lateinit var mAuth: FirebaseAuth
+    private lateinit var soundPoolManager: SoundPoolManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentGamePauseBinding.inflate(layoutInflater)
+        soundPoolManager = SoundPoolManager.getInstance(requireContext())
     }
 
     override fun onCreateView(
@@ -33,6 +35,7 @@ class FragmentGamePause : Fragment() {
         val buttonClick = AlphaAnimation(1F, 0.8F);
         mAuth = FirebaseAuth.getInstance()
         binding.btnResume.setOnClickListener {
+            soundPoolManager.playSound(R.raw.sfx_button)
             binding.btnResume.startAnimation(buttonClick)
             game!!.resume()
 
@@ -44,6 +47,7 @@ class FragmentGamePause : Fragment() {
         }
 
         binding.btnGameSettings.setOnClickListener{
+            soundPoolManager.playSound(R.raw.sfx_button)
             binding.btnGameSettings.startAnimation(buttonClick)
             val goToSettings = Intent(requireActivity(), IngameSettings::class.java)
             startActivity(goToSettings)
@@ -51,6 +55,7 @@ class FragmentGamePause : Fragment() {
         }
 
         binding.btnRetry.setOnClickListener{
+            soundPoolManager.playSound(R.raw.sfx_button)
             binding.btnRetry.startAnimation(buttonClick)
 
             // close fragment
@@ -70,6 +75,7 @@ class FragmentGamePause : Fragment() {
         }
 
         binding.btnQuit.setOnClickListener{
+            soundPoolManager.playSound(R.raw.sfx_button)
             binding.btnQuit.startAnimation(buttonClick)
             game!!.quit()
 

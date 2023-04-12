@@ -11,6 +11,7 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.os.Handler
 import android.util.AttributeSet
 import android.view.Display
 import android.view.View
@@ -26,14 +27,19 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
 
         // pause game
         var isPaused: Boolean = false
+        var isOver: Boolean = false
+
+        // defaults
+        var chosenBG = 0
+        var chosenDino = 0
     }
 
     private var UPDATE_MILLIS: Long = 30
     private var runnable: Runnable
 
     // customize based on user preferences
-    private var bg: BG = BGs[0]
-    private var dino: DinoSprite = Dinos[0]
+    private var bg: BG
+    private var dino: DinoSprite
 
     // background
     private var bgTop: Bitmap
@@ -92,7 +98,6 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
 
     //activity
     private var gameActivity: GameActivity? = null
-
     init {
         //display size
         val display: Display = (context as Activity).windowManager.defaultDisplay
@@ -102,6 +107,10 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
         dHeight = size.y
 
         //reset() :
+        // customize based on user preferences
+        bg = BGs[chosenBG]
+        dino = Dinos[chosenDino]
+
         //bg
         bgTop = BitmapFactory.decodeResource(context.resources, bg.top)
         bgBottom = BitmapFactory.decodeResource(context.resources, bg.bottom)
@@ -178,7 +187,6 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
             if (!isPaused) {
                 invalidate()
             }
-
             start()
         }
     }
@@ -430,7 +438,12 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
 
     // pause game
     fun reset() {
+        // customize based on user preferences
+        bg = BGs[chosenBG]
+        dino = Dinos[chosenDino]
+
         //reset variables
+        isOver = false
         isPaused = false
         dino.runFrame = 0
         dino.hitFrame = 0
@@ -443,10 +456,12 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
         rectBottom = Rect(0, bgTop.height, dWidth, dHeight)
 
         //dino
+        dinoRun.clear()
         dinoRunInt = dino.run
         for (i in dinoRunInt.indices) {
             dinoRun.add(BitmapFactory.decodeResource(context.resources, dinoRunInt[i]))
         }
+        dinoHit.clear()
         dinoHitInt = dino.hit
         for (i in dinoHitInt.indices) {
             dinoHit.add(BitmapFactory.decodeResource(context.resources, dinoHitInt[i]))
@@ -534,9 +549,23 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
     }
 
     fun quit() {
+        isOver = true
         isPaused = false
         resetTimer()
         sensorManager.unregisterListener(this)
         this.handler.removeCallbacks(runnable)
+    }
+
+    fun getPauseBool() : Boolean {
+        return isPaused
+    }
+
+    fun getOverBool() : Boolean {
+        return isOver
+    }
+
+    fun setCustom(bgKey: Int, dinoKey: Int){
+        chosenBG = bgKey
+        chosenDino = dinoKey
     }
 }

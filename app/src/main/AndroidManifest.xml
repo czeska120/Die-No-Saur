@@ -49,8 +49,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <service android:name=".TimerService" />
+        <service android:name=".MusicService"/>
+        <service android:name=".TimerService"/>
     </application>
 
 </manifest>
