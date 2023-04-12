@@ -1,6 +1,7 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
 import android.content.*
+import android.media.AudioManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.IBinder
@@ -17,14 +18,19 @@ import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.Dinos
 class MainLoggedInActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainLoggedInBinding
     private lateinit var mAuth: FirebaseAuth
+
     private var SHARED_PREFS = "sharedPrefs"
     private var chosenBG = 0
     private var chosenDino = 0
+
     private lateinit var soundPoolManager: SoundPoolManager
+    private lateinit var audioManager: AudioManager
+
     private lateinit var serviceIntent: Intent
     private lateinit var service: MusicService
     private lateinit var serviceConn: ServiceConnection
     private var serviceStatus: Int = 0
+    private var serviceLevel: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +88,9 @@ class MainLoggedInActivity : AppCompatActivity() {
         chosenBG = sharedPreferences.getInt("bgKey", 0)
         chosenDino = sharedPreferences.getInt("dinoKey", 0)
         serviceStatus = sharedPreferences.getInt("isMuted", 0)
+        serviceLevel = sharedPreferences.getInt("musicKey", 100)
+        audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, serviceLevel, 0)
 
         binding.bgTop.setImageResource(BGs[chosenBG].top)
         binding.bgBot.setImageResource(BGs[chosenBG].bottom)

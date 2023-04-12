@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var service: MusicService
     private lateinit var serviceConn: ServiceConnection
     private var serviceStatus: Int = 0
+    private var serviceLevel: Int = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -134,6 +135,10 @@ class MainActivity : AppCompatActivity() {
         chosenBG = sharedPreferences.getInt("bgKey", 0)
         chosenDino = sharedPreferences.getInt("dinoKey", 0)
         serviceStatus = sharedPreferences.getInt("isMuted", 0)
+        serviceLevel = sharedPreferences.getInt("musicKey", 100)
+
+        audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, serviceLevel, 0)
 
         binding.bgTop.setImageResource(BGs[chosenBG].top)
         binding.bgBot.setImageResource(BGs[chosenBG].bottom)
