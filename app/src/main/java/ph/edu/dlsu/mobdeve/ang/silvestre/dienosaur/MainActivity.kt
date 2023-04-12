@@ -1,6 +1,7 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
 import android.content.*
+import android.media.AudioManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.IBinder
@@ -22,10 +23,12 @@ class MainActivity : AppCompatActivity() {
     private var chosenBG = 0
     private var chosenDino = 0
     private lateinit var soundPoolManager: SoundPoolManager
+    private lateinit var audioManager: AudioManager
 
     private lateinit var serviceIntent: Intent
     private lateinit var service: MusicService
     private lateinit var serviceConn: ServiceConnection
+    private var serviceStatus: Int = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -114,7 +117,11 @@ class MainActivity : AppCompatActivity() {
             override fun onServiceConnected(p0: ComponentName?, iBinder: IBinder?) {
                 val localBinder = iBinder as MusicService.LocalBinder
                 service = localBinder.getMusicServiceInstance()
-                service.unmuteVolume()
+                if(serviceStatus == 0){
+                    service.unmuteVolume()
+                }else{
+                    service.muteVolume()
+                }
             }
 
             override fun onServiceDisconnected(p0: ComponentName?) {
@@ -126,6 +133,7 @@ class MainActivity : AppCompatActivity() {
         var sharedPreferences : SharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
         chosenBG = sharedPreferences.getInt("bgKey", 0)
         chosenDino = sharedPreferences.getInt("dinoKey", 0)
+        serviceStatus = sharedPreferences.getInt("isMuted", 0)
 
         binding.bgTop.setImageResource(BGs[chosenBG].top)
         binding.bgBot.setImageResource(BGs[chosenBG].bottom)

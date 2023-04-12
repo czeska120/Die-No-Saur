@@ -31,6 +31,7 @@ class LeaderboardActivity : AppCompatActivity() {
     private lateinit var serviceIntent: Intent
     private lateinit var service: MusicService
     private lateinit var serviceConn: ServiceConnection
+    private var serviceStatus: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLeaderboardBinding.inflate(layoutInflater)
@@ -90,6 +91,7 @@ class LeaderboardActivity : AppCompatActivity() {
     fun loadData(){
         var sharedPreferences : SharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
         chosenBG = sharedPreferences.getInt("bgKey", 0)
+        serviceStatus = sharedPreferences.getInt("isMuted", 0)
 
         binding.leaderboardbg.setImageResource(BGs[chosenBG].dark)
     }
@@ -103,7 +105,11 @@ class LeaderboardActivity : AppCompatActivity() {
             override fun onServiceConnected(p0: ComponentName?, iBinder: IBinder?) {
                 val localBinder = iBinder as MusicService.LocalBinder
                 service = localBinder.getMusicServiceInstance()
-                service.unmuteVolume()
+                if(serviceStatus == 0){
+                    service.unmuteVolume()
+                }else{
+                    service.muteVolume()
+                }
             }
 
             override fun onServiceDisconnected(p0: ComponentName?) {

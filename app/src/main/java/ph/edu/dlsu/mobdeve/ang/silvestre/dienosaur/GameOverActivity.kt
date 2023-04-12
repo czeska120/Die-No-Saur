@@ -39,6 +39,7 @@ class GameOverActivity : AppCompatActivity() {
     private lateinit var serviceIntent: Intent
     private lateinit var service: MusicService
     private lateinit var serviceConn: ServiceConnection
+    private var serviceStatus: Int = 0
 
     // fb share
     private val shareDialog = ShareDialog(this)
@@ -179,6 +180,7 @@ class GameOverActivity : AppCompatActivity() {
         var sharedPreferences : SharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
         chosenBG = sharedPreferences.getInt("bgKey", 0)
         chosenDino = sharedPreferences.getInt("dinoKey", 0)
+        serviceStatus = sharedPreferences.getInt("isMuted", 0)
         binding.gameOver.background = ContextCompat.getDrawable(applicationContext, BGs[chosenBG].dark)
         binding.dinoDead.setImageResource(Dinos[chosenDino].dead)
     }
@@ -193,7 +195,11 @@ class GameOverActivity : AppCompatActivity() {
             override fun onServiceConnected(p0: ComponentName?, iBinder: IBinder?) {
                 val localBinder = iBinder as MusicService.LocalBinder
                 service = localBinder.getMusicServiceInstance()
-                service.unmuteVolume()
+                if(serviceStatus == 0){
+                    service.unmuteVolume()
+                }else{
+                    service.muteVolume()
+                }
             }
 
             override fun onServiceDisconnected(p0: ComponentName?) {

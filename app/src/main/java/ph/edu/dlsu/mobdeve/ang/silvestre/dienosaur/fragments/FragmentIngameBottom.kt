@@ -1,9 +1,6 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments
 
-import android.content.ComponentName
-import android.content.Context
-import android.content.Intent
-import android.content.ServiceConnection
+import android.content.*
 import android.os.Bundle
 import android.os.IBinder
 import android.view.FrameMetrics
@@ -12,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
+import androidx.appcompat.app.AppCompatActivity
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.*
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.FragmentIngameBottomBinding
 
@@ -20,6 +18,7 @@ class FragmentIngameBottom : Fragment() {
     private lateinit var soundPoolManager: SoundPoolManager
     private lateinit var serviceIntent: Intent
     private lateinit var service: MusicService
+    private var SHARED_PREFS = "sharedPrefs"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,26 +56,44 @@ class FragmentIngameBottom : Fragment() {
             backBtn.startAnimation(buttonClick)
             requireActivity().finish()
         }
-
         var tick = 0
         val soundSwitch = ArrayList<Int>()
         soundSwitch.add(R.drawable.btn_sound)
         soundSwitch.add(R.drawable.btn_sound_mute)
 
+        var sharedPreferences : SharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS,
+            AppCompatActivity.MODE_PRIVATE
+        )
+        var sharedPrefEdit = sharedPreferences.edit()
+        var savedState = sharedPreferences.getInt("isMuted", 0)
+
+        if(savedState==0){
+            soundBtn.setBackgroundResource(soundSwitch[0])
+        }
+        else{
+            soundBtn.setBackgroundResource(soundSwitch[1])
+        }
+
+
         soundBtn.setOnClickListener {
-            soundPoolManager.playSound(R.raw.sfx_tick)
             soundBtn.startAnimation(buttonClick)
-            if(tick==0){
+            soundPoolManager.playSound(R.raw.sfx_tick)
+            if(savedState==0){
                 soundBtn.setBackgroundResource(soundSwitch[1])
                 tick++
                 service.muteVolume()
+                sharedPrefEdit.putInt("isMuted", 1)
+                sharedPrefEdit.commit()
             }
             else{
                 soundBtn.setBackgroundResource(soundSwitch[0])
                 tick--
                 service.unmuteVolume()
+                sharedPrefEdit.putInt("isMuted", 0)
+                sharedPrefEdit.commit()
             }
         }
+        // Inflate the layout for this fragment
         return rootView
     }
 }
