@@ -107,6 +107,13 @@ class GameOverActivity : AppCompatActivity() {
 
         binding.btnPlayAgain.setOnClickListener{
             soundPoolManager.playSound(R.raw.sfx_button)
+
+            // prevent double clicking
+            binding.btnPlayAgain.isEnabled = false
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.btnPlayAgain.isEnabled = true
+            }, 5000) // re-enable after 5 seconds
+
             val startGame = Intent(this, GameActivity::class.java)
             startActivity(startGame)
             handler.postDelayed({ finish() }, 1000)
@@ -211,7 +218,7 @@ class GameOverActivity : AppCompatActivity() {
     }
 
     // for fb share
-    fun generateImage(score: String): Bitmap {
+    private fun generateImage(score: String): Bitmap {
         val view = LayoutInflater.from(applicationContext).inflate(R.layout.game_over_image, null)
 
         val imgScore = view.findViewById<TextOutline>(R.id.img_score)

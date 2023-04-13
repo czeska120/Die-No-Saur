@@ -3,7 +3,9 @@ package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 import android.content.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.text.TextUtils
 import android.view.View
 import android.view.Window
@@ -48,6 +50,12 @@ class SignInActivity : AppCompatActivity() {
             val email = binding.signinEtEmail.text.toString()
             val password = binding.signinEtPassword.text.toString()
             val confirmpass = binding.signinEtConfirmpass.text.toString()
+
+            // prevent double clicking
+            binding.signinBtnRegister.isEnabled = false
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.signinBtnRegister.isEnabled = true
+            }, 5000) // re-enable after 5 seconds
 
             if(password == confirmpass){
                 createUser(email, password)

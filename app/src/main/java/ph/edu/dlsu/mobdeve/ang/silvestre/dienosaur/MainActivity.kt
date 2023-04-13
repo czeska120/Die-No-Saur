@@ -4,7 +4,9 @@ import android.content.*
 import android.media.AudioManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.Window
@@ -55,6 +57,13 @@ class MainActivity : AppCompatActivity() {
         binding.homeBtnGuest.setOnClickListener{
             binding.homeBtnGuest.startAnimation(buttonClick)
             soundPoolManager.playSound(R.raw.sfx_button)
+
+            // prevent double clicking
+            binding.homeBtnGuest.isEnabled = false
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.homeBtnGuest.isEnabled = true
+            }, 5000) // re-enable after 5 seconds
+
             val startGame = Intent(this, GameActivity::class.java)
             startActivity(startGame)
         }

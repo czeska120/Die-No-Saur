@@ -3,7 +3,9 @@ package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 import android.content.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.text.TextUtils
 import android.view.View
 import android.view.Window
@@ -46,6 +48,13 @@ class LoginActivity : AppCompatActivity() {
         binding.loginBtnLogin.setOnClickListener {
             soundPoolManager.playSound(R.raw.sfx_button)
             binding.loginBtnLogin.startAnimation(buttonClick)
+
+            // prevent double clicking
+            binding.loginBtnLogin.isEnabled = false
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.loginBtnLogin.isEnabled = true
+            }, 5000) // re-enable after 5 seconds
+
             loginUser()
         }
         binding.loginTvSigninPrompt.setOnClickListener {
