@@ -10,11 +10,12 @@ class SoundPoolManager private constructor(context: Context) {
 
     init {
         // Load sound effects into the SoundPool
-        soundMap[R.raw.sfx_tick] = soundPool.load(context, R.raw.sfx_tick, 1)
-        soundMap[R.raw.sfx_button] = soundPool.load(context, R.raw.sfx_button, 1)
-        soundMap[R.raw.sfx_text] = soundPool.load(context, R.raw.sfx_text, 1)
+        // 0 = highest priority; 255 = lowest priority
+        soundMap[R.raw.sfx_tick] = soundPool.load(context, R.raw.sfx_tick, 4)
+        soundMap[R.raw.sfx_button] = soundPool.load(context, R.raw.sfx_button, 3)
+        soundMap[R.raw.sfx_text] = soundPool.load(context, R.raw.sfx_text, 2)
         soundMap[R.raw.sfx_gameover] = soundPool.load(context, R.raw.sfx_gameover, 1)
-        soundMap[R.raw.sfx_hit] = soundPool.load(context, R.raw.sfx_hit, 1)
+        soundMap[R.raw.sfx_hit] = soundPool.load(context, R.raw.sfx_hit, 0)
     }
 
     fun playSound(soundId: Int) {
