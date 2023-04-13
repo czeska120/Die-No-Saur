@@ -2,7 +2,6 @@ package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur
 
 import android.content.*
 import android.os.Bundle
-import android.os.Handler
 import android.os.IBinder
 import android.util.Log
 import android.view.View
@@ -16,8 +15,6 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.ActivityGameBinding
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments.FragmentGamePause
-import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.BGs
-import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.Dinos
 
 class GameActivity : AppCompatActivity() {
     companion object{
@@ -132,6 +129,7 @@ class GameActivity : AppCompatActivity() {
             }
         }
         bindService(serviceIntent, serviceConn, Context.BIND_AUTO_CREATE)
+        loadData()
     }
 
     // activity finished
