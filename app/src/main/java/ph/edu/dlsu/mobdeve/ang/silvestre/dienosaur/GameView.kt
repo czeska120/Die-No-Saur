@@ -217,6 +217,7 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
                 isSoundPlayed = false
             }, 500)
         } else {
+            isSoundPlayed = false
             if (motionX > 0) {
                 val flippedDinoRun = Bitmap.createBitmap(
                     dinoRun[dino.runFrame],
