@@ -1,13 +1,16 @@
 package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments
 
-import android.content.Intent
+import android.content.*
 import android.os.Bundle
 import android.os.Handler
+import android.os.IBinder
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.*
@@ -20,11 +23,17 @@ class FragmentGamePause : Fragment() {
     private lateinit var binding: FragmentGamePauseBinding
     private lateinit var mAuth: FirebaseAuth
     private lateinit var soundPoolManager: SoundPoolManager
+    private var SHARED_PREFS = "sharedPrefs"
+    private lateinit var serviceIntent: Intent
+    private lateinit var service: MusicService
+    private lateinit var serviceConn: ServiceConnection
+    private var serviceStatus: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentGamePauseBinding.inflate(layoutInflater)
         soundPoolManager = SoundPoolManager.getInstance(requireContext())
+        serviceIntent =  Intent(requireActivity(), MusicService::class.java)
     }
 
     override fun onCreateView(
@@ -90,7 +99,23 @@ class FragmentGamePause : Fragment() {
             startActivity(goToHome)
             requireActivity().finishAffinity()
         }
+        Log.d("TESTING", "GAMEPAUSE SERVICESTATUS  $serviceStatus")
+        serviceConn = object : ServiceConnection {
+            override fun onServiceConnected(p0: ComponentName?, iBinder: IBinder?) {
+                val localBinder = iBinder as MusicService.LocalBinder
+                service = localBinder.getMusicServiceInstance()
+                if(serviceStatus == 0){
+                    service.unmuteVolume()
+                }else{
+                    service.muteVolume()
+                }
+            }
 
+            override fun onServiceDisconnected(p0: ComponentName?) {
+            }
+        }
+        requireActivity().bindService(serviceIntent, serviceConn, Context.BIND_AUTO_CREATE)
+        loadData()
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -104,5 +129,12 @@ class FragmentGamePause : Fragment() {
         // replace the FrameLayout with new Fragment
         fragmentTransaction.replace(frame, fragment)
         fragmentTransaction.commit() // save the changes
+    }
+
+    fun loadData(){
+        var sharedPreferences : SharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS,
+            AppCompatActivity.MODE_PRIVATE
+        )
+        serviceStatus = sharedPreferences.getInt("isMuted", 0)
     }
 }

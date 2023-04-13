@@ -12,12 +12,14 @@ import android.view.animation.AlphaAnimation
 import androidx.appcompat.app.AppCompatActivity
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.*
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.databinding.FragmentBottomBtnsBinding
+import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.BGs
 
 class FragmentBottomBtns : Fragment() {
     private lateinit var binding: FragmentBottomBtnsBinding
     private lateinit var soundPoolManager: SoundPoolManager
     private lateinit var serviceIntent: Intent
     private lateinit var service: MusicService
+    private var musicLevel: Int = 0
     private var SHARED_PREFS = "sharedPrefs"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,10 +72,11 @@ class FragmentBottomBtns : Fragment() {
         var sharedPrefEdit = sharedPreferences.edit()
         var savedState = sharedPreferences.getInt("isMuted", 0)
 
+        Log.d("TESTING", "$musicLevel")
         if(savedState==0){
             soundBtn.setBackgroundResource(soundSwitch[0])
         }
-        else{
+        else if ( savedState == 1 || musicLevel == 0){
             soundBtn.setBackgroundResource(soundSwitch[1])
         }
 
@@ -82,25 +85,35 @@ class FragmentBottomBtns : Fragment() {
             soundBtn.startAnimation(buttonClick)
             soundPoolManager.playSound(R.raw.sfx_tick)
             if(savedState==0){ // if unmuted
+                savedState = 1
                 soundBtn.setBackgroundResource(soundSwitch[1]) // to mute
                 tick++
                 service.muteVolume()
                 sharedPrefEdit.putInt("isMuted", 1)
-                Log.d("TESTING", "UNMUTE CLICKED, $savedState")
-                savedState = 1
+//                Log.d("TESTING", "UNMUTE CLICKED, $savedState")
+
             }
             else{ // if muted
+                savedState = 0
                 soundBtn.setBackgroundResource(soundSwitch[0]) // to unmute
                 tick--
                 service.unmuteVolume()
                 sharedPrefEdit.putInt("isMuted", 0)
-                Log.d("TESTING", "MUTE CLICKED  $savedState")
-                savedState = 0
+                Log.d("TESTING", "BOTTOM BTNS MUTE CLICKED  $savedState")
+
             }
             sharedPrefEdit.apply()
         }
+        loadData()
         // Inflate the layout for this fragment
         return rootView
+    }
+    fun loadData(){
+        var sharedPreferences : SharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS,
+            AppCompatActivity.MODE_PRIVATE
+        )
+        musicLevel = sharedPreferences.getInt("musicKey", 100)
+        Log.d("TESTING", "MUSIC LEVEL: $musicLevel")
     }
 
 }

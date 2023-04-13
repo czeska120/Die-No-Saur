@@ -3,6 +3,7 @@ package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments
 import android.content.*
 import android.os.Bundle
 import android.os.IBinder
+import android.util.Log
 import android.view.FrameMetrics
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -19,6 +20,7 @@ class FragmentIngameBottom : Fragment() {
     private lateinit var serviceIntent: Intent
     private lateinit var service: MusicService
     private var SHARED_PREFS = "sharedPrefs"
+    private var musicLevel: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,12 +72,13 @@ class FragmentIngameBottom : Fragment() {
         if(savedState==0){
             soundBtn.setBackgroundResource(soundSwitch[0])
         }
-        else{
+        else if ( savedState == 1 || musicLevel == 0){
             soundBtn.setBackgroundResource(soundSwitch[1])
         }
 
 
         soundBtn.setOnClickListener {
+            Log.d("TESTING", "INGAME BTM $savedState")
             soundBtn.startAnimation(buttonClick)
             soundPoolManager.playSound(R.raw.sfx_tick)
             if(savedState==0){
@@ -83,17 +86,28 @@ class FragmentIngameBottom : Fragment() {
                 tick++
                 service.muteVolume()
                 sharedPrefEdit.putInt("isMuted", 1)
-                sharedPrefEdit.commit()
+                savedState = 1
             }
             else{
                 soundBtn.setBackgroundResource(soundSwitch[0])
                 tick--
                 service.unmuteVolume()
                 sharedPrefEdit.putInt("isMuted", 0)
-                sharedPrefEdit.commit()
+                savedState = 0
             }
+            sharedPrefEdit.apply()
         }
+
+        loadData()
         // Inflate the layout for this fragment
         return rootView
+    }
+
+    fun loadData(){
+        var sharedPreferences : SharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS,
+            AppCompatActivity.MODE_PRIVATE
+        )
+        musicLevel = sharedPreferences.getInt("musicKey", 100)
+        Log.d("TESTING", "MUSIC LEVEL: $musicLevel")
     }
 }

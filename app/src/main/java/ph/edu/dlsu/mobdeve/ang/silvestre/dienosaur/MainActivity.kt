@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     private var chosenBG = 0
     private var chosenDino = 0
     private lateinit var soundPoolManager: SoundPoolManager
-    private lateinit var audioManager: AudioManager
+//    private lateinit var audioManager: AudioManager
 
     private lateinit var serviceIntent: Intent
     private lateinit var service: MusicService
@@ -137,8 +137,18 @@ class MainActivity : AppCompatActivity() {
         serviceStatus = sharedPreferences.getInt("isMuted", 0)
         serviceLevel = sharedPreferences.getInt("musicKey", 100)
 
-        audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, serviceLevel, 0)
+        serviceConn = object : ServiceConnection{
+            override fun onServiceConnected(p0: ComponentName?, iBinder: IBinder?) {
+                val localBinder = iBinder as MusicService.LocalBinder
+                service = localBinder.getMusicServiceInstance()
+                service.setVolume(serviceLevel.toFloat())
+            }
+            override fun onServiceDisconnected(p0: ComponentName?) {
+            }
+        }
+
+//        audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+//        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, serviceLevel, 0)
 
         binding.bgTop.setImageResource(BGs[chosenBG].top)
         binding.bgBot.setImageResource(BGs[chosenBG].bottom)
