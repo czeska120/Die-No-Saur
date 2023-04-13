@@ -23,17 +23,19 @@ class FragmentGamePause : Fragment() {
     private lateinit var binding: FragmentGamePauseBinding
     private lateinit var mAuth: FirebaseAuth
     private lateinit var soundPoolManager: SoundPoolManager
+    /*
     private var SHARED_PREFS = "sharedPrefs"
     private lateinit var serviceIntent: Intent
     private lateinit var service: MusicService
     private lateinit var serviceConn: ServiceConnection
     private var serviceStatus: Int = 0
+    */
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentGamePauseBinding.inflate(layoutInflater)
         soundPoolManager = SoundPoolManager.getInstance(requireContext())
-        serviceIntent =  Intent(requireActivity(), MusicService::class.java)
+//        serviceIntent =  Intent(requireActivity(), MusicService::class.java)
     }
 
     override fun onCreateView(
@@ -99,6 +101,7 @@ class FragmentGamePause : Fragment() {
             startActivity(goToHome)
             requireActivity().finishAffinity()
         }
+        /*
         Log.d("TESTING", "GAMEPAUSE SERVICESTATUS  $serviceStatus")
         serviceConn = object : ServiceConnection {
             override fun onServiceConnected(p0: ComponentName?, iBinder: IBinder?) {
@@ -115,7 +118,10 @@ class FragmentGamePause : Fragment() {
             }
         }
         requireActivity().bindService(serviceIntent, serviceConn, Context.BIND_AUTO_CREATE)
+
         loadData()
+        */
+
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -131,10 +137,12 @@ class FragmentGamePause : Fragment() {
         fragmentTransaction.commit() // save the changes
     }
 
+    /*
     fun loadData(){
         var sharedPreferences : SharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS,
             AppCompatActivity.MODE_PRIVATE
         )
         serviceStatus = sharedPreferences.getInt("isMuted", 0)
     }
+    */
 }
