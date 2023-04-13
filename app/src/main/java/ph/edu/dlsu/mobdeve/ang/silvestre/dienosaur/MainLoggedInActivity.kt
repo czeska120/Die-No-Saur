@@ -39,7 +39,7 @@ class MainLoggedInActivity : AppCompatActivity() {
         binding = ActivityMainLoggedInBinding.inflate(layoutInflater)
         mAuth = FirebaseAuth.getInstance()
         soundPoolManager = SoundPoolManager.getInstance(applicationContext)
-        serviceIntent =  Intent(this, MusicService::class.java)
+        serviceIntent =  Intent(applicationContext, MusicService::class.java)
         val buttonClick = AlphaAnimation(1F, 0.8F);
 
         // Hides title bar

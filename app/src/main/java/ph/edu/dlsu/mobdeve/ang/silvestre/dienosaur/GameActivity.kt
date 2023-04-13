@@ -57,7 +57,7 @@ class GameActivity : AppCompatActivity() {
 
         mAuth = FirebaseAuth.getInstance()
         soundPoolManager = SoundPoolManager.getInstance(applicationContext)
-        serviceIntent =  Intent(this, MusicService::class.java)
+        serviceIntent =  Intent(applicationContext, MusicService::class.java)
         //setContentView(GameView(this))
 
         parent = binding.gameParent

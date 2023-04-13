@@ -34,7 +34,7 @@ class IngameSettings : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityIngameSettingsBinding.inflate(layoutInflater)
         soundPoolManager = SoundPoolManager.getInstance(applicationContext)
-        serviceIntent =  Intent(this, MusicService::class.java)
+        serviceIntent =  Intent(applicationContext, MusicService::class.java)
 
         val buttonClick = AlphaAnimation(1F, 0.8F);
         // Hides title bar

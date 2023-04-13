@@ -49,7 +49,7 @@ class GameOverActivity : AppCompatActivity() {
         binding = ActivityGameOverBinding.inflate(layoutInflater)
         mAuth = FirebaseAuth.getInstance()
         soundPoolManager = SoundPoolManager.getInstance(applicationContext)
-        serviceIntent =  Intent(this, MusicService::class.java)
+        serviceIntent =  Intent(applicationContext, MusicService::class.java)
 
         // Hides title bar
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
