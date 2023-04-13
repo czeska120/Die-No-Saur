@@ -11,7 +11,6 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.os.Handler
 import android.util.AttributeSet
 import android.view.Display
 import android.view.View
@@ -85,7 +84,7 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
     private var score = 0.0 //var score: Int = 0
     private var scoreString: String = ""
     private var timerStarted = false
-    private var serviceIntent: Intent
+    private var timerIntent: Intent
     private val updateTime: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             score = intent.getDoubleExtra(TimerService.TIME_EXTRA, 0.0)
@@ -138,7 +137,7 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
         dinoY = (dHeight - rectBottom.height() - dinoRun[0].height + 70).toFloat()
 
         //timer
-        serviceIntent = Intent(context, TimerService::class.java)
+        timerIntent = Intent(context, TimerService::class.java)
         context.registerReceiver(updateTime, IntentFilter(TimerService.TIMER_UPDATED))
         startTimer()
 
@@ -439,13 +438,13 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
     }
 
     private fun startTimer() {
-        serviceIntent.putExtra(TimerService.TIME_EXTRA, score)
-        context.startService(serviceIntent)
+        timerIntent.putExtra(TimerService.TIME_EXTRA, score)
+        context.startService(timerIntent)
         timerStarted = true
     }
 
     private fun stopTimer() {
-        context.stopService(serviceIntent)
+        context.stopService(timerIntent)
         timerStarted = false
     }
 

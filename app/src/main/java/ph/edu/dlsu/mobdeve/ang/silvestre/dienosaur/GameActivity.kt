@@ -123,7 +123,7 @@ class GameActivity : AppCompatActivity() {
                 service = localBinder.getMusicServiceInstance()
                 if(serviceStatus == 0){
                     service.unmuteVolume()
-                }else if(serviceStatus == 1){
+                }else{
                     service.muteVolume()
                 }
             }
