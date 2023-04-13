@@ -4,6 +4,7 @@ import android.content.*
 import android.os.Bundle
 import android.os.Handler
 import android.os.IBinder
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
@@ -87,6 +88,8 @@ class GameActivity : AppCompatActivity() {
     // activity returned to foreground
     override fun onResume() {
         super.onResume()
+        Log.d("TESTING", "AM IN GAME ACTIVITY")
+        Log.d("TESTING", "$serviceStatus")
 
         // if game has already started only will this run
         if(game!!.handler != null){
@@ -103,7 +106,7 @@ class GameActivity : AppCompatActivity() {
                 service = localBinder.getMusicServiceInstance()
                 if(serviceStatus == 0){
                     service.unmuteVolume()
-                }else{
+                }else if(serviceStatus == 1){
                     service.muteVolume()
                 }
             }

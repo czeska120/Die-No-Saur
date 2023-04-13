@@ -53,4 +53,8 @@ class MusicService: Service() {
         Log.d("TESTING", "YOU ARE UNMUTED")
     }
 
+    fun setVolume(volume : Float){
+        mediaPlayer.setVolume(volume, volume)
+    }
+
 }

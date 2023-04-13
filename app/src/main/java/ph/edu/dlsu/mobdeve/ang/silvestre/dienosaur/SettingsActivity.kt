@@ -30,10 +30,8 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var serviceConn: ServiceConnection
     private var serviceStatus: Int = 0
     private var SHARED_PREFS = "sharedPrefs"
-    private var curVolSFX = 0f
     private var maxVolMusic = 0
     private var curVolMusic = 0
-    private var progressFx = 0
     private var progressMusic = 0
     private var chosenBG = 0
     private var chosenDino = 0
@@ -83,23 +81,6 @@ class SettingsActivity : AppCompatActivity() {
             finishAffinity()
         }
 
-        val fxBtn = binding.seekbarSoundfx
-        fxBtn.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                // intentionally empty; required to override
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar) {
-                // intentionally empty; required to override
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar) {
-                var progress = seekBar.progress
-                Toast.makeText(applicationContext, "Sound FX volume: $progress", Toast.LENGTH_SHORT).show()
-                curVolSFX = (progress.toFloat())/100
-            }
-        })
-
         audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
         maxVolMusic = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
         curVolMusic = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
@@ -111,7 +92,6 @@ class SettingsActivity : AppCompatActivity() {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0)
             }
-
             override fun onStartTrackingTouch(seekBar: SeekBar) {
                 // intentionally empty; required to override
             }
@@ -127,22 +107,19 @@ class SettingsActivity : AppCompatActivity() {
     private fun saveData(){
         var sharedPreferences : SharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
         var sharedPrefEdit = sharedPreferences.edit()
-        sharedPrefEdit.putInt("fxKey", binding.seekbarSoundfx.progress)
         sharedPrefEdit.putInt("musicKey", binding.seekbarMusic.progress)
         sharedPrefEdit.commit()
-        soundPoolManager.setVolume(curVolSFX)
+        soundPoolManager.setVolume(curVolMusic.toFloat())
         Toast.makeText(this, "Settings saved", Toast.LENGTH_SHORT).show()
     }
 
     fun loadData(){
         var sharedPreferences : SharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE)
-        progressFx = sharedPreferences.getInt("fxKey", 100)
         progressMusic = sharedPreferences.getInt("musicKey", curVolMusic)
         chosenBG = sharedPreferences.getInt("bgKey", 0)
         chosenDino = sharedPreferences.getInt("dinoKey", 0)
         serviceStatus = sharedPreferences.getInt("isMuted", 0)
 
-        binding.seekbarSoundfx.progress = progressFx
         binding.seekbarMusic.progress = progressMusic
         binding.settingsBg.setImageResource(BGs[chosenBG].dark)
     }

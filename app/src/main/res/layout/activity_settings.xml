@@ -53,39 +53,12 @@
 
 
         <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
-            android:id="@+id/settings_soundfx"
+            android:id="@+id/settings_music"
             style="@style/textSubheading"
             android:layout_below="@+id/settings_title1"
             android:layout_marginEnd="130dp"
-            android:layout_marginTop="37dp"
             android:textAlignment="textStart"
-            android:text="Sound FX"
-            app:outlineColor="@color/outline"
-            app:outlineSize="5dp" />
-
-        <SeekBar
-            android:id="@+id/seekbar_soundfx"
-            android:layout_width="130dp"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/settings_line1"
-            android:layout_alignEnd="@+id/settings_line1"
-            />
-
-        <View
-            android:id="@+id/settings_line1"
-            android:layout_width="230dp"
-            android:layout_height="1dp"
-            android:layout_alignStart="@+id/settings_soundfx"
-            android:layout_below="@+id/settings_soundfx"
-            android:layout_marginVertical="10dp"
-            android:background="@color/text"/>
-
-        <ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.TextOutline
-            android:id="@+id/settings_music"
-            style="@style/textSubheading"
-            android:layout_below="@+id/settings_line1"
-            android:layout_marginEnd="130dp"
-            android:textAlignment="textStart"
+            android:layout_marginTop="30dp"
             android:text="Music"
             app:outlineColor="@color/outline"
             app:outlineSize="5dp" />
