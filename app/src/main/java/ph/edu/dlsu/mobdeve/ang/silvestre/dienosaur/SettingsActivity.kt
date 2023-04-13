@@ -151,5 +151,6 @@ class SettingsActivity : AppCompatActivity() {
             }
         }
         bindService(serviceIntent, serviceConn, Context.BIND_AUTO_CREATE)
+        loadData()
     }
 }
