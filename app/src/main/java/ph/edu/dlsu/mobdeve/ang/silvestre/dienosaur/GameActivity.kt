@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.Fragment
@@ -18,23 +19,27 @@ import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.BGs
 import ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.models.Dinos
 
 class GameActivity : AppCompatActivity() {
-    private lateinit var serviceIntent: Intent
-    private lateinit var service: MusicService
-    private lateinit var serviceConn: ServiceConnection
-    private var serviceStatus: Int = 0
     companion object{
         lateinit var pauseBtn: AppCompatImageButton
         var game: GameView? = null
     }
+    private lateinit var serviceIntent: Intent
+    private lateinit var service: MusicService
+    private lateinit var serviceConn: ServiceConnection
+    private var serviceStatus: Int = 0
 
     private lateinit var parent: ViewGroup
     private lateinit var binding: ActivityGameBinding
+    private var frame: Int = 0
+
     private lateinit var mAuth: FirebaseAuth
     private var SHARED_PREFS = "sharedPrefs"
     private var chosenBG = 0
     private var chosenDino = 0
+
     private lateinit var soundPoolManager: SoundPoolManager
-    private var frame: Int = 0
+
+    private var isBackPressed: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +75,16 @@ class GameActivity : AppCompatActivity() {
             pauseBtn.visibility = View.INVISIBLE //hide pause button
             loadFragment(frame, FragmentGamePause()) //show pause screen
         }
+
+        // catch when activity is finished due to back pressed
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                isBackPressed = true
+                remove()
+                onBackPressedDispatcher.onBackPressed()
+            }
+        }
+        onBackPressedDispatcher.addCallback(this, callback)
     }
 
     // activity removed from foreground
@@ -78,10 +93,12 @@ class GameActivity : AppCompatActivity() {
         game!!.pause()
         service.muteVolume()
 
-        if(!game!!.getOverBool()){
+        //if game is not over and back is not pressed = show pause screen
+        if(!game!!.getOverBool() && !isBackPressed){
             pauseBtn.visibility = View.INVISIBLE //hide pause button
             loadFragment(frame, FragmentGamePause()) //show pause screen
         }
+        isBackPressed = false //reset boolean
     }
 
     // activity returned to foreground
