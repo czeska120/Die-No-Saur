@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 //    private lateinit var audioManager: AudioManager
 
     private lateinit var serviceIntent: Intent
-    private lateinit var service: MusicService
+    private var service: MusicService? = null
     private lateinit var serviceConn: ServiceConnection
     private var serviceStatus: Int = 0
     private var serviceLevel: Int = 0
@@ -128,9 +128,9 @@ class MainActivity : AppCompatActivity() {
                 val localBinder = iBinder as MusicService.LocalBinder
                 service = localBinder.getMusicServiceInstance()
                 if(serviceStatus == 0){
-                    service.unmuteVolume()
+                    service?.unmuteVolume()
                 }else{
-                    service.muteVolume()
+                    service?.muteVolume()
                 }
             }
 
@@ -150,7 +150,7 @@ class MainActivity : AppCompatActivity() {
             override fun onServiceConnected(p0: ComponentName?, iBinder: IBinder?) {
                 val localBinder = iBinder as MusicService.LocalBinder
                 service = localBinder.getMusicServiceInstance()
-                service.setVolume(serviceLevel.toFloat())
+                service!!.setVolume(serviceLevel.toFloat())
             }
             override fun onServiceDisconnected(p0: ComponentName?) {
             }
@@ -165,7 +165,7 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onPause() {
         super.onPause()
-        service.muteVolume()
+        service?.muteVolume()
 //        unbindService(serviceConn)
     }
 }
