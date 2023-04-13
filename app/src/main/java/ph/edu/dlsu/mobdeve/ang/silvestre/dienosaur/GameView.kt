@@ -93,6 +93,10 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
         }
     }
 
+    //sfx
+    private lateinit var soundPoolManager: SoundPoolManager
+    private var isSoundPlayed = false
+
     //sensors
     private var sensorManager: SensorManager
 
@@ -145,6 +149,9 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
             val asteroid = Asteroid(context)
             asteroids.add(asteroid)
         }
+
+        //sfx
+        soundPoolManager = SoundPoolManager.getInstance(context)
 
         //sensors
         sensorManager = context.getSystemService(SENSOR_SERVICE) as SensorManager
@@ -200,9 +207,14 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
 
         //draw dino
         if (isHit) {
+            if (!isSoundPlayed){
+                soundPoolManager.playSound(R.raw.sfx_hit)
+                isSoundPlayed = true
+            }
             canvas.drawBitmap(dinoHit[dino.hitFrame], dinoX, dinoY, null)
             postDelayed({
                 isHit = false
+                isSoundPlayed = false
             }, 500)
         } else {
             if (motionX > 0) {
@@ -481,6 +493,10 @@ class GameView(context: Context, attributes: AttributeSet? = null) : View(contex
             val asteroid = Asteroid(context)
             asteroids.add(asteroid)
         }
+
+        //sfx
+        soundPoolManager = SoundPoolManager.getInstance(context)
+        isSoundPlayed = false
 
         //sensors
         sensorManager.unregisterListener(this)
