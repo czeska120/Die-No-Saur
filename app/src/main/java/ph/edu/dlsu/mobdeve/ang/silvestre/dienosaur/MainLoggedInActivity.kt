@@ -90,6 +90,20 @@ class MainLoggedInActivity : AppCompatActivity() {
             startActivity(returnMain)
             finish()
         }
+
+        // copied from MainActivity
+        serviceConn = object : ServiceConnection{
+            override fun onServiceConnected(p0: ComponentName?, iBinder: IBinder?) {
+                val localBinder = iBinder as MusicService.LocalBinder
+                service = localBinder.getMusicServiceInstance()
+            }
+
+            override fun onServiceDisconnected(p0: ComponentName?) {
+            }
+        }
+        bindService(serviceIntent, serviceConn, Context.BIND_AUTO_CREATE)
+        startService(serviceIntent)
+
         loadData()
     }
     fun loadData(){
@@ -98,8 +112,19 @@ class MainLoggedInActivity : AppCompatActivity() {
         chosenDino = sharedPreferences.getInt("dinoKey", 0)
         serviceStatus = sharedPreferences.getInt("isMuted", 0)
         serviceLevel = sharedPreferences.getInt("musicKey", 100)
-        audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, serviceLevel, 0)
+//        audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+//        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, serviceLevel, 0)
+
+        // copied from MainActivity
+        serviceConn = object : ServiceConnection{
+            override fun onServiceConnected(p0: ComponentName?, iBinder: IBinder?) {
+                val localBinder = iBinder as MusicService.LocalBinder
+                service = localBinder.getMusicServiceInstance()
+                service.setVolume(serviceLevel.toFloat())
+            }
+            override fun onServiceDisconnected(p0: ComponentName?) {
+            }
+        }
 
         binding.bgTop.setImageResource(BGs[chosenBG].top)
         binding.bgBot.setImageResource(BGs[chosenBG].bottom)
