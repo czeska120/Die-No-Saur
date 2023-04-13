@@ -3,6 +3,7 @@ package ph.edu.dlsu.mobdeve.ang.silvestre.dienosaur.fragments
 import android.content.*
 import android.os.Bundle
 import android.os.IBinder
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -80,20 +81,23 @@ class FragmentBottomBtns : Fragment() {
         soundBtn.setOnClickListener {
             soundBtn.startAnimation(buttonClick)
             soundPoolManager.playSound(R.raw.sfx_tick)
-            if(savedState==0){
-                soundBtn.setBackgroundResource(soundSwitch[1])
+            if(savedState==0){ // if unmuted
+                soundBtn.setBackgroundResource(soundSwitch[1]) // to mute
                 tick++
                 service.muteVolume()
                 sharedPrefEdit.putInt("isMuted", 1)
-                sharedPrefEdit.commit()
+                Log.d("TESTING", "UNMUTE CLICKED, $savedState")
+                savedState = 1
             }
-            else{
-                soundBtn.setBackgroundResource(soundSwitch[0])
+            else{ // if muted
+                soundBtn.setBackgroundResource(soundSwitch[0]) // to unmute
                 tick--
                 service.unmuteVolume()
                 sharedPrefEdit.putInt("isMuted", 0)
-                sharedPrefEdit.commit()
+                Log.d("TESTING", "MUTE CLICKED  $savedState")
+                savedState = 0
             }
+            sharedPrefEdit.apply()
         }
         // Inflate the layout for this fragment
         return rootView

@@ -146,7 +146,11 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onPause() {
         super.onPause()
-        service.muteVolume()
+        if(serviceStatus == 0){
+            service.unmuteVolume()
+        }else{
+            service.muteVolume()
+        }
 //        unbindService(serviceConn)
     }
 }

@@ -45,10 +45,12 @@ class MusicService: Service() {
 
     fun muteVolume() {
             mediaPlayer.pause()
+        Log.d("TESTING", "YOU ARE ON MUTE")
     }
 
     fun unmuteVolume() {
             mediaPlayer.start()
+        Log.d("TESTING", "YOU ARE UNMUTED")
     }
 
 }
